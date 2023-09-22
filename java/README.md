@@ -6,6 +6,11 @@ This is the stub project for the 2023 State Farm Coding Competition Round 1 in J
 
 ## Setup
 
+### Pre-Req
+
+- Java JDK - version 11 or higher
+- Maven - version
+
 TODO: Do this
 
 ## Run

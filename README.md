@@ -4,6 +4,10 @@ This is the stub project for the 2023 State Farm Coding Competition Round 1 in J
 
 ## Considerations
 
+### Use Visual Studio Code (VSCode)
+
+Or else
+
 TODO: Do this
 
 ### Dealing with new line characters
