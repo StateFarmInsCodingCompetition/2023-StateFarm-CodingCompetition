@@ -1,0 +1,13 @@
+{
+  "name": "simple-data-tool",
+  "version": "1.0.0",
+  "description": "A simple data tool converted from Java to Node.js",
+  "main": "application.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}
