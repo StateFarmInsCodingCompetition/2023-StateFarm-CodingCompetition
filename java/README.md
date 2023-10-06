@@ -2,9 +2,9 @@
 
 ## Welcome
 
-This is the stub project for the 2023 State Farm Coding Competition Round 1 in Java. This will be the same project you'll use once Round 1 begins.
+This is the skeleton project for the 2023 State Farm Coding Competition in Java. This will be the same project you'll use once Round 1 begins.
 
-This is to just get you started -- making sure your computer is setup, that you are able to build and run the project (including unit tests), and getting familiar with the structure. Once Round 1 begins, we'll add the problem statement and the actual JSON files and unit tests you'll be using.
+Once Round 1 begins, we'll add the problem statement and the actual JSON files and unit tests you'll be using.
 
 ## Setup
 
