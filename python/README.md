@@ -46,6 +46,12 @@ To test this project:
 pytest
 ```
 
+or 
+
+```sh
+python -m pytest
+```
+
 In VSCode, you can also run the unit tests by clicking on the play button beside each test when you open the test file. If you have the Python extension installed in VSCode, it will automatically detect pytest and give you the option to run and debug tests directly from the editor.
 
 For more details on testing with pytest, refer to the official documentation: [Getting Started with pytest](https://docs.pytest.org/en/stable/getting-started.html).
