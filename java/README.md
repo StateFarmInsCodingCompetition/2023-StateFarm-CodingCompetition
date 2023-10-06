@@ -47,7 +47,7 @@ In VSCode, you can also run the unit tests either per file or per method. See th
 
 ![Example JUnit buttons in VSCode](./Example-Run-JUnits-In-VSCode.jpg)
 
-You should see the circles on the lefthand side. They're checkmarks in this case, because we've already run the unit tests, but they can also come up as a red circle for failures or a green play button.
+You should see the circles on the left-hand side. They are checkmarks in this case, because we've already run the unit tests, but they can also come up as a red circle for failures or a green play button.
 
 For more information, see Microsoft's official guide - [Testing Java with Visual Studio Code - Features Section](https://code.visualstudio.com/docs/java/java-testing#_features).
 
