@@ -1,4 +1,4 @@
-# 2023 State Farm Coding Competition - Round 1 - NodeJS JavaScript Version
+# 2023 State Farm Coding Competition - NodeJS JavaScript Version
 
 ## Welcome
 
@@ -25,7 +25,7 @@ We recommend downloading the LTS version of Node.js from the official website.
 You can install Jest using the following command:
 
 ```sh
-npm install jest
+npm install
 ```
 
 #### Git and VSCode

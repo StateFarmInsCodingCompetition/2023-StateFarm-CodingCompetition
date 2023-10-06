@@ -1,4 +1,4 @@
-# 2023 State Farm Coding Competition - Round 1 - Python Version
+# 2023 State Farm Coding Competition - Python Version
 
 ## Welcome
 

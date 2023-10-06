@@ -1,4 +1,4 @@
-# 2023 State Farm Coding Competition - Round 1 - Java Version
+# 2023 State Farm Coding Competition - Java Version
 
 ## Welcome
 
