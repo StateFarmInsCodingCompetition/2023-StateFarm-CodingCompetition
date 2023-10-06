@@ -25,7 +25,7 @@ You can download the latest version of Python from the official website:
 After ensuring `pip` is installed, you can install pytest:
 
 ```sh
-pip install -f requirements.txt
+pip install -r requirements.txt
 ```
 
 #### Git and VSCode
