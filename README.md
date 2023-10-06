@@ -40,7 +40,7 @@ You will need to have [Git](https://git-scm.com/downloads) installed on your mac
 
 We primarily use and heavily recommend VSCode for this competition, especially if you run into any problems relating to software and your workstation. We cannot help with every issue that may arrise, but by using VSCode, we can hopefully get to a quicker solution for certain edge cases (environment not setup correctly for example).
 
-We also cannot gurantee that these projects will work with other editors. Your mileage may vary.
+We also cannot guarantee that these projects will work with other editors. Your mileage may vary.
 ### Plan to Carry This Project into Round 2
 
 Plan accordingly to use this project for round 2 of the competition. You'll want to make sure your code is reusable and easy to understand, tweak, and maintain. Otherwise, you may have a difficult time with the round 2 problem set.
