@@ -38,7 +38,7 @@ You will need to have [Git](https://git-scm.com/downloads) installed on your mac
 
 ### Using Editors Other Than VSCode
 
-We primarily use and heavily recommend VSCode for this competition, especially if you run into any problems relating to software and your workstation. We cannot help with every issue that may arrise, but by using VSCode, we can hopefully get to a quicker solution for certain edge cases (environment not setup correctly for example).
+We primarily use and heavily recommend VSCode for this competition, especially if you run into any problems relating to software and your workstation. We cannot help with every issue that may arise, but by using VSCode, we can hopefully get to a quicker solution for certain edge cases (environment not setup correctly for example).
 
 We also cannot guarantee that these projects will work with other editors. Your mileage may vary.
 ### Plan to Carry This Project into Round 2
