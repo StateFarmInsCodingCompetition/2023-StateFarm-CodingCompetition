@@ -32,7 +32,7 @@ More on using other editors below.
 
 ### Git
 
-You will need to have [git](https://git-scm.com/downloads) installed on your machine. It is supported on many platforms. For more on git and VSCode, see [this guide](https://code.visualstudio.com/docs/sourcecontrol/overview). For other editors, you will need to search around the Internet.
+You will need to have [Git](https://git-scm.com/downloads) installed on your machine. It is supported on many platforms. For more on Git and VSCode, see [this guide](https://code.visualstudio.com/docs/sourcecontrol/overview). For other editors, you will need to search around the Internet.
 
 ## Considerations
 
