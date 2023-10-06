@@ -1,8 +1,14 @@
-# 2023 State Farm Coding Competition - Round 1
+# 2023 State Farm Coding Competition - Round 1 and 2
 
-This is the GitHub project for the 2023 State Farm Coding Competition Round 1. This will be the same project you'll use once Round 1 begins. This is to just get you started -- making sure your computer is setup, that you are able to build and run the project (including unit tests), and getting familiar with the structure.
+This is the GitHub project for the 2023 State Farm Coding Competition Round 1 and 2. This will be the same project you'll use once Round 1 begins.
+
 
 **Please be sure to read this entire document *PRIOR* to moving into one of the language-specific folders.**
+
+## Change Log:
+
+- October 6, 2023 - Publishing initial repo, including help guides and skeleton projects
+    - This is to just get you started -- making sure your computer is setup, that you are able to build and run the project (including unit tests), and getting familiar with the structure.
 
 ## Getting Started
 
@@ -52,3 +58,7 @@ https://help.github.com/articles/dealing-with-line-endings/
 ## Questions?
 
 E-mail [codingcompetition@statefarm.com](mailto:codingcompetition@statefarm.com), or to post a public question or report a problem, open an issue.
+
+## Feedback
+
+At the ends of Round 1 and 2, we need you to fill out [FEEDBACK.md](./FEEDBACK.md). It includes a few questions such as team name, number of unit tests passed, any notable characteristics. Please 

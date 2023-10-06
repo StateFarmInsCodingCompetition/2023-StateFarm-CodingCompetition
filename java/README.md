@@ -51,4 +51,4 @@ You should see the circles on the left-hand side. They are checkmarks in this ca
 
 For more information, see Microsoft's official guide - [Testing Java with Visual Studio Code - Features Section](https://code.visualstudio.com/docs/java/java-testing#_features).
 
-**Note: Use this functionality for quick and easy testing, but, before you turn your submission in, you must run and pass the maven command above. Your code must compile and pass at least one test.**
+**Note: Use this functionality for quick and easy testing, but, before you turn your submission in, please attempt to run the maven command at least once to determine how many unit tests have been passed.**
