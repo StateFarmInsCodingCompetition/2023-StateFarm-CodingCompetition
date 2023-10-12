@@ -1,5 +1,6 @@
 import json
 
+
 class SimpleDataTool:
     JSON_FILENAME_SIMPLE = "simple.json"
 

@@ -57,3 +57,7 @@ In VSCode, you can also run the unit tests by clicking on the play button beside
 For more details on testing with pytest, refer to the official documentation: [Getting Started with pytest](https://docs.pytest.org/en/stable/getting-started.html).
 
 **Note: Use this functionality for quick and easy testing, but, before you turn your submission in, please attempt to run the `pytest` command at least once to determine how many unit tests have been passed.**
+
+## Installing Additional Packages
+
+To install additional packages, follow [this guide](https://note.nkmk.me/en/python-pip-install-requirements/). You can also search around the Internet for more guidance.
