@@ -146,10 +146,7 @@ class SimpleDataTool {
      *     Assume uniform spacing between claims
      *     Assume disaster impact area is a circle
      *
-     * Args:
-     *     disasterId (number): id of disaster
-     *
-     * Returns:
+     * @param {number} disasterId - ID of disaster.
      * @returns {number} density of claims to disaster area, rounded to the nearest thousandths place
      * null if disaster does not exist
      */
@@ -165,7 +162,6 @@ class SimpleDataTool {
      *     Year should be full four-digit year.
      *     List should be in descending order.
      *
-     * @param {Array} disasterData - An array containing disaster data objects.
      * @returns {Array} - An array of three strings of month and year, descending order of highest claims.
      */
     getTopThreeMonthsWithHighestNumOfClaimsDesc() {

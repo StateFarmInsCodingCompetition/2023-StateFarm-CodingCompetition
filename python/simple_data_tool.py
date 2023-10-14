@@ -186,30 +186,6 @@ class SimpleDataTool:
 
         pass
 
-    def build_claim_lists(self, list_of_regions, start_date, end_date):
-        """Returns four lists of claims based on the region(s), disaster start date, and disaster end date
-
-        Hints:
-            Region lists are already provided above
-            If no regions are passed, search all disasters regardless of state
-            Use inclusive bounds for filtering on start_date and end_date
-            List of regions should be case-sensitive
-
-        Args:
-            list_of_regions (list): list of zero or more regions to search
-            start_date (_type_): earliest disaster start date
-            end_date (_type_): latest disaster end date
-
-        Returns:
-            list: four lists with zero or more claims in each list based on:
-                  first list - claim has loss_of_life = true, but total_loss = false
-                  second list - claim has loss_of_life = false, but total_loss = true
-                  third list - claim has loss_of_life and total_loss as true
-                  fourth list - claim has loss_of_life and total_loss as false
-        """
-
-        pass
-
     def build_map_of_agents_to_total_claim_cost(self):
         """Builds a map of agent and their total claim cost
 
