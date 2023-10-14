@@ -4,6 +4,7 @@ import math
 from statistics import mean
 
 
+
 class SimpleDataTool:
 
     AGENTS_FILEPATH = 'data/sfcc_2023_agents.json'
