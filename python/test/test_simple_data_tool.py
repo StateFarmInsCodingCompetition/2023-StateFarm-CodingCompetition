@@ -85,17 +85,17 @@ class TestSetTwo:
 
     def test_get_num_of_open_claims_for_agent_and_severity(self, controller):
         """Test 8"""
-        assert controller.get_number_open_claims_for_agent_and_severity(
+        assert controller.get_num_of_open_claims_for_agent_and_severity(
             0, 0) == -1
-        assert controller.get_number_open_claims_for_agent_and_severity(
+        assert controller.get_num_of_open_claims_for_agent_and_severity(
             25, 11) == -1
-        assert controller.get_number_open_claims_for_agent_and_severity(
+        assert controller.get_num_of_open_claims_for_agent_and_severity(
             65, 3) == None
-        assert controller.get_number_open_claims_for_agent_and_severity(
+        assert controller.get_num_of_open_claims_for_agent_and_severity(
             24, 1) == 16
-        assert controller.get_number_open_claims_for_agent_and_severity(
+        assert controller.get_num_of_open_claims_for_agent_and_severity(
             87, 6) == 3
-        assert controller.get_number_open_claims_for_agent_and_severity(
+        assert controller.get_num_of_open_claims_for_agent_and_severity(
             85, 6) == 2
 
 
