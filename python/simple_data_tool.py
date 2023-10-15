@@ -59,7 +59,12 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
-        pass
+        count = 0
+        for claim in self.__claim_data:
+            if (claim["status"] == "Closed"):
+                count += 1
+        return count
+
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
         """Calculates the number of claims assigned to a specific claim handler
@@ -70,7 +75,11 @@ class SimpleDataTool:
         Returns:
             int: number of claims assigned to claim handler
         """
-        pass
+        count = 0
+        for claim in self.__claim_data:
+            if (claim["claim_handler_assigned_id"] == claim_handler_id):
+                count += 1
+        return count
 
     def get_num_disasters_for_state(self, state):
         """Calculates the number of disasters for a specific state
@@ -82,7 +91,11 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-        pass
+        count = 0
+        for disaster in self.__disaster_data:
+            if (disaster["state"] == state):
+                count += 1
+        return count
 
     # endregion
 
@@ -99,7 +112,11 @@ class SimpleDataTool:
                           returns None if no claims are found
         """
 
-        pass
+        sum = 0
+        for claim in self.__claim_data:
+            if (claim["disaster_id"] == disaster_id):
+                sum += (claim["estimate_cost"])
+        return sum or None
 
     def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
         """Gets the average estimated cost of all claims assigned to a claim handler
@@ -112,7 +129,13 @@ class SimpleDataTool:
                            or None if no claims are found
         """
 
-        pass
+        sum = 0
+        count = 0
+        for claim in self.__claim_data:
+            if (claim["claim_handler_assigned_id"] == claim_handler_id):
+                sum += (claim["estimate_cost"])
+                count += 1
+        return round(sum / count, 2) if count else None
 
     def get_state_with_most_disasters(self):
         """Returns the name of the state with the most disasters based on disaster data
@@ -127,7 +150,9 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+        states = [disaster["state"] for disaster in self.__disaster_data]
+        return min(set(states), key=lambda x:(0 - states.count(x), x))
+
 
     def get_state_with_least_disasters(self):
         """Returns the name of the state with the least disasters based on disaster data
@@ -142,7 +167,8 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+        states = [disaster["state"] for disaster in self.__disaster_data]
+        return min(set(states), key=lambda x: (states.count(x), x))
     
     def get_most_spoken_agent_language_by_state(self, state):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
@@ -154,7 +180,9 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        pass
+        languages = [agent["secondary_language"] for agent in self.__agent_data\
+                     if (agent["secondary_language"] and agent["state"] == state)]
+        return min(set(languages), key=lambda x: (0 - languages.count(x), x)) if languages else ""
 
     def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
@@ -170,8 +198,15 @@ class SimpleDataTool:
                         -1 if severity rating out of bounds
                         None if agent does not exist, or agent has no claims (open or not)
         """
-
-        pass
+        count = 0
+        if min_severity_rating > 10 or min_severity_rating < 1:
+            return -1
+        for claim in self.__claim_data:
+            if (claim["agent_assigned_id"] == agent_id)\
+                    and (claim["severity_rating"] >= min_severity_rating)\
+                    and claim["status"] != "Closed":
+                count += 1
+        return count or None
 
     # endregion
 
@@ -183,8 +218,11 @@ class SimpleDataTool:
         Returns:
             int: number of disasters where the declared date is after the end date
         """
-
-        pass
+        count = 0
+        for disaster in self.__disaster_data:
+            if (disaster["end_date"] < disaster["declared_date"]):
+                count += 1
+        return count
 
     def build_map_of_agents_to_total_claim_cost(self):
         """Builds a map of agent and their total claim cost
@@ -197,8 +235,11 @@ class SimpleDataTool:
         Returns:
             dict: key is agent id, value is total cost of claims associated to the agent
         """
-
-        pass
+        map = dict((agent["id"], 0) for agent in self.__agent_data if agent["id"])
+        for claim in self.__claim_data:
+            map[claim["agent_assigned_id"]] \
+                = round(map[claim["agent_assigned_id"]] + claim["estimate_cost"], 2)
+        return map
 
     def calculate_disaster_claim_density(self, disaster_id):
         """Calculates density of a diaster based on the number of claims and impact radius
@@ -214,17 +255,17 @@ class SimpleDataTool:
             float: density of claims to disaster area, rounded to the nearest thousandths place
                    None if disaster does not exist
         """
-        pass
-
+        for disaster in self.__disaster_data:
+            if disaster["id"] == disaster_id:
+                return round(len([claim for claim in self.__claim_data
+                            if claim["disaster_id"] == disaster_id])\
+                                 / (math.pi * disaster["radius_miles"] ** 2), 5) or None
     # endregion
 
     # region TestSetFour
 
     def get_top_three_months_with_highest_num_of_claims_desc(self):
-        """Gets the top three months with the highest number of claims
-
-        OPTIONAL! OPTIONAL! OPTIONAL!
-        AS OF 9:21CDT, TEST IS OPTIONAL. SEE GITHUB ISSUE #8 FOR MORE DETAILS
+        """Gets the top three months with the highest total claim cost
 
         Hint:
             Month should be full name like 01 is January and 12 is December
@@ -234,7 +275,22 @@ class SimpleDataTool:
         Returns:
             list: three strings of month and year, descending order of highest claims
         """
+        calendar = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        def get_num_claims_for_disaster(disaster_id):
+            count = 0
+            for claim in self.__claim_data:
+                if (claim["disaster_id"] == disaster_id):
+                    count += 1
+            return count
+        months = {}
+        for disaster in self.__disaster_data:
+            count = get_num_claims_for_disaster(disaster["id"])
+            months[disaster["declared_date"][0:7]] = months.get(disaster["declared_date"][0:7], 0) + count
+        values = list(set(months.values()))
+        values.sort(reverse=True)
+        top = next(calendar[int(k[5:7]) - 1] + " " + k[0:4] for k, v in months.items() if v == values[0])
+        second = next(calendar[int(k[5:7]) - 1] + " " + k[0:4] for k, v in months.items() if v == values[1])
+        third = next(calendar[int(k[5:7]) - 1] + " " + k[0:4] for k, v in months.items() if v == values[2])
 
-        pass
-
+        return [top, second, third]
     # endregion
