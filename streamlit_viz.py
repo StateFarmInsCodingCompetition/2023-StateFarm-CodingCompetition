@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-from datetime import datetime
+# to run: streamlit run streamlit_viz.py
 
 df = pd.read_json('data/sfcc_2023_disasters.json')
 df = df.drop(['description'], axis=1)
