@@ -446,6 +446,12 @@ public class SimpleDataTool {
      *         to the agent
      */
     public Map<Integer, Float> buildMapOfAgentsToTotalClaimCost() {
+        /*  
+            Note - I believe the return type here should be a Map<Integer, Double> due to Issue #9, however
+            I left it as is since we are not allowed to change the test files and the test case expects
+            a Map<Integer, Float> to be returned
+        */
+
         Map<Integer, Float> agentToTotalClaimCost = new HashMap<Integer, Float>();
         List<Claim> claims = getClaims();
         List<Agent> agents = getAgents();
