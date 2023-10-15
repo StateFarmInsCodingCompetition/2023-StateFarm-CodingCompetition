@@ -1,5 +1,9 @@
 import json
 import math
+import typing
+from collections import defaultdict
+import pandas as pd
+import matplotlib.pyplot as plt
 
 from statistics import mean
 
@@ -11,6 +15,15 @@ class SimpleDataTool:
     CLAIM_HANDLERS_FILEPATH = 'data/sfcc_2023_claim_handlers.json'
     CLAIMS_FILEPATH = 'data/sfcc_2023_claims.json'
     DISASTERS_FILEPATH = 'data/sfcc_2023_disasters.json'
+
+    STATES = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
+              'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
+              'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+              'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+              'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon',
+              'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah',
+              'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+              ]
 
     REGION_MAP = {
         'west': 'Alaska,Hawaii,Washington,Oregon,California,Montana,Idaho,Wyoming,Nevada,Utah,Colorado,Arizona,New Mexico',
@@ -54,184 +67,254 @@ class SimpleDataTool:
     # region Test Set One
 
     def get_num_closed_claims(self):
-        """Calculates the number of claims where that status is "Closed"
+        # Holds the total number of claims that are closed
+        num_closed = 0
 
-        Returns:
-            int: number of closed claims
-        """
-        pass
+        for claim in self.get_claim_data():
+            if claim["status"] == "Closed":
+                num_closed += 1
+
+        return num_closed
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
-        """Calculates the number of claims assigned to a specific claim handler
-
-        Args:
-            claim_handler_id (int): id of claim handler
-
-        Returns:
-            int: number of claims assigned to claim handler
-        """
-        pass
+        # Holds the total number of claims for a specific claim handler id
+        num_claims = 0
+        for claim in self.get_claim_data():
+            if claim["claim_handler_assigned_id"] == claim_handler_id:
+                num_claims += 1
+        return num_claims
 
     def get_num_disasters_for_state(self, state):
-        """Calculates the number of disasters for a specific state
+        # Holds the total number of disasters in the given state
+        num_disasters = 0
 
-        Args:
-            state (string): name of a state in the United States of America,
-                            including the District of Columbia
+        for disaster in self.get_disaster_data():
+            if disaster["state"] == state:
+                num_disasters += 1
 
-        Returns:
-            int: number of disasters for state
-        """
-        pass
+        return num_disasters
 
     # endregion
 
     # region Test Set Two
 
     def get_total_claim_cost_for_disaster(self, disaster_id):
-        """Sums the estimated cost of a specific disaster by its claims
+        # Holds the total cost of claims with the disaster id
+        total_cost = 0.0
 
-        Args:
-            disaster_id (int): id of disaster
+        for claim in self.get_claim_data():
+            if claim["disaster_id"] == disaster_id:
+                total_cost += claim["estimate_cost"]
 
-        Returns:
-            float | None: estimate cost of disaster, rounded to the nearest hundredths place
-                          returns None if no claims are found
-        """
-
-        pass
+        # If there were no claims with that disaster id return None
+        if total_cost == 0.0:
+            return None
+        return total_cost
 
     def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
-        """Gets the average estimated cost of all claims assigned to a claim handler
+        num_claims = 0
+        tot_claim_cost = 0.0
 
-        Args:
-            claim_handler_id (int): id of claim handler
+        for claim in self.get_claim_data():
+            if claim["claim_handler_assigned_id"] == claim_handler_id:
+                num_claims += 1
+                tot_claim_cost += claim["estimate_cost"]
 
-        Returns:
-            float | None : average cost of claims, rounded to the nearest hundredths place
-                           or None if no claims are found
-        """
+        if num_claims == 0:
+            return None
+        return round(tot_claim_cost/num_claims, 2)
 
-        pass
 
     def get_state_with_most_disasters(self):
-        """Returns the name of the state with the most disasters based on disaster data
+        disaster_dict = defaultdict(int)
 
-        If two states have the same number of disasters, then sort by alphabetical (a-z)
-        and take the first.
+        for disaster in self.get_disaster_data():
+            disaster_dict[disaster["state"]] += 1
 
-        Example: Say New Jersey and Delaware both have the highest number of disasters at
-                 12 disasters each. Then, this method would return "Delaware" since "D"
-                 comes before "N" in the alphabet. 
+        # Default initiliazing if there are no disasters
+        # (First alphabetical state, no disasters)
+        max_state = "Alabama"   # State with most disasters
+        max_disasters = 0       # Number of most disasters
 
-        Returns:
-            string: single name of state
-        """
-        pass
+        for state in self.STATES:
+            if disaster_dict[state] > max_disasters:
+                max_state = state
+                max_disasters = disaster_dict[state]
 
+        return max_state
+            
+    # Returns the name of the state with the least disasters provided the state has at least 1 disaster.
+    # If multiple states have the same minimum number of disasters, the lexicographically smallest state is returned
     def get_state_with_least_disasters(self):
-        """Returns the name of the state with the least disasters based on disaster data
 
-        If two states have the same number of disasters, then sort by alphabetical (a-z)
-        and take the first.
+        # Key: (str) State name
+        # Val: (int) Number of disasters of the state
+        disaster_dict = defaultdict(int)
 
-        Example: Say New Mexico and West Virginia both have the least number of disasters at
-                 1 disaster each. Then, this method would return "New Mexico" since "N"
-                 comes before "W" in the alphabet. 
+        for disaster in self.get_disaster_data():
+            disaster_dict[disaster["state"]] += 1
 
-        Returns:
-            string: single name of state
-        """
-        pass
-    
+        # Default initializing if there are no disasters
+        # (First alphabetical state, no disasters)
+        min_state = ""  # State with least disasters
+        min_disasters = float('inf')  # Infinity
+
+        for state in self.STATES:
+            # If the state has 0 disasters, ignore the state
+            if state not in disaster_dict:
+                continue
+            if disaster_dict[state] < min_disasters:
+                min_state = state
+                min_disasters = disaster_dict[state]
+
+        # If no states are in the data
+        if min_state == '':
+            return None
+        return min_state
+
     def get_most_spoken_agent_language_by_state(self, state):
-        """Returns the name of the most spoken language by agents (besides English) for a specific state
+        language_dict = defaultdict(int)
 
-        Args:
-            state (string): name of state
-
-        Returns:
-            string: name of language
-                    or empty string if state doesn't exist
-        """
-        pass
-
-    def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
-        """Returns the number of open claims for a specific agent and for a minimum severity level and higher
-
-        Note: Severity rating scale for claims is 1 to 10, inclusive.
+        for agent in self.get_agent_data():
+            if agent["state"] == state:
+                if not (agent["primary_language"] == "English" or agent["primary_language"] == None):
+                    language_dict[agent["primary_language"]] += 1
+                if not (agent["secondary_language"] == "English" or agent["secondary_language"] == None):
+                    language_dict[agent["secondary_language"]] += 1
         
-        Args:
-            agent_id (int): ID of the agent
-            min_severity_rating (int): minimum claim severity rating
+        max_language = ""
+        max_agent = 0
 
-        Returns:
-            int | None: number of claims that are not closed and have minimum severity rating or greater
-                        -1 if severity rating out of bounds
-                        None if agent does not exist, or agent has no claims (open or not)
-        """
+        for language in language_dict.keys():
+            if language_dict[language] > max_agent:
+                max_language = language
 
-        pass
+        print(max_language)
+        return max_language
+
+    def get_num_of_open_claims_for_agent_and_severity(self, agent_id: int, min_severity_rating: int):
+
+        # Checks if min_severity_rating is in bounds 1 to 10 inclusive
+        if min_severity_rating < 1 or min_severity_rating > 10:
+            return -1
+
+        # Holds number of open claims for given agent that have at least min_severity_rating
+        num_open_claims: int = 0
+
+        # Iterates through claims, checking if agent_id matches, claim is not closed, and severity_rating matches
+        for claim in self.get_claim_data():
+            if claim['agent_assigned_id'] == agent_id:
+                if claim['status'] != 'Closed':
+                    if claim['severity_rating'] >= min_severity_rating:
+                        num_open_claims += 1
+
+        if num_open_claims == 0:
+            return None
+
+        return num_open_claims
 
     # endregion
 
     # region TestSetThree
 
     def get_num_disasters_declared_after_end_date(self):
-        """Gets the number of disasters where it was declared after it ended
+        # Total number of disasters declared after end date
+        num_disasters = 0
+        
+        for disaster in self.get_disaster_data():
+            if disaster["declared_date"] > disaster["end_date"]:
+                num_disasters += 1
 
-        Returns:
-            int: number of disasters where the declared date is after the end date
-        """
-
-        pass
+        return num_disasters
 
     def build_map_of_agents_to_total_claim_cost(self):
-        """Builds a map of agent and their total claim cost
 
-        Hints:
-            An agent with no claims should return 0
-            Invalid agent id should have a value of None
-            You should round your total_claim_cost to the nearest hundredths
+        agents_to_total_claim_cost = {}
 
-        Returns:
-            dict: key is agent id, value is total cost of claims associated to the agent
-        """
+        for agent in self.get_agent_data():
+            agents_to_total_claim_cost[agent['id']] = 0
 
-        pass
+        for claim in self.get_claim_data():
+            agent_id = claim['agent_assigned_id']
+            claim_cost = float(claim['estimate_cost'])
+
+            # Check for invalid agent_id
+            if agent_id not in agents_to_total_claim_cost:
+                continue
+
+            agents_to_total_claim_cost[agent_id] += claim_cost
+
+        for agent in agents_to_total_claim_cost:
+            agents_to_total_claim_cost[agent] = round(agents_to_total_claim_cost[agent],2)
+        return agents_to_total_claim_cost
+
 
     def calculate_disaster_claim_density(self, disaster_id):
-        """Calculates density of a diaster based on the number of claims and impact radius
+        area = 0
+        radius = 0
+        num_claims = 0
 
-        Hints:
-            Assume uniform spacing between claims
-            Assume disaster impact area is a circle
+        for disaster in self.get_disaster_data():
+            if disaster["id"] == disaster_id:
+                radius = disaster["radius_miles"]
 
-        Args:
-            disaster_id (int): id of diaster
+        if radius == 0:
+            return None
+        
+        for claim in self.get_claim_data():
+            if claim["disaster_id"] == disaster_id:
+                num_claims += 1
 
-        Returns:
-            float: density of claims to disaster area, rounded to the nearest thousandths place
-                   None if disaster does not exist
-        """
-        pass
+        area = (math.pi * radius * radius)
+        return round(num_claims/area, 5) # Instructions say to round to the thousanths place, 
 
     # endregion
 
     # region TestSetFour
 
     def get_top_three_months_with_highest_num_of_claims_desc(self):
-        """Gets the top three months with the highest total claim cost
 
-        Hint:
-            Month should be full name like 01 is January and 12 is December
-            Year should be full four-digit year
-            List should be in descending order
+        INT_MONTH_TO_STR_MONTH = {
+            1: 'January',
+            2: 'February',
+            3: 'March',
+            4: 'April',
+            5: 'May',
+            6: 'June',
+            7: 'July',
+            8: 'August',
+            9: 'September',
+            10: 'October',
+            11: 'November',
+            12: 'December'
+        }
 
-        Returns:
-            list: three strings of month and year, descending order of highest claims
-        """
+        disaster_to_date = {}
+        for disaster in self.get_disaster_data():
+            # Extract year, month and day from disaster
+            [year, month, day] = [int(i) for i in disaster['declared_date'].split('-')]
+            disaster_to_date[disaster['id']] = (year, month)
 
-        pass
+        date_to_cost = defaultdict(int)
 
-    # endregion
+        for claim in self.get_claim_data():
+            disaster_id = claim['disaster_id']
+            cost = claim['estimate_cost']
+            date = disaster_to_date[disaster_id]
+            date_to_cost[date] += cost
+
+        dates_and_cost = []
+        for date in date_to_cost:
+            cost = date_to_cost[date]
+            dates_and_cost.append((date, cost))
+        dates_and_cost.sort(key=lambda x: x[1], reverse=True)
+
+        top_three_months = []
+        print(dates_and_cost)
+        for i in range(3):
+            date = dates_and_cost[i][0]
+            year, month = date
+            month_and_year = INT_MONTH_TO_STR_MONTH[month] + ' ' + str(year)
+            top_three_months.append(month_and_year)
+        return top_three_months
+# endregion

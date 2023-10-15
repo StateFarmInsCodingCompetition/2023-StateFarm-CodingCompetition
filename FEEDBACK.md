@@ -1,12 +1,10 @@
 # Feedback
 
-1. Your team:
-2. Name of each individual participating:
-3. How many unit tests were you able to pass? 
+1. Your team: Screaming Eagles
+2. Name of each individual participating: Luke Liu, Daniel Stanev
+3. How many unit tests were you able to pass? 12
 4. Document and describe any enhancements included to help the judges properly grade your submission.
-    - Example One
-    - Example Two
-    - Example Three
+    - Included a data visualizer which includes methods that show various graphs of the data provide by simple_data_tool.py
 
 5. Any feedback for the coding competition? Things you would like to see in future events?
 
