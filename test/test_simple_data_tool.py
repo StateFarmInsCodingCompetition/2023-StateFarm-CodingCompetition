@@ -65,7 +65,7 @@ class TestSetTwo:
         )
 
     def test_get_state_with_least_disasters(self, controller):
-        assert controller.get_state_with_least_disasters() == 'Alaska'
+        assert controller.get_state_with_least_disasters() == "Alaska"
 
     def test_get_state_with_most_and_least_disasters(self, controller):
         """Test 6"""
