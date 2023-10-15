@@ -11,5 +11,6 @@
    - Example Three
 
 5. Any feedback for the coding competition? Things you would like to see in future events?
+   Please provide more detailed description!
 
 This form can also be emailed to [codingcompetition@statefarm.com](mailto:codingcompetition@statefarm.com). Just make sure that you include a link to your GitHub pull requests.
