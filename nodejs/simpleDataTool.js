@@ -16,6 +16,7 @@ class SimpleDataTool {
         };
     }
 
+
     /**
      * Calculates the number of claims where the status is "Closed"
      *
@@ -248,7 +249,7 @@ class SimpleDataTool {
     calculateDisasterClaimDensity(disasterId) {
         const disaster = sfcc2023Disasters.find(disaster => disaster.id === disasterId);
         if (disaster) {
-            const areaOfDisaster = disaster.radius_miles * disaster.radius_miles * Math.PI;
+            const areaOfDisaster = Math.pow(disaster.radius_miles, 2) * Math.PI;
             const claimsLinkedToDisaster = sfcc2023Claims.filter(claim => claim.disaster_id === disasterId);
     
             return Math.round(claimsLinkedToDisaster.length / areaOfDisaster * 100000) / 100000;
@@ -267,7 +268,30 @@ class SimpleDataTool {
      * @returns {Array} - An array of three strings of month and year, descending order of highest claims.
      */
     getTopThreeMonthsWithHighestNumOfClaimsDesc() {
-        return null;
+
+        const monthAndYearMap = {}
+
+        
+        const getDisasterMonthAndYear = (disasterDate) => {
+            let declaredDate = new Date(disasterDate);
+            return declaredDate.toLocaleString('default', { month: 'long' }) + " " + declaredDate.getFullYear();
+        }
+
+        sfcc2023Claims.forEach(claim => {
+            let disaster = sfcc2023Disasters.find( disaster => disaster.id === claim.disaster_id);
+
+            const monthAndYear = getDisasterMonthAndYear(disaster.declared_date);
+
+            monthAndYearMap[monthAndYear] = (monthAndYearMap[monthAndYear] || 0) + claim.estimate_cost;
+        })
+
+        const monthAndYearArray = Object.entries(monthAndYearMap);
+
+        monthAndYearArray.sort((a, b) => b[1] - a[1]);
+
+        const top3MonthsWithHighestClaimCost = monthAndYearArray.slice(0, 3).map(entry => entry[0]);
+
+        return top3MonthsWithHighestClaimCost;
     }
 }
 
