@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from simple_data_tool import SimpleDataTool
 
-app = FastAPI()
+app = FastAPI(title="StateFarm Round 1")
 controller = SimpleDataTool()
 
 

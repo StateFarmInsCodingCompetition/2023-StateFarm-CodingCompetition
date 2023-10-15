@@ -111,7 +111,7 @@ class SimpleDataTool:
         if len(filtered_df) == 0:
             return None
 
-        ketotal_cost = round(filtered_df["estimate_cost"].sum(), 2)
+        total_cost = round(filtered_df["estimate_cost"].sum(), 2)
 
         return total_cost
 
@@ -148,8 +148,7 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        data = self.get_disaster_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_disaster_data())
 
         state_counts = df.groupby("state").agg({"id": "nunique"}).reset_index()
 
