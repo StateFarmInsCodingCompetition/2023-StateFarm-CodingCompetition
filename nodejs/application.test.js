@@ -121,8 +121,8 @@ describe("Test Set Four", () => {
         const topThreeMonths =
             controller.getTopThreeMonthsWithHighestNumOfClaimsDesc();
         expect(topThreeMonths.length).toBe(3);
-        expect(top_three_months[0]).toBe("April 2023");
-        expect(top_three_months[1]).toBe("November 2022");
-        expect(top_three_months[2]).toBe("February 2023");
+        expect(topThreeMonths[0]).toBe("April 2023");
+        expect(topThreeMonths[1]).toBe("November 2022");
+        expect(topThreeMonths[2]).toBe("February 2023");
     });
 });
