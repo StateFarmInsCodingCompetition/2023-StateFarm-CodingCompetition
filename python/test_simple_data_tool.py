@@ -142,12 +142,7 @@ class TestSetThree:
 class TestSetFour:
 
     def test_get_top_three_months_with_highest_num_of_claims_desc(self, controller):
-        """Test 12
-
-        OPTIONAL! OPTIONAL! OPTIONAL!
-        AS OF 9:21CDT, TEST IS OPTIONAL. SEE GITHUB ISSUE #8 FOR MORE DETAILS
-
-        """
+        """Test 12"""
         top_three_months = controller.get_top_three_months_with_highest_num_of_claims_desc()
         assert len(top_three_months) == 3
         assert top_three_months[0] == 'April 2023'
@@ -156,4 +151,7 @@ class TestSetFour:
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', __file__])
+    # pytest.main(['-v', __file__])
+
+    # only run TestSetOne
+    pytest.main(['-v', __file__ + '::TestSetTwo'])
