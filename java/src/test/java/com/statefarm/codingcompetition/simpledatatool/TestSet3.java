@@ -31,7 +31,7 @@ public class TestSet3 {
 
     @Test
     public void test10_buildMapOfAgentsToTotalClaimCost() {
-        Map<Integer, Float> agentCostMap = controller.buildMapOfAgentsToTotalClaimCost();
+        Map<Integer, Double> agentCostMap = controller.buildMapOfAgentsToTotalClaimCost();
 
         assertEquals(100, agentCostMap.size());
 
