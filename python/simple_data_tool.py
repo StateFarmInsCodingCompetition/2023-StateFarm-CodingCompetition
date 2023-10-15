@@ -2,7 +2,7 @@ import json
 import math
 
 from statistics import mean
-import datetime # For Test Set Four
+from datetime import datetime# For Test Set Four
 
 
 
@@ -121,7 +121,7 @@ class SimpleDataTool:
                 total_cost += claim['estimate_cost']
 
         # If there is no cost, return None
-        return round(total_cost, -2) if total_cost > 0 else None
+        return round(total_cost, 2) if total_cost > 0 else None
 
 
     def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
@@ -149,7 +149,7 @@ class SimpleDataTool:
                 count += 1
         
         # If count is 0, return None, else return average cost rounded to nearest hundredths place
-        return None if count == 0 else round(total_cost / count, -2)
+        return None if count == 0 else round(total_cost / count, 2)
 
     def get_state_with_most_disasters(self):
         """Returns the name of the state with the most disasters based on disaster data
@@ -250,7 +250,7 @@ class SimpleDataTool:
             # Check if the agent is from the specified state
             if agent['state'] == state:
                 # Get the languages spoken by the agent excluding English
-                languages = [lang for lang in agent['languages'] if lang != 'English']
+                languages = [lang for lang in agent['secondary_language'] if lang != 'English']
                 # Increment count for each language in the dictionary
                 for lang in languages:
                     language_counts[lang] = language_counts.get(lang, 0) + 1
@@ -312,6 +312,10 @@ class SimpleDataTool:
     # region TestSetThree
 
     def get_num_disasters_declared_after_end_date(self):
+        disasters = self.get_disaster_data()
+
+        disasters_declared = sum(1 for disaster in disasters if datetime.strptime(disaster['declared_date'], '%Y-%m-%d').date() > datetime.strptime(disaster['end_date'], '%Y-%m-%d').date())
+        return disasters_declared
         """Gets the number of disasters where it was declared after it ended
 
         Returns:
@@ -321,6 +325,17 @@ class SimpleDataTool:
         pass
 
     def build_map_of_agents_to_total_claim_cost(self):
+        claims = self.get_claim_data()
+        agent_costs = {agent_id: 0 for agent_id in range(1, 101)}
+
+        for claim in claims:
+            agent_id = claim["agent_assigned_id"]
+            cost = claim["estimate_cost"]
+
+            agent_costs[agent_id] = round(agent_costs[agent_id] + cost, 2)
+            
+        return(agent_costs)
+
         """Builds a map of agent and their total claim cost
 
         Hints:
