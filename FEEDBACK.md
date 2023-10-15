@@ -2,7 +2,7 @@
 
 1. Your team: Preston Roesslet
 2. Name of each individual participating: Preston Roesslet
-3. How many unit tests were you able to pass? 13
+3. How many unit tests were you able to pass? 13 - However, I believe that I would pass all 14 of them if Issue #9 had been resolved. At the time of my submission, Issue #9 had yet to be resolved.
 4. Document and describe any enhancements included to help the judges properly grade your submission.
 
    I implemented a REST Api to interact with the data from the problem set. I utilized Spring Boot. The Spring Boot application is initialized in the RestApi class. I then created all of the endpoints inside of the ApiController.java file.
@@ -22,9 +22,12 @@
    - /agentsTotalClaimCost - returns a map of agent ID's and their total claim cost
    - /disasterClaimDensity/{id} - returns the density of the given disaster ID based on the number of claims and the impact radius
 
-   This could be further extended to include persistent data through a database rather than json files, or even creating a front end to view/edit the data. However, given the time constraints for this competition, this were not feasible to implement.
+   This could be further extended to include persistent data through a database rather than just json files, or even creating a front end to view/edit the data. However, given the time constraints for this competition, these were not feasible to implement.
 
 5. Any feedback for the coding competition? Things you would like to see in future events?
-   One thing in particular that I think could be better is ensuring that the test cases and skeleton code are bug free. While I know that programming certainly comes along with bugs, it felt as though there were many issues, some of which weren't being resolved until towards the end of the competition.
+
+   One thing in particular that I think could be better is ensuring that the test cases and skeleton code are bug free. While I know that programming certainly comes along with bugs, it felt as though there were many issues, some of which weren't being resolved until towards the end of the competition. This made it difficult to complete all tasks in an efficient manner and I could not complete one of the test cases at all prior to submission due to this.
+
+   Overall though this was a very fun competition!
 
 This form can also be emailed to [codingcompetition@statefarm.com](mailto:codingcompetition@statefarm.com). Just make sure that you include a link to your GitHub pull requests.
