@@ -210,7 +210,29 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        pass
+
+        agents = self.get_agent_data()
+
+        # Keeps track of the language and the number of agents
+        language_agent_count = {}
+
+        for agent in agents:
+            if agent['state'] == state:
+                language = agent['secondary_language']
+                print(language)
+                language_agent_count[language] = language_agent_count.get(language, 0) + 1
+
+        if language_agent_count:
+            # Get maximum agent count
+            max_value = max(language_agent_count.values())
+
+            # Get list of languages with max value
+            languages_with_max_agents = [key for key, value in language_agent_count.items() if value == max_value]
+
+            # Sort list of languages
+            languages_with_max_agents.sort()
+
+        return languages_with_max_agents[0] if language_agent_count else ''
 
     def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
