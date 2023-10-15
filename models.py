@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import date
 
+
 class Averages(BaseModel):
     average_claims_per_agent: float
     average_claims_per_handler: float
@@ -16,9 +17,8 @@ class Agent(BaseModel):
     state: str
     region: str
     primary_language: str
-    secondary_language: str
+    secondary_language: str | None = None
     years_active: int
-
 
 class Claim(BaseModel):
     id: int
