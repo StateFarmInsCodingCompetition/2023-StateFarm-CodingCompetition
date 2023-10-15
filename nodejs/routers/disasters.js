@@ -39,8 +39,17 @@ module.exports = (dataTool) => {
   });
 
   router.get("/state/counts", function (req, res) {
-    const stateDisasterCounts = dataTool.getStatesWithDisasterAmounts();
-    res.json({ stateDisasterCounts });
+    const stateAmounts = {};
+    for (const disaster of disasters) {
+      if (!stateAmounts[disaster.state]) stateAmounts[disaster.state] = 0;
+      stateAmounts[disaster.state]++;
+    }
+
+    let sortableAmounts = [];
+    for (const state in stateAmounts) {
+      sortableAmounts.push([state, stateAmounts[state]]);
+    }
+    res.json({ stateDisasterCounts: sortableAmounts });
   });
 
   router.get("/state/high", function (req, res) {

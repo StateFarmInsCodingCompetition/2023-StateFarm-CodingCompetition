@@ -86,7 +86,14 @@ class SimpleDataTool {
     return parseFloat(average.toFixed(2));
   }
 
-  getStatesWithDisasterAmounts() {
+  /**
+   * Returns the name of the state with the most disasters based on disaster data.
+   * If two states have the same number of disasters, then sorts by alphabetical (a-z)
+   * and takes the first.
+   *
+   * @returns {string} - Single name of state
+   */
+  getStateWithMostDisasters() {
     const stateAmounts = {};
     for (const disaster of sfcc2023Disasters) {
       if (!stateAmounts[disaster.state]) stateAmounts[disaster.state] = 0;
@@ -97,19 +104,6 @@ class SimpleDataTool {
     for (const state in stateAmounts) {
       sortableAmounts.push([state, stateAmounts[state]]);
     }
-
-    return sortableAmounts;
-  }
-
-  /**
-   * Returns the name of the state with the most disasters based on disaster data.
-   * If two states have the same number of disasters, then sorts by alphabetical (a-z)
-   * and takes the first.
-   *
-   * @returns {string} - Single name of state
-   */
-  getStateWithMostDisasters() {
-    let sortableAmounts = this.getStatesWithDisasterAmounts();
 
     sortableAmounts.sort(function (a, b) {
       if (a[1] === b[1]) {
@@ -134,7 +128,16 @@ class SimpleDataTool {
    * @returns {string} - Single name of state
    */
   getStateWithLeastDisasters() {
-    let sortableAmounts = this.getStatesWithDisasterAmounts();
+    const stateAmounts = {};
+    for (const disaster of sfcc2023Disasters) {
+      if (!stateAmounts[disaster.state]) stateAmounts[disaster.state] = 0;
+      stateAmounts[disaster.state]++;
+    }
+
+    let sortableAmounts = [];
+    for (const state in stateAmounts) {
+      sortableAmounts.push([state, stateAmounts[state]]);
+    }
 
     sortableAmounts.sort(function (a, b) {
       if (a[1] === b[1]) {
