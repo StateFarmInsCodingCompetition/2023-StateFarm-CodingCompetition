@@ -1,11 +1,12 @@
+# ------------------------------------ Package Installation ------------------------------------ #
 import json
 import math
 
-from statistics import mean
-from datetime import datetime# For Test Set Four
+# from statistics import mean # Deprecated since we are not using it
+from datetime import datetime # For formatting datetime strings
 
 
-
+# ------------------------------------ Class Declaration ------------------------------------ #
 class SimpleDataTool:
 
     AGENTS_FILEPATH = 'data/sfcc_2023_agents.json'
@@ -52,23 +53,21 @@ class SimpleDataTool:
 
     # Unit Test Methods
 
+# ------------------------------------ Unit Test One ------------------------------------ #
     # region Test Set One
 
     def get_num_closed_claims(self):
-        claims = self.get_claim_data()
-        closed_claims_count = sum(1 for claim in claims if claim['status'] == 'Closed')
-        return closed_claims_count
         """Calculates the number of claims where that status is "Closed"
 
         Returns:
             int: number of closed claims
         """
-        pass
+        claims = self.get_claim_data()
+        closed_claims_count = sum(1 for claim in claims if claim['status'] == 'Closed')
+        return closed_claims_count
+
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
-        claims = self.get_claim_data()
-        claim_handler_claims = sum(1 for claim in claims if claim['claim_handler_assigned_id'] == claim_handler_id)
-        return claim_handler_claims
         """Calculates the number of claims assigned to a specific claim handler
 
         Args:
@@ -77,12 +76,13 @@ class SimpleDataTool:
         Returns:
             int: number of claims assigned to claim handler
         """
-        pass
+        claims = self.get_claim_data()
+        claim_handler_claims = sum(1 for claim in claims if claim['claim_handler_assigned_id'] == claim_handler_id)
+        return claim_handler_claims
+
+
 
     def get_num_disasters_for_state(self, state):
-        disasters = self.get_disaster_data()
-        state_disasters = sum(1 for disaster in disasters if disaster['state'] == state)
-        return state_disasters
         """Calculates the number of disasters for a specific state
 
         Args:
@@ -92,10 +92,15 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-        pass
+        disasters = self.get_disaster_data()
+        state_disasters = sum(1 for disaster in disasters if disaster['state'] == state)
+        return state_disasters
+
+
 
     # endregion
 
+# ------------------------------------ Unit Test Two ------------------------------------ #
     # region Test Set Two
 
     def get_total_claim_cost_for_disaster(self, disaster_id):
@@ -309,22 +314,33 @@ class SimpleDataTool:
 
     # endregion
 
+# ------------------------------------ Unit Test Three ------------------------------------ #
     # region TestSetThree
 
     def get_num_disasters_declared_after_end_date(self):
-        disasters = self.get_disaster_data()
-
-        disasters_declared = sum(1 for disaster in disasters if datetime.strptime(disaster['declared_date'], '%Y-%m-%d').date() > datetime.strptime(disaster['end_date'], '%Y-%m-%d').date())
-        return disasters_declared
         """Gets the number of disasters where it was declared after it ended
 
         Returns:
             int: number of disasters where the declared date is after the end date
         """
+        disasters = self.get_disaster_data()
 
-        pass
+        disasters_declared = sum(1 for disaster in disasters if datetime.strptime(disaster['declared_date'], '%Y-%m-%d').date() > datetime.strptime(disaster['end_date'], '%Y-%m-%d').date())
+        return disasters_declared
+
+
 
     def build_map_of_agents_to_total_claim_cost(self):
+        """Builds a map of agent and their total claim cost
+
+        Hints:
+            An agent with no claims should return 0
+            Invalid agent id should have a value of None
+            You should round your total_claim_cost to the nearest hundredths
+
+        Returns:
+            dict: key is agent id, value is total cost of claims associated to the agent
+        """
         claims = self.get_claim_data()
         agent_costs = {agent_id: 0 for agent_id in range(1, 101)}
 
@@ -336,20 +352,21 @@ class SimpleDataTool:
             
         return(agent_costs)
 
-        """Builds a map of agent and their total claim cost
-
-        Hints:
-            An agent with no claims should return 0
-            Invalid agent id should have a value of None
-            You should round your total_claim_cost to the nearest hundredths
-
-        Returns:
-            dict: key is agent id, value is total cost of claims associated to the agent
-        """
-
-        pass
 
     def calculate_disaster_claim_density(self, disaster_id):
+        """Calculates density of a diaster based on the number of claims and impact radius
+
+        Hints:
+            Assume uniform spacing between claims
+            Assume disaster impact area is a circle
+
+        Args:
+            disaster_id (int): id of diaster
+
+        Returns:
+            float: density of claims to disaster area, rounded to the nearest thousandths place
+            None if disaster does not exist
+        """
         disaster = next((d for d in self.get_disaster_data() if d['id'] == disaster_id), None)
     
         if not disaster:
@@ -366,23 +383,11 @@ class SimpleDataTool:
         density = num_claims / disaster_area
 
         return round(density, 5)
-        """Calculates density of a diaster based on the number of claims and impact radius
 
-        Hints:
-            Assume uniform spacing between claims
-            Assume disaster impact area is a circle
-
-        Args:
-            disaster_id (int): id of diaster
-
-        Returns:
-            float: density of claims to disaster area, rounded to the nearest thousandths place
-            None if disaster does not exist
-        """
-        pass
 
     # endregion
 
+# ------------------------------------ Unit Test Four ------------------------------------ #
     # region TestSetFour
 
     def get_top_three_months_with_highest_num_of_claims_desc(self):
@@ -423,6 +428,11 @@ class SimpleDataTool:
         
         return top_three_months
     
+    # endregion
+    
+# ------------------------------------ Nice to Have! ------------------------------------ #
+
+    # This funcftions maps out each regional disaster by type and counts the number of each type
     def get_regional_disaster_map(self):
         disasters = self.get_disaster_data()
         regional_disaster_map = {
@@ -450,4 +460,4 @@ class SimpleDataTool:
 
         return regional_disaster_map
 
-    # endregion
+
