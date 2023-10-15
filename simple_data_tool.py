@@ -63,11 +63,16 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
+
+        # converting JSON to pd dataframe
         pclaims = pd.json_normalize(self.get_claim_data())
+
+        # filtering the data
         res = pclaims.loc[pclaims['status'] == 'Closed']
+
         return len(res.index)
 
-    def get_num_claims_for_claim_handler_id(self, claim_handler_id):
+    def get_num_claims_for_claim_handler_id(self, claim_handler_id: int):
         """Calculates the number of claims assigned to a specific claim handler
 
         Args:
@@ -80,7 +85,7 @@ class SimpleDataTool:
         res = pclaims.loc[pclaims['claim_handler_assigned_id'] == claim_handler_id]
         return len(res.index)
 
-    def get_num_disasters_for_state(self, state):
+    def get_num_disasters_for_state(self, state: str):
         """Calculates the number of disasters for a specific state
 
         Args:
@@ -98,7 +103,7 @@ class SimpleDataTool:
 
     # region Test Set Two
 
-    def get_total_claim_cost_for_disaster(self, disaster_id):
+    def get_total_claim_cost_for_disaster(self, disaster_id: int):
         """Sums the estimated cost of a specific disaster by its claims
 
         Args:
@@ -110,12 +115,14 @@ class SimpleDataTool:
         """
         pclaims = pd.json_normalize(self.get_claim_data())
         related = pclaims.loc[pclaims['disaster_id'] == disaster_id]
+
+        # summing the estimate cost for specified disaster
         res = related['estimate_cost'].sum()
         if res == 0:
             res = None
         return res
 
-    def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
+    def get_average_claim_cost_for_claim_handler(self, claim_handler_id: int):
         """Gets the average estimated cost of all claims assigned to a claim handler
 
         Args:
@@ -130,6 +137,8 @@ class SimpleDataTool:
         if related.empty:
             return None
 
+
+        # average of estiamte cost for specified disaster
         res = related['estimate_cost'].mean()
         if res == 0:
             res = None
@@ -151,6 +160,8 @@ class SimpleDataTool:
             string: single name of state
         """
         pclaims = pd.json_normalize(self.get_disaster_data())
+
+        # creating frequency table, then sorting the values
         related: DataFrame = pclaims['state'].value_counts().reset_index(drop=False)
         related.sort_values(by=['count', 'state'], ascending=[False, True], inplace=True)
         res = related['state'].iloc[0]
@@ -169,13 +180,15 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
+
+        # same as above function
         pclaims = pd.json_normalize(self.get_disaster_data())
         related: DataFrame = pclaims['state'].value_counts().reset_index(drop=False)
         related.sort_values(by=['count', 'state'], ascending=[True, True], inplace=True)
         res = related['state'].iloc[0]
         return res
 
-    def get_most_spoken_agent_language_by_state(self, state):
+    def get_most_spoken_agent_language_by_state(self, state: str):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
 
         Args:
@@ -188,12 +201,14 @@ class SimpleDataTool:
         pclaims = pd.json_normalize(self.get_agent_data())
         pclaims = pclaims.loc[pclaims['state'] == state]
 
+        # creating frequency tables for the languages
         primary: DataFrame = pclaims['primary_language'].value_counts().reset_index(drop=False)
         secondary = pclaims['secondary_language'].value_counts().reset_index(drop=False)
 
         primary.columns = ['language', 'count']
         secondary.columns = ['language', 'count']
 
+        # combining them to get dataframe with all languages
         merged = pd.concat([primary, secondary])
         if merged.empty:
             return ''
@@ -204,7 +219,7 @@ class SimpleDataTool:
 
         return res
 
-    def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
+    def get_num_of_open_claims_for_agent_and_severity(self, agent_id: int, min_severity_rating: int):
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
 
         Note: Severity rating scale for claims is 1 to 10, inclusive.
