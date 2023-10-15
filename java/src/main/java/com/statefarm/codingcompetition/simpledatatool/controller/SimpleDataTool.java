@@ -1,5 +1,9 @@
 package com.statefarm.codingcompetition.simpledatatool.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +62,13 @@ public class SimpleDataTool {
      * @return number of closed claims
      */
     public int getNumClosedClaims() {
-        return 0;
+        int num = 0;
+        for(var claim : claims) {
+            if(claim.getStatus().contains("Closed")) {
+                num++;
+            }
+        }
+        return num;
     }
 
     /**
@@ -68,7 +78,13 @@ public class SimpleDataTool {
      * @return number of claims assigned to claim handler
      */
     public int getNumClaimsForClaimHandlerId(int id) {
-        return 0;
+        int num = 0;
+        for(var claim : claims) {
+            if(claim.getClaim_handler_assigned_id() == id) {
+                num++;
+            }
+        }
+        return num;
     }
 
     /**
@@ -79,7 +95,13 @@ public class SimpleDataTool {
      * @return number of disasters for state
      */
     public int getNumDisastersForState(String stateName) {
-        return -1;
+        int num = 0;
+        for(var disaster : disasters) {
+            if(disaster.getState().contains(stateName)) {
+                num++;
+            }
+        }
+        return num++;
     }
 
     // endregion
@@ -94,7 +116,22 @@ public class SimpleDataTool {
      *         returns null if no claims are found
      */
     public Float getTotalClaimCostForDisaster(int id) {
-        return -0.01f;
+        float totalCost = 0f;
+        // get all claims from disaster
+        for(var claim : claims) {
+            if(claim.getDisaster_id() == id) {
+                totalCost += claim.getEstimate_cost();
+            }
+        }
+
+        if(totalCost > 0f) {
+            System.out.println(totalCost);
+            totalCost = roundFloat(totalCost);
+            return totalCost;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -105,7 +142,20 @@ public class SimpleDataTool {
      *         or null if no claims are found
      */
     public Float getAverageClaimCostforClaimHandler(int id) {
-        return -0.01f;
+        float totalCost = 0f;
+        int numOfClaims = 0;
+        for(var claim : claims) {
+            if(claim.getClaim_handler_assigned_id() == id) {
+                totalCost += claim.getEstimate_cost();
+                numOfClaims++;
+            }
+        }
+        if(numOfClaims == 0) {
+            return null;
+        }
+        float average = totalCost/numOfClaims;
+        average = roundFloat(average);
+        return average;
     }
 
     /**
@@ -121,7 +171,27 @@ public class SimpleDataTool {
      * @return single name of state
      */
     public String getStateWithTheMostDisasters() {
-        return null;
+        List<String> allDisasters = new ArrayList<String>();
+        for(var disaster : disasters) {
+            allDisasters.add(disaster.getState());
+        }
+
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        String mostFrequentString = null;
+        int maxFrequency = 0;
+
+        for (String str : allDisasters) {
+            frequencyMap.put(str, frequencyMap.getOrDefault(str, 0) + 1);
+            int currentFrequency = frequencyMap.get(str);
+            
+            // Update mostFrequentString if we find a higher frequency
+            if (currentFrequency > maxFrequency || (currentFrequency == maxFrequency && (mostFrequentString == null || str.compareTo(mostFrequentString) < 0))) {
+                mostFrequentString = str;
+                maxFrequency = currentFrequency;
+            }
+        }
+
+        return mostFrequentString;
     }
 
     /**
@@ -137,7 +207,29 @@ public class SimpleDataTool {
      * @return single name of state
      */
     public String getStateWithTheLeastDisasters() {
-        return null;
+        List<String> allDisasters = new ArrayList<String>();
+        for(var disaster : disasters) {
+            allDisasters.add(disaster.getState());
+        }
+
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        String leastFrequentString = null;
+        int minFrequency = Integer.MAX_VALUE;
+
+        for (String str : allDisasters) {
+            frequencyMap.put(str, frequencyMap.getOrDefault(str, 0) + 1);
+        }
+
+        for (String str : frequencyMap.keySet()) {
+            int frequency = frequencyMap.get(str);
+
+            if (frequency < minFrequency || (frequency == minFrequency && str.compareTo(leastFrequentString) < 0)) {
+                leastFrequentString = str;
+                minFrequency = frequency;
+            }
+        }
+
+        return leastFrequentString;
     }
 
     /**
@@ -149,7 +241,34 @@ public class SimpleDataTool {
      *         or empty string if state doesn't exist
      */
     public String getMostSpokenAgentLanguageByState(String string) {
-        return null;
+        List<String> languages = new ArrayList<String>();
+
+        for(var agent: agents) {
+            if(agent.getState().contains(string)){
+                languages.add(agent.getSecondary_language());
+            }
+        }
+
+        if(languages.size() == 0) {
+            return "";
+        }
+        
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        String mostFrequentString = null;
+        int maxFrequency = 0;
+
+        for (String str : languages) {
+            frequencyMap.put(str, frequencyMap.getOrDefault(str, 0) + 1);
+            int currentFrequency = frequencyMap.get(str);
+            
+            // Update mostFrequentString if we find a higher frequency
+            if (currentFrequency > maxFrequency || (currentFrequency == maxFrequency && (mostFrequentString == null || str.compareTo(mostFrequentString) < 0))) {
+                mostFrequentString = str;
+                maxFrequency = currentFrequency;
+            }
+        }
+
+        return mostFrequentString;
     }
 
     /**
@@ -166,7 +285,31 @@ public class SimpleDataTool {
      *         null if agent does not exist, or agent has no claims (open or not)
      */
     public Integer getNumOfOpenClaimsForAgentAndSeverity(int agentId, int minSeverityRating) {
-        return -2;
+        // check severity rating:
+        if(minSeverityRating > 10 || minSeverityRating < 1){
+            return -1;
+        }
+
+        int num = 0;
+        // check for agent/agent has claims
+        List<Claim> totalClaimsFromAgent = new ArrayList<Claim>();
+        for(var claim : claims) {
+            if(claim.getAgent_assigned_id() == agentId && !claim.getStatus().contains("Closed")) {
+                totalClaimsFromAgent.add(claim);
+            }
+        }
+
+        if(totalClaimsFromAgent.size() == 0){
+            return null;
+        }
+
+        for(var claim : totalClaimsFromAgent) {
+            if(claim.getSeverity_rating() >= minSeverityRating) {
+                num++;
+            }
+        }
+        
+        return num;
     }
 
     // endregion
@@ -179,7 +322,13 @@ public class SimpleDataTool {
      * @return number of disasters where the declared date is after the end date
      */
     public int getNumDisastersDeclaredAfterEndDate() {
-        return -1;
+        int num = 0;
+        for(var disaster : disasters) {
+            if(disaster.getDeclared_date().isAfter(disaster.getEnd_date())){
+                num++;
+            }
+        }
+        return num;
     }
 
     /**
@@ -194,7 +343,26 @@ public class SimpleDataTool {
      *         to the agent
      */
     public Map<Integer, Float> buildMapOfAgentsToTotalClaimCost() {
-        return null;
+        Map<Integer, Float> agentMap = new HashMap<>();
+
+        for(var agent : agents) {
+            // check for claims:
+            List<Claim> agentClaims = new ArrayList<Claim>();
+            Float totalCost = 0f;
+            for(var claim : claims) {
+                if(claim.getAgent_assigned_id() == agent.getId()) {
+                    agentClaims.add(claim);
+                    totalCost += claim.getEstimate_cost();
+                }
+            }
+            if(agentClaims.size() == 0) {
+                agentMap.put(agent.getId(), 0.00f);
+            }
+            totalCost = roundFloat(totalCost);
+            agentMap.put(agent.getId(), totalCost);
+
+        }
+        return agentMap;
     }
 
     /**
@@ -210,8 +378,35 @@ public class SimpleDataTool {
      *         thousandths place
      *         null if disaster does not exist
      */
-    public float calculateDisasterClaimDensity(int id) {
-        return -0.01f;
+    public Float calculateDisasterClaimDensity(int id) {
+        Disaster disaster = new Disaster();
+        boolean isInit = false;
+        for(var dis : disasters) {
+            if(dis.getId() == id) {
+                disaster = dis;
+                isInit = true;
+                break;
+            }
+        }
+        if(isInit == false) {
+            return null;
+        }
+        
+
+        int numOfClaims = 0;
+        List<Claim> disasterClaims = new ArrayList<Claim>();
+        for(var claim : claims) {
+            if(claim.getDisaster_id() == id) {
+                disasterClaims.add(claim);
+                numOfClaims++;
+            }
+        }
+
+        
+
+        float area = (float) Math.PI * (disaster.getRadius_miles()*disaster.getRadius_miles());
+        float density = numOfClaims/area;
+        return density;
     }
 
     // endregion
@@ -219,10 +414,7 @@ public class SimpleDataTool {
     // region TestSet4
 
     /**
-     * Gets the top three months with the highest number of claims
-     * 
-     * OPTIONAL! OPTIONAL! OPTIONAL!
-     * AS OF 9:21CDT, TEST IS OPTIONAL. SEE GITHUB ISSUE #8 FOR MORE DETAILS
+     * Gets the top three months with the highest total claim cost
      * 
      * Hint:
      * - Month should be full name like 01 is January and 12 is December
@@ -236,4 +428,12 @@ public class SimpleDataTool {
     }
 
     // endregion
+
+
+
+    // caleb's methods:
+    public static float roundFloat(float input) {
+        float num = BigDecimal.valueOf(input).setScale(2, RoundingMode.HALF_EVEN).floatValue();
+        return num;
+    }
 }
