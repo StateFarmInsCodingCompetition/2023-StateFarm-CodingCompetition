@@ -7,6 +7,8 @@ This is the GitHub project for the 2023 State Farm Coding Competition Round 1 an
 
 ## Change Log:
 
+- October 14, 2023 - Publishing problem sets
+    - [Problem Statement PDF](./round%201/ROUND_ONE_PROMPT.pdf)
 - October 6, 2023 - Publishing initial repo, including help guides and skeleton projects
     - This is to just get you started -- making sure your computer is setup, that you are able to build and run the project (including unit tests), and getting familiar with the structure.
     - The Problem Statement and relevant JSON files will be published at the start of Round 1
