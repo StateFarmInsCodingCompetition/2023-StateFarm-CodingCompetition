@@ -350,6 +350,22 @@ class SimpleDataTool:
         pass
 
     def calculate_disaster_claim_density(self, disaster_id):
+        disaster = next((d for d in self.get_disaster_data() if d['id'] == disaster_id), None)
+    
+        if not disaster:
+            return None
+
+        # Calculate disaster impact area
+        radius = disaster['radius_miles']
+        disaster_area = math.pi * (radius ** 2)
+
+        # Count claims associated with this disaster
+        num_claims = sum(1 for claim in self.get_claim_data() if claim['disaster_id'] == disaster_id)
+
+        # Compute claim density
+        density = num_claims / disaster_area
+
+        return round(density, 5)
         """Calculates density of a diaster based on the number of claims and impact radius
 
         Hints:
@@ -361,7 +377,7 @@ class SimpleDataTool:
 
         Returns:
             float: density of claims to disaster area, rounded to the nearest thousandths place
-                   None if disaster does not exist
+            None if disaster does not exist
         """
         pass
 
