@@ -386,7 +386,7 @@ class SimpleDataTool:
     # region TestSetFour
 
     def get_top_three_months_with_highest_num_of_claims_desc(self):
-        """Gets the top three months with the highest total claim cost
+        """Gets the top three months with the highest total claims
 
         Hint:
             Month should be full name like 01 is January and 12 is December
@@ -396,24 +396,58 @@ class SimpleDataTool:
         Returns:
             list: three strings of month and year, descending order of highest claims
         """
+        
         # Dictionary to store the total cost of claims per month
         monthly_costs = {}
 
         # Assign dataset to variable
         claims = self.get_claim_data()
-        
+
+        # Convert disasters list to a dictionary for O(1) lookups
+        disasters_dict = {disaster['id']: disaster for disaster in self.get_disaster_data()}
+
         # Loop through each claim
         for claim in claims:
-            # Extract the month and year (assuming a date field is available and in 'YYYY-MM-DD' format)
-            claim_date = datetime.datetime.strptime(claim['date'], '%Y-%m-%d')
-            month_year = claim_date.strftime('%B %Y')
+            disaster_id = claim['disaster_id']
+            disaster = disasters_dict.get(disaster_id)
 
-            # Add the cost of this claim to the monthly total
-            monthly_costs[month_year] = monthly_costs.get(month_year, 0) + claim['estimate_cost']
+            if disaster:   
+                claim_date = datetime.strptime(disaster['declared_date'], '%Y-%m-%d')
+                month_year = claim_date.strftime('%B %Y')
+
+                # Add the cost of this claim to the monthly total
+                monthly_costs[month_year] = monthly_costs.get(month_year, 0) + 1
         
         # Get the top three months by total claim cost
         top_three_months = sorted(monthly_costs.keys(), key=lambda month: monthly_costs[month], reverse=True)[:3]
         
         return top_three_months
+    
+    def get_regional_disaster_map(self):
+        disasters = self.get_disaster_data()
+        regional_disaster_map = {
+        'west': {},
+        'midwest': {},
+        'south': {},
+        'northeast': {}
+        }
+
+        # Helper function to get the region of a given state
+        def get_region(state):
+            for region, states in self.REGION_MAP.items():
+                if state in states.split(','):
+                    return region
+            return None
+
+        for disaster in disasters:
+            region = get_region(disaster['state'])
+            if region:
+                disaster_type = disaster['type']
+            if disaster_type in regional_disaster_map[region]:
+                regional_disaster_map[region][disaster_type] += 1
+            else:
+                regional_disaster_map[region][disaster_type] = 1
+
+        return regional_disaster_map
 
     # endregion

@@ -4,4 +4,4 @@ from test.test_simple_data_tool import TestSetOne, TestSetTwo, TestSetThree, Tes
 
 dataset = SimpleDataTool()
 
-print(dataset.get_top_three_months_with_highest_num_of_claims_desc())
+print(dataset.get_regional_disaster_map())
