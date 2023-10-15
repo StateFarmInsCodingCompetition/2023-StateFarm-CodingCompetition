@@ -402,7 +402,29 @@ class SimpleDataTool:
             float: density of claims to disaster area, rounded to the nearest thousandths place
                    None if disaster does not exist
         """
-        pass
+        pi = math.pi
+
+        claim_file = self.get_claim_data()
+        numbers_of_claim = 0 
+        disaster_radius = 0
+
+        for i in range(len(claim_file)):
+            if disaster_id == claim_file[i].get("disaster_id"):
+                numbers_of_claim += 1
+
+        disaster_file = self.get_disaster_data()
+        
+        for i in range(len(disaster_file)):
+            if disaster_id == disaster_file[i].get("id"):
+                disaster_radius = disaster_file[i].get("radius_miles")
+        disaster_area = pi  * disaster_radius *disaster_radius
+
+        if disaster_area == 0:
+            return None
+
+        density = round( numbers_of_claim / disaster_area, 5)
+
+        return density
 
     # endregion
 
