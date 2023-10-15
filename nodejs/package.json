@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lambda-api": "^1.0.3"
+  },
   "devDependencies": {
     "jest": "^27.3.1"
   }
