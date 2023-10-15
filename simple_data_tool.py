@@ -1,6 +1,6 @@
 import json
 import math
-
+import pandas as pd
 from statistics import mean
 
 
@@ -59,7 +59,10 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
-        pass
+        data = self.get_claim_data()
+        df = pd.DataFrame(data)
+
+        return len(df[df['status'] == 'Closed'])
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
         """Calculates the number of claims assigned to a specific claim handler

@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 #### Git and VSCode
 
-For setting up Git and VSCode, please see [the overall README.md](../README.md).
+For setting up Git and VSCode, please see [the overall README.md](README.md).
 
 #### VSCode Extensions
 

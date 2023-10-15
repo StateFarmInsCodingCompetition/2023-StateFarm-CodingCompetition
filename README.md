@@ -8,7 +8,7 @@ This is the GitHub project for the 2023 State Farm Coding Competition Round 1 an
 ## Change Log:
 
 - October 14, 2023
-    - 7:00pm CDT - Publishing problem sets, [Problem Statement PDF](./round%201/ROUND_ONE_PROMPT.pdf)
+    - 7:00pm CDT - Publishing problem sets, [Problem Statement PDF](ROUND_ONE_PROMPT.pdf)
     - 7:35pm CDT
       - [Issues Creating Branch in GitHub](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/5)
       - [Python project was missing data/ folder](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/7)
