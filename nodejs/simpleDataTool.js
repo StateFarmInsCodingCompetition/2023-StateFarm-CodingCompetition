@@ -2,6 +2,19 @@ const sfcc2023Agents = require("./data/sfcc_2023_agents.json");
 const sfcc2023ClaimHandlers = require("./data/sfcc_2023_claim_handlers.json");
 const sfcc2023Claims = require("./data/sfcc_2023_claims.json");
 const sfcc2023Disasters = require("./data/sfcc_2023_disasters.json");
+const logicalOperators = {
+	Equals:         Symbol("equals"),
+	GreaterThan:    Symbol("greaterThan"),
+	LessThan:       Symbol("lessThan"),
+	NotEqual:       Symbol("notEqual"),
+}
+const stateList = [
+    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia',
+    'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
+    'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+    'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
+    'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+  ];
 
 class SimpleDataTool {
     constructor() {
@@ -15,6 +28,129 @@ class SimpleDataTool {
                 "Maryland,Delaware,District of Columbia,Pennsylvania,New York,New Jersey,Connecticut,Massachusetts,Vermont,New Hampshire,Rhode Island,Maine",
         };
     }
+    parseOnCondition(data, keyName, operator, targetValue){
+        
+        var matches = [];
+        try{
+            var dataSize = (data).length;
+        }
+        catch(e){
+            throw new Error("unable to parse data in parseOnCondition")
+        }
+
+        try{
+            let currentValue = null;
+            switch (operator) {
+
+                case logicalOperators.Equals:
+                    for(let iter = 0 ; iter<dataSize; iter++){
+                            currentValue = data[iter][keyName];
+                        if(targetValue == currentValue){matches.push(data[iter])}
+                    }
+                break;
+
+                case logicalOperators.GreaterThan:
+                    for(let iter = 0 ; iter<dataSize; iter++){
+                        currentValue = data[iter][keyName];
+                    if(targetValue > currentValue){matches.push(data[iter])}
+                }
+                break;
+
+                case logicalOperators.LessThan:
+                    for(let iter = 0 ; iter<dataSize; iter++){
+                        currentValue = data[iter][keyName];
+                    if(targetValue < currentValue){matches.push(data[iter])}
+                    }
+                break;
+
+                case logicalOperators.NotEqual:
+                    for(let iter = 0 ; iter<dataSize; iter++){
+                        currentValue = data[iter][keyName];
+                    if(targetValue != currentValue){matches.push(data[iter])}
+                    }
+                break;
+
+                default:
+                    throw e.message("no operator found in parseOnCondition");
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+        return matches;
+    }
+    statisticsOnKey(data, idKeyName, idValue, targetKeyName){
+        var results = [];
+        var min = 10000;
+        var max = 0;
+        var average = 0.0;
+        var sum = 0.0;
+        var count = 0;
+        var isNumeric = true;
+        try{
+            var dataSize = (data).length;
+        }
+        catch(e){
+            throw new Error("unable to parse data in sumOnKey")
+        }
+
+
+        var currentValue = data[0][targetKeyName];
+        if(isNaN(currentValue)){isNumeric = false}
+
+        try{
+            for(let iter = 0 ; iter<dataSize; iter++){
+                let currentId = data[iter][idKeyName]
+                currentValue = data[iter][targetKeyName];
+                if(isNumeric){
+                    if(idValue == currentId){
+                        sum+=(currentValue);
+                        count++;
+                    }
+                    if(currentValue > max){ max = currentValue;}                        
+                    if(currentValue < min){ min = currentValue;}
+                }
+                else{
+                    if(idValue == currentId){
+                        count++;
+                    }
+                }
+            }
+        }  
+        catch(e){
+            console.log(e);
+        }
+
+        if(count == 0){return null;}
+        average = sum/count;
+        results = {"Count":count, "Sum":sum, "Average":average,"Min":min,"Max":max};
+        return results;
+    }
+    // sumOnKey(data, targetKeyName, targetValue, sumKeyName){
+    //     var sum = 0;
+    //     try{
+    //         var dataSize = (data).length;
+    //     }
+    //     catch(e){
+    //         throw new Error("unable to parse data in sumOnKey")
+    //     }
+    //     try{
+    //         let currentValue = 0;
+    //         for(let iter = 0 ; iter<dataSize; iter++){
+    //             currentValue = data[iter][targetKeyName];
+    //                 if(targetValue == currentValue){sum+=(data[iter][sumKeyName])}
+    //         }
+    //     }
+    //     catch(e){
+    //         console.log(e);
+    //     }
+    //     if(sum == 0){
+    //         return null;
+    //     }
+    //     return sum;
+    // }
+
+
 
     /**
      * Calculates the number of claims where the status is "Closed"
@@ -22,7 +158,16 @@ class SimpleDataTool {
      * @returns {number} number of closed claims
      */
     getNumClosedClaims() {
-        return -1;
+        var claimCount = 0;
+        try{
+            let claims = this.parseOnCondition(sfcc2023Claims, "status", logicalOperators.Equals,"Closed")
+            claimCount = claims.length;
+        }
+        catch(e){
+            console.log(e);
+        }        
+        
+        return claimCount;
     }
 
     /**
@@ -32,7 +177,16 @@ class SimpleDataTool {
      * @returns {number} - Number of claims assigned to the claim handler.
      */
     getNumClaimsForClaimHandlerId(claimHandlerId) {
-        return null;
+        var claimCount = 0;
+        try{
+            let claims = this.parseOnCondition(sfcc2023Claims, "claim_handler_assigned_id", logicalOperators.Equals, claimHandlerId);
+            claimCount = claims.length;
+        }
+        catch(e){
+            console.log(e);
+        }        
+        
+        return claimCount;
     }
 
     /**
@@ -42,7 +196,16 @@ class SimpleDataTool {
      * @returns {number} - Number of disasters for the state.
      */
     getNumDisastersForState(state) {
-        return null;
+        var claimCount = 0;
+        try{
+            let claims = this.parseOnCondition(sfcc2023Disasters, "state", logicalOperators.Equals, state);
+            claimCount = claims.length;
+        }
+        catch(e){
+            console.log(e);
+        }        
+        
+        return claimCount;
     }
 
     /**
@@ -53,7 +216,21 @@ class SimpleDataTool {
      *                          or null if no claims are found.
      */
     getTotalClaimCostForDisaster(disasterId) {
-        return -1;
+        var costOfDisaster = 0;
+        try{
+            let stats = this.statisticsOnKey(sfcc2023Claims, "disaster_id",  disasterId, "estimate_cost");
+            if(stats == null){
+                return null;
+            }
+            else{
+                costOfDisaster = +(stats.Sum).toFixed(2);
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+
+        return costOfDisaster;
     }
 
     /**
@@ -64,7 +241,22 @@ class SimpleDataTool {
      *                          or null if no claims are found.
      */
     getAverageClaimCostForClaimHandler(claimHandlerId) {
-        return -1;
+        var claimCostAvg = 0;
+        try{
+            let stats = this.statisticsOnKey(sfcc2023Claims, "claim_handler_assigned_id",  claimHandlerId, "estimate_cost");
+            if(stats == null){
+                return null;
+            }
+            else{
+                claimCostAvg = +(stats.Average).toFixed(2);
+            }
+        }
+        catch(e){
+            console.log(e);        
+        }
+        
+        
+        return claimCostAvg;
     }
 
     /**
@@ -75,7 +267,25 @@ class SimpleDataTool {
      * @returns {string} - Single name of state
      */
     getStateWithMostDisasters() {
-        return null;
+        var numDisasters = 0;
+        var stateName = null;
+        try{
+            for (let iter = 0; iter < stateList.length; iter++) {
+                let stats = this.statisticsOnKey(sfcc2023Disasters, "state",  stateList[iter], "id");
+                if(stats){
+                    if(stats.Count > numDisasters){ 
+                        stateName = stateList[iter];
+                        numDisasters = stats.Count;
+                    }
+                }
+            }
+        }
+        catch(e){
+            throw e;
+            console.log(e);
+        }
+
+        return stateName;
     }
 
     /**
@@ -90,7 +300,24 @@ class SimpleDataTool {
      * @returns {string} - Single name of state
      */
     getStateWithLeastDisasters() {
-        return null;
+        var numDisasters = 100;
+        var stateName = null;
+        try{
+            for (let iter = 0; iter < stateList.length; iter++) {
+                let stats = this.statisticsOnKey(sfcc2023Disasters, "state",  stateList[iter], "id");
+                if(stats){
+                    if(stats.Count < numDisasters){ 
+                        stateName = stateList[iter];
+                        numDisasters = stats.Count;
+                    }
+                }
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+
+        return stateName;
     }
 
     /**
@@ -100,7 +327,17 @@ class SimpleDataTool {
      * @returns {string} - Name of language, or empty string if state doesn't exist.
      */
     getMostSpokenAgentLanguageByState(state) {
-        return null;
+        var speackerCount = 0;
+        var stateName = null;
+        try{
+            for (let iter = 0; iter < stateList.length; iter++) {
+
+            }
+        }
+        catch(e){
+            throw e;
+            console.log(e);
+        }
     }
 
     /**
@@ -115,7 +352,15 @@ class SimpleDataTool {
      *                          null if agent does not exist, or agent has no claims (open or not).
      */
     getNumOfOpenClaimsForAgentAndSeverity(agentId, minSeverityRating) {
-        return -2;
+        var claimCount = 0;
+        var severity = null;
+        try{
+
+        }
+        catch(err){
+            throw err.message("error in calculateDisasterClaimDensity")
+        }
+        return null;
     }
 
     /**
@@ -124,7 +369,14 @@ class SimpleDataTool {
      * @returns {number} - Number of disasters where the declared date is after the end date.
      */
     getNumDisastersDeclaredAfterEndDate() {
-        return null;
+        var disasterCount = 0;
+        try{
+
+        }
+        catch(err){
+            throw err.message("error in calculateDisasterClaimDensity")
+        }
+        return disasterCount;
     }
 
     /** Builds a map of agent and their total claim cost
@@ -137,7 +389,14 @@ class SimpleDataTool {
      *  @returns {Object}: key is agent id, value is total cost of claims associated to the agent
      */
     buildMapOfAgentsToTotalClaimCost() {
-        return null;
+        var agentToClaimMap = [];
+        try{
+
+        }
+        catch(err){
+            throw err.message("error in calculateDisasterClaimDensity")
+        }
+        return agentToClaimMap;
     }
 
     /**  Calculates density of a disaster based on the number of claims and impact radius
@@ -151,6 +410,14 @@ class SimpleDataTool {
      * null if disaster does not exist
      */
     calculateDisasterClaimDensity(disasterId) {
+        var disasterClaimDensity = 0;
+        try{
+
+        }
+        catch(err){
+            throw err.message("error in calculateDisasterClaimDensity")
+        }
+
         return -1;
     }
 
@@ -165,7 +432,15 @@ class SimpleDataTool {
      * @returns {Array} - An array of three strings of month and year, descending order of highest claims.
      */
     getTopThreeMonthsWithHighestNumOfClaimsDesc() {
-        return null;
+        var topThreeMonths = [];
+        try{
+
+        }
+        catch(err){
+            throw err.message("error in getTopThreeMonthsWithHighestNumOfClaimsDesc")
+        }
+
+        return topThreeMonths;
     }
 }
 
