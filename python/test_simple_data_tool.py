@@ -151,4 +151,7 @@ class TestSetFour:
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', __file__])
+    # pytest.main(['-v', __file__])
+
+    # only run TestSetOne
+    pytest.main(['-v', __file__ + '::TestSetTwo'])
