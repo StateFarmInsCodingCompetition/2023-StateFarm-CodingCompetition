@@ -57,8 +57,7 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
-        data = self.get_claim_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_claim_data())
 
         return len(df[df["status"] == "Closed"])
 
@@ -71,8 +70,7 @@ class SimpleDataTool:
         Returns:
             int: number of claims assigned to claim handler
         """
-        data = self.get_claim_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_claim_data())
 
         handler_df = df[df["claim_handler_assigned_id"] == claim_handler_id]
 
@@ -88,9 +86,7 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-
-        data = self.get_disaster_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_disaster_data())
 
         return len(df[df["state"] == state])
 
@@ -108,8 +104,7 @@ class SimpleDataTool:
             float | None: estimate cost of disaster, rounded to the nearest hundredths place
                           returns None if no claims are found
         """
-        data = self.get_claim_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_claim_data())
 
         filtered_df = df[df["disaster_id"] == disaster_id]
 
@@ -130,9 +125,7 @@ class SimpleDataTool:
             float | None : average cost of claims, rounded to the nearest hundredths place
                            or None if no claims are found
         """
-
-        data = self.get_claim_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_claim_data())
 
         needed_data = df[df["claim_handler_assigned_id"] == claim_handler_id][
             "estimate_cost"
@@ -179,9 +172,7 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-
-        data = self.get_disaster_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_disaster_data())
 
         states_and_counts = df["state"].value_counts()
 
@@ -204,8 +195,7 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        data = self.get_agent_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_agent_data())
 
         state_agents = df[
             (df["state"] == state)
@@ -223,7 +213,7 @@ class SimpleDataTool:
         return most_common_language
 
     def get_num_of_open_claims_for_agent_and_severity(
-        self, agent_id, min_severity_rating
+            self, agent_id, min_severity_rating
     ):  #: z
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
 
@@ -238,24 +228,22 @@ class SimpleDataTool:
                         -1 if severity rating out of bounds
                         None if agent does not exist, or agent has no claims (open or not)
         """
-
-        data = self.get_claim_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_claim_data())
 
         #: Severity rating scale for claims is 1 to 10, inclusive.
-        if min_severity_rating < 1 or min_severity_rating > 10:
+        if not (1 <= min_severity_rating <= 10):
             return -1
 
-        claims = df[df["agent_assigned_id"] == agent_id]  #: get all claims for agent
-        claims = claims[claims["status"] != "Closed"]  #: remove all closed claims
-        claims = claims[
-            claims["severity_rating"] >= min_severity_rating
-        ]  #: remove all claims with lower severity rating
+        claims = df[
+            (df["agent_assigned_id"] == agent_id)  #: get all claims for agent
+            & (df["status"] != "Closed")  #: remove all closed claims
+            & (df["severity_rating"] >= min_severity_rating)  #: remove all claims with lower severity rating
+        ]
 
-        if len(claims) == 0:
+        if claims_length := len(claims) == 0:
             return None
 
-        return len(claims)
+        return claims_length
 
     # endregion
 
@@ -267,8 +255,7 @@ class SimpleDataTool:
         Returns:
             int: number of disasters where the declared date is after the end date
         """
-        data = self.get_disaster_data()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.get_disaster_data())
 
         late_declaration = df[df["declared_date"] > df["end_date"]]
 
@@ -286,22 +273,22 @@ class SimpleDataTool:
             dict: key is agent id, value is total cost of claims associated to the agent
         """
 
-        claims_data = self.get_claim_data()
-        claims_df = pd.DataFrame(claims_data)
-
-        agent_data = self.get_agent_data()
-        agent_df = pd.DataFrame(agent_data)
+        claims_df = pd.DataFrame(self.get_claim_data())
+        agent_df = pd.DataFrame(self.get_agent_data())
 
         agent_ids = agent_df["id"].unique()
         costs = {}
 
         for agent_id in agent_ids:
+            #: Get agent's claims
             agent_df = claims_df[claims_df["agent_assigned_id"] == agent_id]
 
             if len(agent_df) != 0:
                 costs[agent_id] = round(agent_df["estimate_cost"].sum(), 2)
             else:
-                costs[agent_id] = 0
+                costs[agent_id] = 0  #: No claims case
+
+        #: This covers None (Invalid agent id) cases as well, since .get will return None if key doesn't exist
 
         return costs
 
@@ -319,11 +306,8 @@ class SimpleDataTool:
             float: density of claims to disaster area, rounded to the nearest thousandths place
                    None if disaster does not exist
         """
-        disaster_data = self.get_disaster_data()
-        df_disaster = pd.DataFrame(disaster_data)
-
-        claim_data = self.get_claim_data()
-        df_claim = pd.DataFrame(claim_data)
+        df_disaster = pd.DataFrame(self.get_disaster_data())
+        df_claim = pd.DataFrame(self.get_claim_data())
 
         disaster_row = df_disaster[df_disaster["id"] == disaster_id]
 
@@ -333,8 +317,8 @@ class SimpleDataTool:
         num_claims = df_claim[df_claim["disaster_id"] == disaster_id].shape[0]
 
         radius = disaster_row.iloc[0]["radius_miles"]
-        area = math.pi * (radius**2)
 
+        area = math.pi * (radius ** 2)
         density = num_claims / area
 
         return round(density, 5)
@@ -354,20 +338,23 @@ class SimpleDataTool:
         Returns:
             list: three strings of month and year, descending order of highest claims
         """
-        claims_data = self.get_claim_data()
-        disaster_data = self.get_disaster_data()
 
-        claims_df = pd.DataFrame(claims_data)
+        #: Load data
+        claims_df = pd.DataFrame(self.get_claim_data())
+        disaster_df = pd.DataFrame(self.get_disaster_data())
+
+        #: Shorten lists
         claims_df = claims_df[['disaster_id']]
-
-        disaster_df = pd.DataFrame(disaster_data)
         disaster_df = disaster_df[['id', 'declared_date']]
 
+        #: Merge data & calculate month_year
         merged_df = pd.merge(claims_df, disaster_df, left_on='disaster_id', right_on='id')
         merged_df['month_year'] = pd.to_datetime(merged_df['declared_date']).dt.strftime('%B %Y')
 
+        #: Group by month_year and count month_years
         grouped_df = merged_df.groupby('month_year').size().reset_index(name='count')
         grouped_df = grouped_df.sort_values(by='count', ascending=False)
 
+        #: Return top 3 month_years
         return grouped_df['month_year'].head(3).tolist()
     # endregion
