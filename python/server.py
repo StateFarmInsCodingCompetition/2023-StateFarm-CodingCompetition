@@ -75,6 +75,3 @@ def calculate_disaster_claim_density():
 def get_top_three_months_with_highest_num_of_claims_desc():
     top_three_months = data_tool.get_top_three_months_with_highest_num_of_claims_desc()
     return jsonify({'top_three_months': top_three_months})
-
-if __name__ == '__main__':
-    app.run(debug=True)
