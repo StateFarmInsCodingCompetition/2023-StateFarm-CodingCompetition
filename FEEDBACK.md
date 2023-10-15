@@ -5,7 +5,7 @@
 3. How many unit tests were you able to pass? All. I had to change the relative file paths of the input json files for my pytest to work. U may have to change them back for yours to work.
 4. Document and describe any enhancements included to help the judges properly grade your submission.
  - Completed test case 12
- - Run `cool_visualizations.py` it see two cool visualizations
+ - Run `cool_visualizations.py` to see two cool visualizations
 5. Any feedback for the coding competition? Things you would like to see in future events?
 I spent over an hour stuck on test case 12 before I saw the announcement, but was good besides that. More difficult problems next time.
 
