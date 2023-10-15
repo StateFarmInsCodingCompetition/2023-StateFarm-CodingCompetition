@@ -9,8 +9,7 @@ class SimpleDataTool {
             west: "Alaska,Hawaii,Washington,Oregon,California,Montana,Idaho,Wyoming,Nevada,Utah,Colorado,Arizona,New Mexico",
             midwest:
                 "North Dakota,South Dakota,Minnesota,Wisconsin,Michigan,Nebraska,Iowa,Illinois,Indiana,Ohio,Missouri,Kansas",
-            south:
-                "Oklahoma,Texas,Arkansas,Louisiana,Kentucky,Tennessee,Mississippi,Alabama,West Virginia,Virginia,North Carolina,South Carolina,Georgia,Florida",
+            south: "Oklahoma,Texas,Arkansas,Louisiana,Kentucky,Tennessee,Mississippi,Alabama,West Virginia,Virginia,North Carolina,South Carolina,Georgia,Florida",
             northeast:
                 "Maryland,Delaware,District of Columbia,Pennsylvania,New York,New Jersey,Connecticut,Massachusetts,Vermont,New Hampshire,Rhode Island,Maine",
         };
@@ -22,7 +21,8 @@ class SimpleDataTool {
      * @returns {number} number of closed claims
      */
     getNumClosedClaims() {
-        return -1;
+        return sfcc2023Claims.filter((claim) => claim.status == "Closed")
+            .length;
     }
 
     /**
@@ -32,7 +32,9 @@ class SimpleDataTool {
      * @returns {number} - Number of claims assigned to the claim handler.
      */
     getNumClaimsForClaimHandlerId(claimHandlerId) {
-        return null;
+        return sfcc2023Claims.filter(
+            (claim) => claim.claim_handler_assigned_id == claimHandlerId
+        ).length;
     }
 
     /**
@@ -42,7 +44,8 @@ class SimpleDataTool {
      * @returns {number} - Number of disasters for the state.
      */
     getNumDisastersForState(state) {
-        return null;
+        return sfcc2023Disasters.filter((disaster) => disaster.state == state)
+            .length;
     }
 
     /**
@@ -53,7 +56,17 @@ class SimpleDataTool {
      *                          or null if no claims are found.
      */
     getTotalClaimCostForDisaster(disasterId) {
-        return -1;
+        // Filter claims for this disaster
+        const claimsForDisaster = sfcc2023Claims.filter(
+            (claim) => claim.disaster_id == disasterId
+        );
+
+        if (claimsForDisaster.length == 0) {
+            // No claims are found
+            return null;
+        } else {
+            return this.#getTotalCostOfClaims(claimsForDisaster);
+        }
     }
 
     /**
@@ -64,7 +77,21 @@ class SimpleDataTool {
      *                          or null if no claims are found.
      */
     getAverageClaimCostForClaimHandler(claimHandlerId) {
-        return -1;
+        // Filter claims for this claim handler
+        const claimsForClaimHandler = sfcc2023Claims.filter(
+            (claim) => claim.claim_handler_assigned_id == claimHandlerId
+        );
+
+        if (claimsForClaimHandler.length == 0) {
+            // No claims are found
+            return null;
+        } else {
+            const totalCost = this.#getTotalCostOfClaims(claimsForClaimHandler);
+            // Average = total / length
+            const average = totalCost / claimsForClaimHandler.length;
+            // Return the average round to 2 decimal places
+            return Math.round(average * 100) / 100;
+        }
     }
 
     /**
@@ -75,7 +102,11 @@ class SimpleDataTool {
      * @returns {string} - Single name of state
      */
     getStateWithMostDisasters() {
-        return null;
+        const statesListSortedByDisasters =
+            this.#getSortStatesByDisasterCount(false);
+        // The array of states is sort decreasing by
+        // number of disasters, thus we just need to return the first state.
+        return statesListSortedByDisasters[0];
     }
 
     /**
@@ -90,7 +121,11 @@ class SimpleDataTool {
      * @returns {string} - Single name of state
      */
     getStateWithLeastDisasters() {
-        return null;
+        const statesListSortedByDisasters =
+            this.#getSortStatesByDisasterCount();
+        // The array of states is sort increasing by
+        // number of disasters, thus we just need to return the first state.
+        return statesListSortedByDisasters[0];
     }
 
     /**
@@ -100,7 +135,29 @@ class SimpleDataTool {
      * @returns {string} - Name of language, or empty string if state doesn't exist.
      */
     getMostSpokenAgentLanguageByState(state) {
-        return null;
+        // Map from a language to number of agents that speaks that language.
+        const languageMap = new Map();
+        // List of agents of the given state.
+        const agentsOfState = sfcc2023Agents.filter(
+            (agent) => agent.state == state
+        );
+        agentsOfState.forEach((agent) => {
+            // Update the language map
+            this.#increaseValueForMap(languageMap, agent.primary_language);
+            this.#increaseValueForMap(languageMap, agent.secondary_language);
+        });
+
+        // Sort languages descreasing by number of agents that speaks that language.
+        const sortedSpokenLanguages = this.#sortMapByValue(languageMap, false);
+        if (sortedSpokenLanguages.length == 0) {
+            return "";
+        } else {
+            // If the most spoken language is English
+            // then return the second-most spoken language.
+            return sortedSpokenLanguages[0] == "English"
+                ? sortedSpokenLanguages[1]
+                : sortedSpokenLanguages[0];
+        }
     }
 
     /**
@@ -115,7 +172,25 @@ class SimpleDataTool {
      *                          null if agent does not exist, or agent has no claims (open or not).
      */
     getNumOfOpenClaimsForAgentAndSeverity(agentId, minSeverityRating) {
-        return -2;
+        if (minSeverityRating < 1 || minSeverityRating > 10) {
+            // Severity out of bounds.
+            return -1;
+        }
+
+        const claimsForAgentAndSeverity = sfcc2023Claims.filter((claim) => {
+            return (
+                claim.status != "Closed" &&
+                claim.agent_assigned_id == agentId &&
+                claim.severity_rating >= minSeverityRating
+            );
+        });
+
+        if (claimsForAgentAndSeverity.length == 0) {
+            // Agent does not exist/agent has no claims
+            return null;
+        } else {
+            return claimsForAgentAndSeverity.length;
+        }
     }
 
     /**
@@ -124,7 +199,9 @@ class SimpleDataTool {
      * @returns {number} - Number of disasters where the declared date is after the end date.
      */
     getNumDisastersDeclaredAfterEndDate() {
-        return null;
+        return sfcc2023Disasters.filter(
+            (disaster) => disaster.declared_date > disaster.end_date
+        ).length;
     }
 
     /** Builds a map of agent and their total claim cost
@@ -137,7 +214,18 @@ class SimpleDataTool {
      *  @returns {Object}: key is agent id, value is total cost of claims associated to the agent
      */
     buildMapOfAgentsToTotalClaimCost() {
-        return null;
+        const agentsToTotalCost = {};
+
+        sfcc2023Agents.forEach((agent) => agentsToTotalCost[agent.id] = 0);
+
+        sfcc2023Claims.forEach((claim) => {
+            const agentId = claim.agent_assigned_id;
+
+            agentsToTotalCost[agentId] += claim.estimate_cost;
+            agentsToTotalCost[agentId] = Math.round(agentsToTotalCost[agentId] * 100) / 100;
+        });
+        
+        return agentsToTotalCost;
     }
 
     /**  Calculates density of a disaster based on the number of claims and impact radius
@@ -151,7 +239,18 @@ class SimpleDataTool {
      * null if disaster does not exist
      */
     calculateDisasterClaimDensity(disasterId) {
-        return -1;
+        const givenDisaster = sfcc2023Disasters.find((disaster) => disaster.id == disasterId);
+        if (!givenDisaster) {
+            // Disaster does not exist.
+            return null;
+        }
+        // Find the area of the disaster.
+        const area = Math.PI * givenDisaster.radius_miles * givenDisaster.radius_miles;
+        // Number of claims of the given disaster.
+        const numClaims = sfcc2023Claims.filter((claim) => claim.disaster_id == disasterId).length;
+        
+        // Return density rounded by 5 decimal places.
+        return Math.round(numClaims / area * 100000) / 100000;
     }
 
     /**
@@ -166,6 +265,74 @@ class SimpleDataTool {
      */
     getTopThreeMonthsWithHighestNumOfClaimsDesc() {
         return null;
+    }
+
+    /**
+     * Returns the total cost of a array of claims.
+     *
+     * @param {Array} claims - The array of claims to calculate the total cost.
+     * @returns {double} - The total cost.
+     */
+    #getTotalCostOfClaims(claims) {
+        let totalCost = 0;
+        claims.forEach((claim) => (totalCost += claim.estimate_cost));
+        return totalCost;
+    }
+
+    /**
+     * Returns an array of states sorted by number of disaters.
+     *
+     * @param {boolean} increasing - True if sort increasingly. Otherwise, sort decreasingly.
+     * @returns {Array} - States sorted by number of disaters.
+     */
+    #getSortStatesByDisasterCount(increasing = true) {
+        // Map from state to the number of disaster at that state.
+        const stateToNumDisaster = new Map();
+
+        sfcc2023Disasters.forEach((disaster) => {
+            this.#increaseValueForMap(stateToNumDisaster, disaster.state);
+        });
+
+        return this.#sortMapByValue(stateToNumDisaster, increasing);
+    }
+
+    /**
+     * Safely updates a map by adding val to m[key].
+     *
+     * @param {Map} m - The map to update.
+     * @param {string} key - The key where value needs to be updated.
+     * @param {int} val - The val to add to current value.
+     */
+    #increaseValueForMap(m, key, val = 1) {
+        if (!m.has(key)) {
+            m.set(key, val);
+        } else {
+            m.set(key, m.get(key) + val);
+        }
+    }
+
+    /**
+     * Returns an array of keys sorted by its value.
+     * If two keys have the same value, then sorts by alphabetical (a-z)
+     * and takes the first.
+     *
+     * @param {Map} m - The map to sort.
+     * @param {boolean} increasing - True if sort increasingly.
+     */
+    #sortMapByValue(m, increasing = true) {
+        const sortedList = [...m.entries()].sort((a, b) => {
+            if (
+                (!increasing && a[1] > b[1]) ||
+                (increasing && a[1] < b[1]) ||
+                (a[1] == b[1] && a[0] < b[0])
+            ) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        // Only returns the array of keys.
+        return sortedList.map((entry) => entry[0]);
     }
 }
 
