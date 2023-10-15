@@ -4,10 +4,11 @@
   "description": "A simple data tool converted from Java to Node.js",
   "main": "application.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "http-server"
   },
-  "dependencies": {},
   "devDependencies": {
+    "http-server": "^14.1.1",
     "jest": "^27.3.1"
   }
 }
