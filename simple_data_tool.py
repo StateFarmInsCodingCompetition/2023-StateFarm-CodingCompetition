@@ -111,7 +111,7 @@ class SimpleDataTool:
         if len(filtered_df) == 0:
             return None
 
-        total_cost = round(filtered_df["estimate_cost"].sum(), 2)
+        ketotal_cost = round(filtered_df["estimate_cost"].sum(), 2)
 
         return total_cost
 
@@ -213,7 +213,7 @@ class SimpleDataTool:
         return most_common_language
 
     def get_num_of_open_claims_for_agent_and_severity(
-            self, agent_id, min_severity_rating
+        self, agent_id, min_severity_rating
     ):  #: z
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
 
@@ -237,7 +237,9 @@ class SimpleDataTool:
         claims = df[
             (df["agent_assigned_id"] == agent_id)  #: get all claims for agent
             & (df["status"] != "Closed")  #: remove all closed claims
-            & (df["severity_rating"] >= min_severity_rating)  #: remove all claims with lower severity rating
+            & (
+                df["severity_rating"] >= min_severity_rating
+            )  #: remove all claims with lower severity rating
         ]
 
         if claims_length := len(claims) == 0:
@@ -318,7 +320,7 @@ class SimpleDataTool:
 
         radius = disaster_row.iloc[0]["radius_miles"]
 
-        area = math.pi * (radius ** 2)
+        area = math.pi * (radius**2)
         density = num_claims / area
 
         return round(density, 5)
@@ -344,17 +346,22 @@ class SimpleDataTool:
         disaster_df = pd.DataFrame(self.get_disaster_data())
 
         #: Shorten lists
-        claims_df = claims_df[['disaster_id']]
-        disaster_df = disaster_df[['id', 'declared_date']]
+        claims_df = claims_df[["disaster_id"]]
+        disaster_df = disaster_df[["id", "declared_date"]]
 
         #: Merge data & calculate month_year
-        merged_df = pd.merge(claims_df, disaster_df, left_on='disaster_id', right_on='id')
-        merged_df['month_year'] = pd.to_datetime(merged_df['declared_date']).dt.strftime('%B %Y')
+        merged_df = pd.merge(
+            claims_df, disaster_df, left_on="disaster_id", right_on="id"
+        )
+        merged_df["month_year"] = pd.to_datetime(
+            merged_df["declared_date"]
+        ).dt.strftime("%B %Y")
 
         #: Group by month_year and count month_years
-        grouped_df = merged_df.groupby('month_year').size().reset_index(name='count')
-        grouped_df = grouped_df.sort_values(by='count', ascending=False)
+        grouped_df = merged_df.groupby("month_year").size().reset_index(name="count")
+        grouped_df = grouped_df.sort_values(by="count", ascending=False)
 
         #: Return top 3 month_years
-        return grouped_df['month_year'].head(3).tolist()
+        return grouped_df["month_year"].head(3).tolist()
+
     # endregion
