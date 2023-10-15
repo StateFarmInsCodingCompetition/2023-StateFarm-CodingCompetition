@@ -51,3 +51,7 @@ In VSCode, you can also run the unit tests by clicking on the play button beside
 For more information on testing with Jest, see the official Jest documentation - [Getting Started with Jest](https://jestjs.io/docs/getting-started).
 
 **Note: Use this functionality for quick and easy testing, but, before you turn your submission in, please attempt to run the `npm test` command at least once to determine how many unit tests have been passed.**
+
+## Installing Additional Packages
+
+To install additional packages, follow [this guide](https://docs.npmjs.com/downloading-and-installing-packages-locally). You can also search around the Internet for more guidance.
