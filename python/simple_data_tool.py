@@ -275,6 +275,7 @@ class SimpleDataTool:
         Returns:
             list: three strings of month and year, descending order of highest claims
         """
+        calendar = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         def get_num_claims_for_disaster(disaster_id):
             count = 0
             for claim in self.__claim_data:
@@ -287,10 +288,9 @@ class SimpleDataTool:
             months[disaster["declared_date"][0:7]] = months.get(disaster["declared_date"][0:7], 0) + count
         values = list(set(months.values()))
         values.sort(reverse=True)
-        for v in values:
-            v = 
-        top = next(k for k, v in months.items() if v == values[0])
-        second = next(k for k, v in months.items() if v == values[1])
-        third = next(k for k, v in months.items() if v == values[2])
+        top = next(calendar[int(k[5:7]) - 1] + " " + k[0:4] for k, v in months.items() if v == values[0])
+        second = next(calendar[int(k[5:7]) - 1] + " " + k[0:4] for k, v in months.items() if v == values[1])
+        third = next(calendar[int(k[5:7]) - 1] + " " + k[0:4] for k, v in months.items() if v == values[2])
+
         return [top, second, third]
     # endregion
