@@ -1,5 +1,11 @@
 package com.statefarm.codingcompetition.simpledatatool.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +64,14 @@ public class SimpleDataTool {
      * @return number of closed claims
      */
     public int getNumClosedClaims() {
-        return 0;
+        List<Claim> claims = getClaims();
+        int numClosedClaims = 0;
+        for (Claim claim : claims) {
+            if (claim.getStatus().equals("Closed")) {
+                numClosedClaims++;
+            }
+        }
+        return numClosedClaims;
     }
 
     /**
@@ -68,7 +81,14 @@ public class SimpleDataTool {
      * @return number of claims assigned to claim handler
      */
     public int getNumClaimsForClaimHandlerId(int id) {
-        return 0;
+        List<Claim> claims = getClaims();
+        int numClaimsForClaimHandlerId = 0;
+        for (Claim claim : claims) {
+            if (claim.getClaim_handler_assigned_id() == id) {
+                numClaimsForClaimHandlerId++;
+            }
+        }
+        return numClaimsForClaimHandlerId;
     }
 
     /**
@@ -79,7 +99,14 @@ public class SimpleDataTool {
      * @return number of disasters for state
      */
     public int getNumDisastersForState(String stateName) {
-        return -1;
+        List<Disaster> disasters = getDisasters();
+        int numDisastersForState = 0;
+        for (Disaster disaster : disasters) {
+            if (disaster.getState().equals(stateName)) {
+                numDisastersForState++;
+            }
+        }
+        return numDisastersForState;
     }
 
     // endregion
@@ -94,8 +121,32 @@ public class SimpleDataTool {
      *         returns null if no claims are found
      */
     public Float getTotalClaimCostForDisaster(int id) {
-        return -0.01f;
+        List<Claim> claims = getClaims();
+
+        // Map of disaster to cost
+        Map<Integer, Float> disasterToCost = new HashMap<Integer, Float>();
+
+        for (Claim claim : claims) {
+            int disasterId = claim.getDisaster_id();
+            float claimCost = claim.getEstimate_cost();
+
+            if (disasterToCost.containsKey(disasterId)) {
+                float newCost = disasterToCost.get(disasterId) + claimCost;
+                disasterToCost.put(disasterId, newCost);
+            } else {
+                disasterToCost.put(disasterId, claimCost);
+            }
+        }
+
+        if (disasterToCost.containsKey(id)) {
+            BigDecimal bd = new BigDecimal(Float.toString(disasterToCost.get(id)));
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
+            return bd.floatValue();
+        } else {
+            return null;
+        }
     }
+
 
     /**
      * Gets the average estimated cost of all claims assigned to a claim handler
@@ -105,7 +156,34 @@ public class SimpleDataTool {
      *         or null if no claims are found
      */
     public Float getAverageClaimCostforClaimHandler(int id) {
-        return -0.01f;
+        List<Claim> claims = getClaims();
+
+        // Map of claim handler to cost
+        Map<Integer, Float> claimHandlerToCost = new HashMap<Integer, Float>();
+
+        for (Claim claim : claims) {
+            int claimHandlerId = claim.getClaim_handler_assigned_id();
+            float claimCost = claim.getEstimate_cost();
+
+            if (claimHandlerToCost.containsKey(claimHandlerId)) {
+                float newCost = claimHandlerToCost.get(claimHandlerId) + claimCost;
+                claimHandlerToCost.put(claimHandlerId, newCost);
+            } else {
+                claimHandlerToCost.put(claimHandlerId, claimCost);
+            }
+        }
+
+        if (claimHandlerToCost.containsKey(id)) {
+            int numClaims = getNumClaimsForClaimHandlerId(id);
+            float totalCost = claimHandlerToCost.get(id);
+            float averageCost = totalCost / numClaims;
+
+            BigDecimal bd = new BigDecimal(Float.toString(averageCost));
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
+            return bd.floatValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -121,7 +199,39 @@ public class SimpleDataTool {
      * @return single name of state
      */
     public String getStateWithTheMostDisasters() {
-        return null;
+        List<String> statesWithMostDisasters = new ArrayList<String>();
+        List<Disaster> disasters = getDisasters();
+
+        // Map of state to number of disasters
+        Map<String, Integer> stateToNumDisasters = new HashMap<String, Integer>();
+
+        for (Disaster disaster : disasters) {
+            String state = disaster.getState();
+
+            if (stateToNumDisasters.containsKey(state)) {
+                int newNumDisasters = stateToNumDisasters.get(state) + 1;
+                stateToNumDisasters.put(state, newNumDisasters);
+            } else {
+                stateToNumDisasters.put(state, 1);
+            }
+        }
+
+        int maxNumDisasters = 0;
+
+        for (String state : stateToNumDisasters.keySet()) {
+            int numDisasters = stateToNumDisasters.get(state);
+
+            if (numDisasters > maxNumDisasters) {
+                maxNumDisasters = numDisasters;
+                statesWithMostDisasters.clear();
+                statesWithMostDisasters.add(state);
+            } else if (numDisasters == maxNumDisasters) {
+                statesWithMostDisasters.add(state);
+            }
+        }
+
+        statesWithMostDisasters.sort(String::compareToIgnoreCase);
+        return statesWithMostDisasters.get(0);
     }
 
     /**
@@ -137,7 +247,39 @@ public class SimpleDataTool {
      * @return single name of state
      */
     public String getStateWithTheLeastDisasters() {
-        return null;
+        List<String> statesWithLeastDisasters = new ArrayList<String>();
+        List<Disaster> disasters = getDisasters();
+
+        // Map of state to number of disasters
+        Map<String, Integer> stateToNumDisasters = new HashMap<String, Integer>();
+
+        for (Disaster disaster : disasters) {
+            String state = disaster.getState();
+
+            if (stateToNumDisasters.containsKey(state)) {
+                int newNumDisasters = stateToNumDisasters.get(state) + 1;
+                stateToNumDisasters.put(state, newNumDisasters);
+            } else {
+                stateToNumDisasters.put(state, 1);
+            }
+        }
+
+        int maxNumDisasters = Integer.MAX_VALUE;
+
+        for (String state : stateToNumDisasters.keySet()) {
+            int numDisasters = stateToNumDisasters.get(state);
+
+            if (numDisasters < maxNumDisasters) {
+                maxNumDisasters = numDisasters;
+                statesWithLeastDisasters.clear();
+                statesWithLeastDisasters.add(state);
+            } else if (numDisasters == maxNumDisasters) {
+                statesWithLeastDisasters.add(state);
+            }
+        }
+
+        statesWithLeastDisasters.sort(String::compareToIgnoreCase);
+        return statesWithLeastDisasters.get(0);
     }
 
     /**
@@ -149,7 +291,51 @@ public class SimpleDataTool {
      *         or empty string if state doesn't exist
      */
     public String getMostSpokenAgentLanguageByState(String string) {
-        return null;
+        List<Agent> agents = getAgents();
+        Map<String, Integer> languageToNumAgents = new HashMap<String, Integer>();
+
+        for (Agent agent : agents) {
+            String state = agent.getState();
+            String language1 = agent.getPrimary_language();
+            String language2 = agent.getSecondary_language();
+
+            if (state.equalsIgnoreCase(string)) {
+                // Add primary language to map
+                if (!language1.equalsIgnoreCase("English")) {
+                    if (languageToNumAgents.containsKey(language1)) {
+                    int newNumAgents = languageToNumAgents.get(language1) + 1;
+                    languageToNumAgents.put(language1, newNumAgents);
+                    } else {
+                        languageToNumAgents.put(language1, 1);
+                    }
+                }
+
+                // Add secondary language to map
+                if (!language2.equalsIgnoreCase("English")) {
+                    if (languageToNumAgents.containsKey(language2)) {
+                    int newNumAgents = languageToNumAgents.get(language2) + 1;
+                    languageToNumAgents.put(language2, newNumAgents);
+                    } else {
+                        languageToNumAgents.put(language2, 1);
+                    }
+                }
+            }
+        } 
+
+        int maxNumAgents = 0;
+        String mostSpokenLanguage = "";
+
+        for (String language : languageToNumAgents.keySet()) {
+            int numAgents = languageToNumAgents.get(language);
+
+            if (numAgents > maxNumAgents) {
+                maxNumAgents = numAgents;
+                mostSpokenLanguage = language;
+            }
+        }
+
+        return mostSpokenLanguage;
+
     }
 
     /**
@@ -166,7 +352,35 @@ public class SimpleDataTool {
      *         null if agent does not exist, or agent has no claims (open or not)
      */
     public Integer getNumOfOpenClaimsForAgentAndSeverity(int agentId, int minSeverityRating) {
-        return -2;
+        if (minSeverityRating < 1 || minSeverityRating > 10) {
+            return -1;
+        }
+
+        List<Claim> claims = getClaims();
+
+        // Map of agent to number of open claims
+        Map<Integer, Integer> agentToNumOpenClaims = new HashMap<Integer, Integer>();
+
+        for (Claim claim : claims) {
+            int claimAgentId = claim.getAgent_assigned_id();
+            int claimSeverityRating = claim.getSeverity_rating();
+            String claimStatus = claim.getStatus();
+
+            if (claimAgentId == agentId && claimSeverityRating >= minSeverityRating && !claimStatus.equals("Closed")) {
+                if (agentToNumOpenClaims.containsKey(claimAgentId)) {
+                    int newNumOpenClaims = agentToNumOpenClaims.get(claimAgentId) + 1;
+                    agentToNumOpenClaims.put(claimAgentId, newNumOpenClaims);
+                } else {
+                    agentToNumOpenClaims.put(claimAgentId, 1);
+                }
+            }
+        }
+
+        if (agentToNumOpenClaims.containsKey(agentId)) {
+            return agentToNumOpenClaims.get(agentId);
+        } else {
+            return null;
+        }
     }
 
     // endregion
@@ -179,7 +393,18 @@ public class SimpleDataTool {
      * @return number of disasters where the declared date is after the end date
      */
     public int getNumDisastersDeclaredAfterEndDate() {
-        return -1;
+        List<Disaster> disasters = getDisasters();
+        int numDisastersDeclaredAfterEndDate = 0;
+
+        for (Disaster disaster : disasters) {
+            LocalDate declaredDate = disaster.getDeclared_date();
+            LocalDate endDate = disaster.getEnd_date();
+
+            if (declaredDate.isAfter(endDate)) {
+                numDisastersDeclaredAfterEndDate++;
+            }
+        }
+        return numDisastersDeclaredAfterEndDate;
     }
 
     /**
@@ -194,7 +419,33 @@ public class SimpleDataTool {
      *         to the agent
      */
     public Map<Integer, Float> buildMapOfAgentsToTotalClaimCost() {
-        return null;
+        Map<Integer, Float> agentToTotalClaimCost = new HashMap<Integer, Float>();
+        List<Claim> claims = getClaims();
+        List<Agent> agents = getAgents();
+
+        // Pre-Populate map with all agents
+        for (Agent agent : agents) {
+            Integer agentId = agent.getId();
+            agentToTotalClaimCost.put(agentId, 0.0f);
+        }
+
+        for (Claim claim : claims) {
+            int agentId = claim.getAgent_assigned_id();
+            Float claimCost = claim.getEstimate_cost();
+
+            if (agentToTotalClaimCost.containsKey(agentId)) {
+                // DecimalFormat df = new DecimalFormat("0.00");
+                // String claimCostString = df.format(claimCost);
+                // claimCost = Float.parseFloat(claimCostString);
+                // float newTotalClaimCost = agentToTotalClaimCost.get(agentId) + claimCost;
+                Float newTotalClaimCost = Float.sum(agentToTotalClaimCost.get(agentId), claimCost);
+                agentToTotalClaimCost.put(agentId, newTotalClaimCost);
+            } else {
+                agentToTotalClaimCost.put(agentId, claimCost);
+            }
+        }
+        
+        return agentToTotalClaimCost;
     }
 
     /**
@@ -210,8 +461,50 @@ public class SimpleDataTool {
      *         thousandths place
      *         null if disaster does not exist
      */
-    public float calculateDisasterClaimDensity(int id) {
-        return -0.01f;
+    public Float calculateDisasterClaimDensity(int id) {
+        List<Claim> claims = getClaims();
+        List<Disaster> disasters = getDisasters();
+
+        // Map of disaster to claims
+        Map<Integer, List<Claim>> disasterToClaims = new HashMap<Integer, List<Claim>>();
+
+        for (Claim claim : claims) {
+            int disasterId = claim.getDisaster_id();
+
+            if (disasterToClaims.containsKey(disasterId)) {
+                List<Claim> newClaims = disasterToClaims.get(disasterId);
+                newClaims.add(claim);
+                disasterToClaims.put(disasterId, newClaims);
+            } else {
+                List<Claim> newClaims = new ArrayList<Claim>();
+                newClaims.add(claim);
+                disasterToClaims.put(disasterId, newClaims);
+            }
+        }
+
+        // Map of disaster to impact radius
+        Map<Integer, Float> disasterToImpactRadius = new HashMap<Integer, Float>();
+
+        for (Disaster disaster : disasters) {
+            int disasterId = disaster.getId();
+            float impactRadius = disaster.getRadius_miles();
+
+            disasterToImpactRadius.put(disasterId, impactRadius);
+        }
+
+        if (disasterToClaims.containsKey(id)) {
+            List<Claim> claimsForDisaster = disasterToClaims.get(id);
+            float impactRadius = disasterToImpactRadius.get(id);
+            float area = (float) (Math.PI * Math.pow(impactRadius, 2));
+            float density = claimsForDisaster.size() / area;
+
+            BigDecimal bd = new BigDecimal(Float.toString(density));
+            bd = bd.setScale(5, RoundingMode.HALF_UP);
+            return bd.floatValue();
+        } else {
+            return null;
+        }
+
     }
 
     // endregion
@@ -229,6 +522,7 @@ public class SimpleDataTool {
      * @return three strings of month and year, descending order of highest claims
      */
     public String[] getTopThreeMonthsWithHighestNumOfClaimsDesc() {
+        
         return new String[1];
     }
 
