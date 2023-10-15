@@ -54,6 +54,9 @@ class SimpleDataTool:
     # region Test Set One
 
     def get_num_closed_claims(self):
+        claims = self.get_claim_data()
+        closed_claims_count = sum(1 for claim in claims if claim['status'] == 'Closed')
+        return closed_claims_count
         """Calculates the number of claims where that status is "Closed"
 
         Returns:
@@ -62,6 +65,9 @@ class SimpleDataTool:
         pass
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
+        claims = self.get_claim_data()
+        claim_handler_claims = sum(1 for claim in claims if claim['claim_handler_assigned_id'] == claim_handler_id)
+        return claim_handler_claims
         """Calculates the number of claims assigned to a specific claim handler
 
         Args:
@@ -73,6 +79,9 @@ class SimpleDataTool:
         pass
 
     def get_num_disasters_for_state(self, state):
+        disasters = self.get_disaster_data()
+        state_disasters = sum(1 for disaster in disasters if disaster['state'] == state)
+        return state_disasters
         """Calculates the number of disasters for a specific state
 
         Args:
