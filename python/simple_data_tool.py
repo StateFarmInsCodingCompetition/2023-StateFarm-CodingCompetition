@@ -3,6 +3,7 @@ import math
 import pandas as pd
 
 from statistics import mean
+from datetime import datetime as dt       
 
 
 
@@ -336,7 +337,14 @@ class SimpleDataTool:
             int: number of disasters where the declared date is after the end date
         """
 
-        pass
+        disasters = self.get_disaster_data()
+        count = 0
+        for disaster in disasters:
+            end_date = dt.strptime(disaster["end_date"],"%Y-%m-%d").date()
+            declared_date = dt.strptime(disaster["declared_date"], "%Y-%m-%d").date()
+            if declared_date > end_date:
+                count += 1
+        return count
 
     def build_map_of_agents_to_total_claim_cost(self):
         """Builds a map of agent and their total claim cost
