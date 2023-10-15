@@ -340,7 +340,7 @@ public class SimpleDataTool {
      * @return number of claims that are not closed and have minimum severity rating
      *         or greater
      *         -1 if severity rating out of bounds
-     *         None if agent does not exist, or agent has no claims (open or not)
+     *         null if agent does not exist, or agent has no claims (open or not)
      */
     public int getNumOfOpenClaimsForAgentAndSeverity(int agentId, int minSeverityRating) {
         // check if the severity rating is in bounds
@@ -464,7 +464,10 @@ public class SimpleDataTool {
     // region TestSet4
 
     /**
-     * Gets the top three months with the highest total claim cost
+     * Gets the top three months with the highest number of claims
+     * 
+     * OPTIONAL! OPTIONAL! OPTIONAL!
+     * AS OF 9:21CDT, TEST IS OPTIONAL. SEE GITHUB ISSUE #8 FOR MORE DETAILS
      * 
      * Hint:
      * - Month should be full name like 01 is January and 12 is December
