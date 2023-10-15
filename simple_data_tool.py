@@ -85,7 +85,11 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-        pass
+
+        data = self.get_disaster_data()
+        df = pd.DataFrame(data)
+
+        return len(df[df['state'] == state])
 
     # endregion
 
@@ -115,7 +119,14 @@ class SimpleDataTool:
                            or None if no claims are found
         """
 
-        pass
+        data = self.get_claim_data()
+        df = pd.DataFrame(data)
+
+        needed_data = df[df['claim_handler_assigned_id'] == claim_handler_id]['estimate_cost']
+        if needed_data is None or len(needed_data) == 0:
+            return None
+
+        return round(mean(needed_data), 2)
 
     def get_state_with_most_disasters(self):
         """Returns the name of the state with the most disasters based on disaster data
@@ -145,8 +156,21 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
-    
+
+        data = self.get_disaster_data()
+        df = pd.DataFrame(data)
+
+        states_and_counts = df['state'].value_counts()
+
+        #: remove all states that don't have the amount of the last state (lowest amount)
+        least_states = states_and_counts[states_and_counts == states_and_counts[-1]]
+
+        #: sort alphabetically
+        least_states.sort_index(inplace=True)
+
+        #: return first state in list
+        return least_states.index[0]
+
     def get_most_spoken_agent_language_by_state(self, state):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
 
@@ -174,7 +198,21 @@ class SimpleDataTool:
                         None if agent does not exist, or agent has no claims (open or not)
         """
 
-        pass
+        data = self.get_claim_data()
+        df = pd.DataFrame(data)
+
+        #: Severity rating scale for claims is 1 to 10, inclusive.
+        if min_severity_rating < 1 or min_severity_rating > 10:
+            return -1
+
+        claims = df[df['agent_assigned_id'] == agent_id]  #: get all claims for agent
+        claims = claims[claims['status'] != 'Closed']  #: remove all closed claims
+        claims = claims[claims['severity_rating'] >= min_severity_rating]  #: remove all claims with lower severity rating
+
+        if len(claims) == 0:
+            return None
+
+        return len(claims)
 
     # endregion
 
@@ -201,7 +239,24 @@ class SimpleDataTool:
             dict: key is agent id, value is total cost of claims associated to the agent
         """
 
-        pass
+        claims_data = self.get_claim_data()
+        claims_df = pd.DataFrame(claims_data)
+
+        agent_data = self.get_agent_data()
+        agent_df = pd.DataFrame(agent_data)
+
+        agent_ids = agent_df['id'].unique()
+        costs = {}
+
+        for agent_id in agent_ids:
+            agent_df = claims_df[claims_df['agent_assigned_id'] == agent_id]
+
+            if len(agent_df) != 0:
+                costs[agent_id] = round(agent_df['estimate_cost'].sum(), 2)
+            else:
+                costs[agent_id] = 0
+
+        return costs
 
     def calculate_disaster_claim_density(self, disaster_id):
         """Calculates density of a diaster based on the number of claims and impact radius
@@ -235,6 +290,12 @@ class SimpleDataTool:
             list: three strings of month and year, descending order of highest claims
         """
 
-        pass
+        claims_data = self.get_claim_data()
+        disaster_data = self.get_disaster_data()
+
+        claims_df = pd.DataFrame(claims_data)
+        disaster_df = pd.DataFrame(disaster_data)
+
+
 
     # endregion

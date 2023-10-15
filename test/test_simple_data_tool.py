@@ -69,6 +69,9 @@ class TestSetTwo:
         assert round(
             controller.get_average_claim_cost_for_claim_handler(151), 2) == 242134.96
 
+    def test_get_state_with_least_disasters(self, controller):
+        assert controller.get_state_with_least_disasters() == 'Alaska'
+
     def test_get_state_with_most_and_least_disasters(self, controller):
         """Test 6"""
         assert controller.get_state_with_most_disasters() == 'California'
