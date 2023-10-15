@@ -86,14 +86,7 @@ class SimpleDataTool {
     return parseFloat(average.toFixed(2));
   }
 
-  /**
-   * Returns the name of the state with the most disasters based on disaster data.
-   * If two states have the same number of disasters, then sorts by alphabetical (a-z)
-   * and takes the first.
-   *
-   * @returns {string} - Single name of state
-   */
-  getStateWithMostDisasters() {
+  getStatesWithDisasterAmounts() {
     const stateAmounts = {};
     for (const disaster of sfcc2023Disasters) {
       if (!stateAmounts[disaster.state]) stateAmounts[disaster.state] = 0;
@@ -105,9 +98,22 @@ class SimpleDataTool {
       sortableAmounts.push([state, stateAmounts[state]]);
     }
 
+    return sortableAmounts;
+  }
+
+  /**
+   * Returns the name of the state with the most disasters based on disaster data.
+   * If two states have the same number of disasters, then sorts by alphabetical (a-z)
+   * and takes the first.
+   *
+   * @returns {string} - Single name of state
+   */
+  getStateWithMostDisasters() {
+    let sortableAmounts = this.getStatesWithDisasterAmounts();
+
     sortableAmounts.sort(function (a, b) {
       if (a[1] === b[1]) {
-        return a[0].localeCompare(b[0]);
+        return a[0].localeCompare(b[0]); // compare names to sort them alphabetically
       } else {
         return b[1] - a[1];
       }
@@ -128,16 +134,7 @@ class SimpleDataTool {
    * @returns {string} - Single name of state
    */
   getStateWithLeastDisasters() {
-    const stateAmounts = {};
-    for (const disaster of sfcc2023Disasters) {
-      if (!stateAmounts[disaster.state]) stateAmounts[disaster.state] = 0;
-      stateAmounts[disaster.state]++;
-    }
-
-    let sortableAmounts = [];
-    for (const state in stateAmounts) {
-      sortableAmounts.push([state, stateAmounts[state]]);
-    }
+    let sortableAmounts = this.getStatesWithDisasterAmounts();
 
     sortableAmounts.sort(function (a, b) {
       if (a[1] === b[1]) {
@@ -157,7 +154,7 @@ class SimpleDataTool {
    * @returns {string} - Name of language, or empty string if state doesn't exist.
    */
   getMostSpokenAgentLanguageByState(state) {
-    const agents = sfcc2023Agents.filter((a) => a.state == state);
+    const agents = sfcc2023Agents.filter((agent) => agent.state == state);
     if (agents.length == 0) return "";
     const languageAmounts = {};
     for (const agent of agents) {
