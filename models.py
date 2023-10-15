@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from datetime import date
 
 class Averages(BaseModel):
     average_claims_per_agent: float
@@ -11,22 +11,45 @@ class Averages(BaseModel):
 
 class Agent(BaseModel):
     id: int
-    name: str
+    first_name: str
+    last_name: str
+    state: str
+    region: str
+    primary_language: str
+    secondary_language: str
+    years_active: int
 
 
 class Claim(BaseModel):
     id: int
-    title: str
+    disaster_id: int
+    status: str
+    total_loss: bool
+    loss_of_life: bool
+    type: str
+    severity_rating: int
+    estimate_cost: float
+    agent_assigned_id: int
+    claim_handler_assigned_id: int
 
 
 class ClaimHandler(BaseModel):
     id: int
-    name: str
-
+    first_name: str
+    last_name: str
 
 class Disaster(BaseModel):
     id: int
     type: str
+    state: str
+    name: str
+    description: str
+    start_date: date
+    end_date: date
+    declared_date: date
+    lat: float
+    long: float
+    radius_miles: int
 
 
 class DisasterCount(BaseModel):
