@@ -146,7 +146,7 @@ class SimpleDataTool:
             elif val == max_value:
                 max_key = min(max_key, key)
         return max_key
-    
+
     def _dict_argmin(self, d):
         min_key = None
         min_value = 1e99
@@ -179,7 +179,7 @@ class SimpleDataTool:
         for disaster in self.__disaster_data:
             state = disaster["state"]
             num_disasters[state] = num_disasters.get(state, 0) + 1
-        
+
         return self._dict_argmax(num_disasters)
 
     def get_state_with_least_disasters(self):
@@ -199,7 +199,7 @@ class SimpleDataTool:
         for disaster in self.__disaster_data:
             state = disaster["state"]
             num_disasters[state] = num_disasters.get(state, 0) + 1
-        
+
         return self._dict_argmin(num_disasters)
 
     def get_most_spoken_agent_language_by_state(self, state):
@@ -223,12 +223,16 @@ class SimpleDataTool:
             primary_language = agent["primary_language"]
             secondary_language = agent["secondary_language"]
 
-            language_counts[primary_language]   = language_counts.get(primary_language, 0)   + 1
-            language_counts[secondary_language] = language_counts.get(secondary_language, 0) + 1
+            language_counts[primary_language] = (
+                language_counts.get(primary_language, 0) + 1
+            )
+            language_counts[secondary_language] = (
+                language_counts.get(secondary_language, 0) + 1
+            )
 
         if "English" in language_counts:
             del language_counts["English"]
-             
+
         return self._dict_argmax(language_counts)
 
     def get_num_of_open_claims_for_agent_and_severity(
@@ -249,14 +253,19 @@ class SimpleDataTool:
         """
         if min_severity_rating < 1 or min_severity_rating > 10:
             return -1
-        if not any(claim["agent_assigned_id"] == agent_id for claim in self.__claim_data):
+        if not any(
+            claim["agent_assigned_id"] == agent_id for claim in self.__claim_data
+        ):
             return None
-        
+
         num_valid = 0
         for claim in self.__claim_data:
             if claim["agent_assigned_id"] != agent_id:
                 continue
-            num_valid += claim["severity_rating"] >= min_severity_rating and claim["status"] != "Closed"
+            num_valid += (
+                claim["severity_rating"] >= min_severity_rating
+                and claim["status"] != "Closed"
+            )
 
         return num_valid
 
@@ -264,15 +273,15 @@ class SimpleDataTool:
 
     # region TestSetThree
     def compare_dates(self, date1, date2):
-        '''
+        """
         Returns 1 if date1 occurs later than date2, 0 if they're the same, and -1 otherwise
-        '''
+        """
         y1, m1, d1 = date1.split("-")
         y2, m2, d2 = date2.split("-")
 
         if y1 == y2 and m1 == m2 and d1 == d2:
             return 0
-        
+
         date_int1 = int(y1 + m1 + d1)
         date_int2 = int(y2 + m2 + d2)
         return [-1, 1][date_int1 < date_int2]
@@ -283,8 +292,12 @@ class SimpleDataTool:
         Returns:
             int: number of disasters where the declared date is after the end date
         """
-        return sum([self.compare_dates(claim["end_date"], claim["declared_date"]) == 1 for claim in self.__disaster_data])
-
+        return sum(
+            [
+                self.compare_dates(claim["end_date"], claim["declared_date"]) == 1
+                for claim in self.__disaster_data
+            ]
+        )
 
     def build_map_of_agents_to_total_claim_cost(self):
         """Builds a map of agent and their total claim cost
@@ -301,13 +314,15 @@ class SimpleDataTool:
         for claim in self.__claim_data:
             agent = claim["agent_assigned_id"]
             cost = claim["estimate_cost"]
-            agent_total_claims[agent] = round(agent_total_claims.get(agent, 0) + cost, 2)
-        
+            agent_total_claims[agent] = round(
+                agent_total_claims.get(agent, 0) + cost, 2
+            )
+
         # Fill in valid agent's counts with 0
         for agent in self.__agent_data:
             agent_id = agent["id"]
             agent_total_claims[agent_id] = agent_total_claims.get(agent_id, 0)
-        
+
         return agent_total_claims
 
     def _get_disaster(self, id):
@@ -331,13 +346,14 @@ class SimpleDataTool:
         """
         if disaster_id < 1 or disaster_id >= len(self.__disaster_data):
             return None
-        
-        num_disasters = sum([claim["disaster_id"] == disaster_id for claim in self.__claim_data])
-        
+
+        num_disasters = sum(
+            [claim["disaster_id"] == disaster_id for claim in self.__claim_data]
+        )
 
         disaster_info = self._get_disaster(disaster_id)
         disaster_area = math.pi * disaster_info["radius_miles"] ** 2
-        
+
         return round(num_disasters / disaster_area, 5)
 
     # endregion
@@ -359,18 +375,18 @@ class SimpleDataTool:
             list: three strings of month and year, descending order of highest claims
         """
         month_dict = {
-            1 : "January",
-            2 : "February",
-            3 : "March",
-            4 : "April",
-            5 : "May",
-            6 : "June",
-            7 : "July",
-            8 : "August",
-            9 : "September",
-            10 : "October",
-            11 : "November",
-            12 : "December"
+            1: "January",
+            2: "February",
+            3: "March",
+            4: "April",
+            5: "May",
+            6: "June",
+            7: "July",
+            8: "August",
+            9: "September",
+            10: "October",
+            11: "November",
+            12: "December",
         }
 
         date_total_claim = {}
@@ -387,7 +403,6 @@ class SimpleDataTool:
             top_three.append(largest_key)
             del date_total_claim[largest_key]
 
-        return top_three         
-
+        return top_three
 
     # endregion
