@@ -380,7 +380,7 @@ class SimpleDataTool:
         return agents_costs
         pass
 
-    def calculate_disaster_claim_density(self, disaster_id): # dont do this one
+    def calculate_disaster_claim_density(self, disaster_id):
         """Calculates density of a diaster based on the number of claims and impact radius
 
         Hints:
@@ -394,6 +394,18 @@ class SimpleDataTool:
             float: density of claims to disaster area, rounded to the nearest thousandths place
                    None if disaster does not exist
         """
+        disaster = next((d for d in self.get_disaster_data() if d['id'] == disaster_id), None)
+        if not disaster: return None
+        
+        radius = disaster['radius_miles']
+        
+        claims = [claim for claim in self.get_claim_data() if claim['disaster_id'] == disaster_id]
+
+        density = len(claims) / (math.pi * radius**2)
+
+        density_rounded = round(density, 5)
+
+        return density_rounded
         pass
 
     # endregion
@@ -412,22 +424,30 @@ class SimpleDataTool:
             list: three strings of month and year, descending order of highest claims
         """
         
-        monthly_claim_cost = {}
+        def custom_sort(item):
+            month, year = item.split()
+            return (int(year), month_order[month])
         
-        # was not able to implement the estimate cost functionality.
-        for object in self.get_disaster_data():
-            start_date = datetime.strptime(object['start_date'], "%Y-%m-%d")
-            month_year = start_date.strftime("%m-%Y")
-            
-            if month_year in monthly_claim_cost:
-                monthly_claim_cost[month_year] += object['estimate_cost']
-            else:
-                monthly_claim_cost[month_year] = object['estimate_cost']
-                
-        sorted_months = sorted(monthly_claim_cost.items(), key=lambda x: x[1], reverse=True)
+        month_order = {"January": 1, "February": 2, "March": 3, "April": 4, "May": 5, "June": 6,"July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12}
+        
+        total_claim_by_month = {}
+
+        # Iterate through the claims data
+        for claim in self.get_claim_data():
+            disaster_id = claim.get("disaster_id")
+            hazard = next((h for h in self.get_disaster_data() if h.get("id") == disaster_id), None)
+
+            if hazard:
+                start_date = datetime.strptime(hazard["start_date"], "%Y-%m-%d")
+                month_year_key = start_date.strftime("%m-%Y")
+                total_claim_by_month[month_year_key] = total_claim_by_month.get(month_year_key, 0) + claim["estimate_cost"]
+
+        sorted_months = sorted(total_claim_by_month.items(), key=lambda x: (x[1], datetime.strptime(x[0], "%m-%Y")), reverse=True)
         top_three_months = sorted_months[:3]
-        result = [f"{month} {year}" for month, year in top_three_months]
-        return result
+        result = [datetime.strptime(month_year, "%m-%Y").strftime("%B %Y") for month_year, _ in top_three_months]
+        print(sorted(result, key=custom_sort, reverse=True))
+        
+        return sorted(result, key=custom_sort, reverse=True)
         pass
 
     # endregion
