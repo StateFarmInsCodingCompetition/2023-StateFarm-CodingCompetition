@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI, HTTPException
 from simple_data_tool import SimpleDataTool
 from models import Agents, Claims, Claim, ClaimHandlers, Disasters, Disaster, DisasterCount
@@ -54,5 +55,4 @@ async def get_disasters_for_state(state: str):
         raise HTTPException(status_code=404, detail=f"No data available for state: {state}")
 
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8010)

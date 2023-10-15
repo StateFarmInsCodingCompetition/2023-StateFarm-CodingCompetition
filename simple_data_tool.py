@@ -51,7 +51,7 @@ class SimpleDataTool:
 
     # region Test Set One
 
-    def get_num_closed_claims(self):  
+    def get_num_closed_claims(self) -> int:
         """Calculates the number of claims where that status is "Closed"
 
         Returns:
@@ -61,7 +61,7 @@ class SimpleDataTool:
 
         return len(df[df["status"] == "Closed"])
 
-    def get_num_claims_for_claim_handler_id(self, claim_handler_id):
+    def get_num_claims_for_claim_handler_id(self, claim_handler_id: int) -> int:
         """Calculates the number of claims assigned to a specific claim handler
 
         Args:
@@ -76,7 +76,7 @@ class SimpleDataTool:
 
         return len(handler_df)
 
-    def get_num_disasters_for_state(self, state):  
+    def get_num_disasters_for_state(self, state: str) -> int:
         """Calculates the number of disasters for a specific state
 
         Args:
@@ -94,7 +94,7 @@ class SimpleDataTool:
 
     # region Test Set Two
 
-    def get_total_claim_cost_for_disaster(self, disaster_id):
+    def get_total_claim_cost_for_disaster(self, disaster_id: int) -> float | None:
         """Sums the estimated cost of a specific disaster by its claims
 
         Args:
@@ -115,7 +115,7 @@ class SimpleDataTool:
 
         return total_cost
 
-    def get_average_claim_cost_for_claim_handler(self, claim_handler_id):  
+    def get_average_claim_cost_for_claim_handler(self, claim_handler_id: int) -> float | None:
         """Gets the average estimated cost of all claims assigned to a claim handler
 
         Args:
@@ -135,7 +135,7 @@ class SimpleDataTool:
 
         return round(mean(needed_data), 2)
 
-    def get_state_with_most_disasters(self):
+    def get_state_with_most_disasters(self) -> str:
         """Returns the name of the state with the most disasters based on disaster data
 
         If two states have the same number of disasters, then sort by alphabetical (a-z)
@@ -158,7 +158,7 @@ class SimpleDataTool:
 
         return state_counts.iloc[0]["state"]
 
-    def get_state_with_least_disasters(self):  
+    def get_state_with_least_disasters(self) -> str:
         """Returns the name of the state with the least disasters based on disaster data
 
         If two states have the same number of disasters, then sort by alphabetical (a-z)
@@ -184,7 +184,7 @@ class SimpleDataTool:
         #: return first state in list
         return least_states.index[0]
 
-    def get_most_spoken_agent_language_by_state(self, state):
+    def get_most_spoken_agent_language_by_state(self, state: str) -> str:
         """Returns the name of the most spoken language by agents (besides English) for a specific state
 
         Args:
@@ -212,8 +212,8 @@ class SimpleDataTool:
         return most_common_language
 
     def get_num_of_open_claims_for_agent_and_severity(
-        self, agent_id, min_severity_rating
-    ):  
+        self, agent_id: int, min_severity_rating: int
+    ) -> int | None:
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
 
         Note: Severity rating scale for claims is 1 to 10, inclusive.
@@ -250,7 +250,7 @@ class SimpleDataTool:
 
     # region TestSetThree
 
-    def get_num_disasters_declared_after_end_date(self):
+    def get_num_disasters_declared_after_end_date(self) -> int:
         """Gets the number of disasters where it was declared after it ended
 
         Returns:
@@ -262,7 +262,7 @@ class SimpleDataTool:
 
         return len(late_declaration)
 
-    def build_map_of_agents_to_total_claim_cost(self):  
+    def build_map_of_agents_to_total_claim_cost(self) -> dict[int, float]:
         """Builds a map of agent and their total claim cost
 
         Hints:
@@ -293,7 +293,7 @@ class SimpleDataTool:
 
         return costs
 
-    def calculate_disaster_claim_density(self, disaster_id):
+    def calculate_disaster_claim_density(self, disaster_id: int) -> float | None:
         """Calculates density of a diaster based on the number of claims and impact radius
 
         Hints:
@@ -328,7 +328,7 @@ class SimpleDataTool:
 
     # region TestSetFour
 
-    def get_top_three_months_with_highest_num_of_claims_desc(self):  
+    def get_top_three_months_with_highest_num_of_claims_desc(self) -> list[str]:
         """Gets the top three months with the highest total claim cost
 
         Hint:
