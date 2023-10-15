@@ -250,7 +250,7 @@ class SimpleDataTool:
             # Check if the agent is from the specified state
             if agent['state'] == state:
                 # Get the languages spoken by the agent excluding English
-                languages = [lang for lang in agent['secondary_language'] if lang != 'English']
+                languages = [lang for lang in [agent['primary_language'], agent['secondary_language']] if lang != 'English']
                 # Increment count for each language in the dictionary
                 for lang in languages:
                     language_counts[lang] = language_counts.get(lang, 0) + 1
