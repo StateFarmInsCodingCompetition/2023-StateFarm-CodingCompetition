@@ -1,8 +1,6 @@
 import json
 import math
 import pandas as pd
-import numpy as np
-import operator
 
 from statistics import mean
 from datetime import datetime, date, timedelta
