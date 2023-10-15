@@ -59,7 +59,12 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
-        pass
+        claims = self.get_claim_data()
+        count = 0
+        for claim in claims:
+            if claim['status'] == 'Closed':
+                count += 1
+        return count
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
         """Calculates the number of claims assigned to a specific claim handler
