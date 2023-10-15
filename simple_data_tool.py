@@ -241,7 +241,7 @@ class SimpleDataTool:
             )  #: remove all claims with lower severity rating
         ]
 
-        if claims_length := len(claims) == 0:
+        if (claims_length := len(claims)) == 0:
             return None
 
         return claims_length
