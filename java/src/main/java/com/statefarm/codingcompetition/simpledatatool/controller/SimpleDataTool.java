@@ -525,8 +525,7 @@ public class SimpleDataTool {
      * @return three strings of month and year, descending order of highest claims
      */
     public String[] getTopThreeMonthsWithHighestNumOfClaimsDesc() {
-        
-        return new String[1];
+        return new String[3];
     }
 
     // endregion

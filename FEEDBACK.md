@@ -15,6 +15,12 @@
    - /numClaims/{id} - returns the number of claims associated with the given claim handler ID
    - /numDisasters/{state} - returns the number of disasters in the given state
    - /disasterTotalCost/{id} - returns the total claim cost for the given disaster ID
+   - /averageClaimCost/{id} - returns the average claim cost for the given claim handler ID
+   - /stateWithMostDisasters - returns the state with the highest number of disasters
+   - /stateWithLeastDisasters - returns the state with the highest number of disasters
+   - /mostSpokenLanguage/{state} - returns the language spoken most by claim handlers in the given state
+   - /numOpenClaims/{id}/{minSeverity} - returns the number of open claims for the given agent ID and above the given minimum severity
+   - /numDistastersDeclaredAfterEndDate - returns the number of disasters where it was declared after it ended
 
 5. Any feedback for the coding competition? Things you would like to see in future events?
    One thing in particular that I think could be better is ensuring that the test cases and skeleton code are bug free. While I know that programming certainly comes along with bugs, it felt as though there were many issues, some of which weren't being resolved until towards the end of the competition.

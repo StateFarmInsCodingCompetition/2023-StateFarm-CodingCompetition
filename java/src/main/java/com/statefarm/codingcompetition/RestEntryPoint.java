@@ -31,5 +31,42 @@ public class RestEntryPoint {
     public Float getDisasterTotalCost(@PathVariable("id") int id) {
         return dataService.getTotalClaimCostForDisaster(id);
     }
+
+    @GetMapping("/averageClaimCost/{id}")
+    public Float getAverageClaimCost(@PathVariable("id") int id) {
+        return dataService.getAverageClaimCostforClaimHandler(id);
+    }
+
+    @GetMapping("/stateWithMostDisasters")
+    public String getStateWithMostDisasters() {
+        return dataService.getStateWithTheMostDisasters();
+    }
+
+    @GetMapping("/stateWithLeastDisasters")
+    public String getStateWithLeastDisasters() {
+        return dataService.getStateWithTheLeastDisasters();
+    }
+
+    @GetMapping("/mostSpokenLanguage/{state}")
+    public String getMostSpokenLanguage(@PathVariable("state") String state) {
+        return dataService.getMostSpokenAgentLanguageByState(state);
+    }
+
+    @GetMapping("/numOpenClaims/{id}/{minSeverity}")
+    public int getNumOpenClaims(@PathVariable("id") int id, @PathVariable("minSeverity") int minSeverity) {
+        return dataService.getNumOfOpenClaimsForAgentAndSeverity(id, minSeverity);
+    }
+
+    @GetMapping("/numDistastersDeclaredAfterEndDate")
+    public int getNumDistastersDeclaredAfterEndDate() {
+        return dataService.getNumDisastersDeclaredAfterEndDate();
+    }
+
+    // Map method??
+
+    @GetMapping("/disasterClaimDensity/{id}")
+    public Float getDisasterClaimDensity(@PathVariable("id") int id) {
+        return dataService.calculateDisasterClaimDensity(id);
+    }
 }
 
