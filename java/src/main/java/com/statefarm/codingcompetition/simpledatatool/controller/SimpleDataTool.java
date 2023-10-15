@@ -1,7 +1,10 @@
 package com.statefarm.codingcompetition.simpledatatool.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import com.statefarm.codingcompetition.simpledatatool.io.JsonHelper;
 import com.statefarm.codingcompetition.simpledatatool.model.Agent;
@@ -58,7 +61,20 @@ public class SimpleDataTool {
      * @return number of closed claims
      */
     public int getNumClosedClaims() {
-        return 0;
+        int closedClaims = 0;
+
+        List<Claim> claims = getClaims();
+
+        for (Claim claim : claims) {
+
+            String status = claim.getStatus();
+            if (status.equals("Closed"))
+                closedClaims++;
+
+        }
+
+        int result = closedClaims == 0 ? -1 : closedClaims;
+        return result;
     }
 
     /**
@@ -68,7 +84,20 @@ public class SimpleDataTool {
      * @return number of claims assigned to claim handler
      */
     public int getNumClaimsForClaimHandlerId(int id) {
-        return 0;
+        int claimsForClaimHandler = 0;
+
+        List<Claim> claims = getClaims();
+
+        for (Claim claim : claims) {
+
+            int claimHandlerID = claim.getClaim_handler_assigned_id();
+            if (claimHandlerID == id)
+                claimsForClaimHandler++;
+
+        }
+
+        int result = claimsForClaimHandler == 0 ? -1 : claimsForClaimHandler;
+        return result;
     }
 
     /**
@@ -79,7 +108,18 @@ public class SimpleDataTool {
      * @return number of disasters for state
      */
     public int getNumDisastersForState(String stateName) {
-        return -1;
+        int numDisasters = 0;
+
+        List<Disaster> disasters = getDisasters();
+
+        for (Disaster disaster : disasters) {
+
+            if (disaster.getState().equals(stateName))
+                numDisasters++;
+        }
+
+        int result = numDisasters == 0 ? -1 : numDisasters;
+        return result;
     }
 
     // endregion
@@ -94,7 +134,23 @@ public class SimpleDataTool {
      *         returns null if no claims are found
      */
     public Float getTotalClaimCostForDisaster(int id) {
-        return -0.01f;
+        float totalClaimCost = 0;
+
+        List<Claim> claims = getClaims();
+
+        for (Claim claim : claims) {
+
+            if (claim.getDisaster_id() != id)
+                continue;
+            totalClaimCost += claim.getEstimate_cost();
+
+        }
+
+        if (totalClaimCost == 0)
+            return null;
+
+        String result = String.format("%.2f", totalClaimCost);
+        return Float.parseFloat(result);
     }
 
     /**
@@ -105,7 +161,30 @@ public class SimpleDataTool {
      *         or null if no claims are found
      */
     public Float getAverageClaimCostforClaimHandler(int id) {
-        return -0.01f;
+
+        float avgClaimCost = 0;
+        float totalClaimCost = 0;
+
+        List<Claim> claims = getClaims();
+
+        int noOfClaims = 0;
+        for (Claim claim : claims) {
+
+            if (claim.getClaim_handler_assigned_id() != id)
+                continue;
+            noOfClaims++;
+
+            totalClaimCost += claim.getEstimate_cost();
+        }
+
+        if (noOfClaims == 0)
+            return null;
+
+        avgClaimCost = totalClaimCost / noOfClaims;
+
+        String result = String.format("%.2f", avgClaimCost);
+
+        return Float.parseFloat(result);
     }
 
     /**
@@ -121,7 +200,35 @@ public class SimpleDataTool {
      * @return single name of state
      */
     public String getStateWithTheMostDisasters() {
-        return null;
+
+        SortedMap<String, Integer> stateMap = new TreeMap<String, Integer>();
+
+        List<Disaster> disasters = getDisasters();
+
+        for (Disaster disaster : disasters) {
+
+            String stateName = disaster.getState();
+
+            if (!stateMap.containsKey(stateName)) { // initialize if new element
+                stateMap.put(stateName, 1);
+                continue;
+            }
+
+            stateMap.put(stateName, stateMap.get(stateName) + 1); // Add one if existing element
+        }
+
+        String result = "";
+        int topDisasters = 0;
+        // loop through map and take greatest # of disasters in alphabetical order
+        for (Map.Entry<String, Integer> element : stateMap.entrySet()) {
+
+            if (element.getValue() < topDisasters || element.getValue() == topDisasters)
+                continue;
+            topDisasters = element.getValue();
+            result = element.getKey();
+        }
+
+        return result;
     }
 
     /**
@@ -137,7 +244,41 @@ public class SimpleDataTool {
      * @return single name of state
      */
     public String getStateWithTheLeastDisasters() {
-        return null;
+
+        SortedMap<String, Integer> stateMap = new TreeMap<String, Integer>();
+
+        List<Disaster> disasters = getDisasters();
+
+        for (Disaster disaster : disasters) {
+
+            String stateName = disaster.getState();
+
+            if (!stateMap.containsKey(stateName)) { // initialize if new element
+                stateMap.put(stateName, 1);
+                continue;
+            }
+
+            stateMap.put(stateName, stateMap.get(stateName) + 1); // Add one if existing element
+        }
+
+        String result = "";
+        int leastDisasters = 0;
+        // loop through map and take the least # of disasters in alphabetical order
+        for (Map.Entry<String, Integer> element : stateMap.entrySet()) {
+
+            if(leastDisasters == 0) {   //initialize least disasters
+                leastDisasters = element.getValue();
+                continue;
+            }
+
+            if (element.getValue() > leastDisasters || element.getValue() == leastDisasters)
+                continue;
+
+            leastDisasters = element.getValue();
+            result = element.getKey();
+        }
+
+        return result;
     }
 
     /**
