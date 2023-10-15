@@ -1,10 +1,10 @@
 # Feedback
 
-1. Your team:
-2. Name of each individual participating:
-3. How many unit tests were you able to pass? 
+1. Your team: GSU_DCSC_1
+2. Name of each individual participating: Minh Nguyen
+3. How many unit tests were you able to pass? 8
 4. Document and describe any enhancements included to help the judges properly grade your submission.
-    - Example One
+    - I implemented BigDecimal to fix precision error on test4 but one still keeps getting wrong
     - Example Two
     - Example Three
 
