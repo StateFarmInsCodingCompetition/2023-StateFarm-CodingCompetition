@@ -448,9 +448,13 @@ class SimpleDataTool:
     
 # ------------------------------------ Nice to Have! ------------------------------------ #
 
-    # This funcftions maps out each regional disaster by type and counts the number of each type
-    def get_regional_disaster_map(self):
+    # This functions maps out each regional disaster by type and counts the number of each type
+    def get_regional_disaster_map(self):\
+        
+        # Assign dataset to variable
         disasters = self.get_disaster_data()
+        
+        # Initialize a dictionary to store disaster types per region
         regional_disaster_map = {
         'west': {},
         'midwest': {},
@@ -465,6 +469,7 @@ class SimpleDataTool:
                     return region
             return None
 
+        # Accumulate disaster types per region
         for disaster in disasters:
             region = get_region(disaster['state'])
             if region:
@@ -477,3 +482,42 @@ class SimpleDataTool:
         return regional_disaster_map
 
 
+    # This functions maps out each regional claims by type and counts the total claims of each type
+    def get_total_claims_per_regional_disaster(self):
+        
+        # Assign dataset to variable
+        claims = self.get_claim_data()
+        disasters = self.get_disaster_data()
+        
+        # Map disasters by id for quick lookup
+        disaster_map = {disaster['id']: disaster for disaster in disasters}
+
+        # Initialize the result data structure
+        regional_claims = {region: {} for region in self.REGION_MAP.keys()}
+
+        # Helper function to get the region of a state
+        def get_region(state):
+            for region, states in self.REGION_MAP.items():
+                if state in states:
+                    return region
+            return None  # or 'unknown'
+
+        # Iterate through each claim, map to disaster, and update counts
+        for claim in claims:
+            # Map claim to disaster using disaster_id
+            disaster = disaster_map.get(claim['disaster_id'])
+            
+            # Ensure disaster exists
+            if disaster:
+                state = disaster['state']
+                region = get_region(state)
+                
+                # Ensure region is found and update the counts
+                if region is not None:
+                    if state in regional_claims[region]:
+                        regional_claims[region][state] += 1
+                    else:
+                        regional_claims[region][state] = 1
+        
+        # Return the resulting data structure
+        return regional_claims

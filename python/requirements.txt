@@ -7,3 +7,5 @@ pandas==1.3.5
 matplotlib==3.6.0
 
 seaborn==0.13.0
+
+flask==3.0.0
