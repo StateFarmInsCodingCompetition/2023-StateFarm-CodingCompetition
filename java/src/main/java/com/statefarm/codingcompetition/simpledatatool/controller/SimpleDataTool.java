@@ -2,7 +2,6 @@ package com.statefarm.codingcompetition.simpledatatool.controller;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,11 +65,14 @@ public class SimpleDataTool {
     public int getNumClosedClaims() {
         List<Claim> claims = getClaims();
         int numClosedClaims = 0;
+
+        // If claim is closed, increment counter
         for (Claim claim : claims) {
             if (claim.getStatus().equals("Closed")) {
                 numClosedClaims++;
             }
         }
+
         return numClosedClaims;
     }
 
@@ -83,11 +85,14 @@ public class SimpleDataTool {
     public int getNumClaimsForClaimHandlerId(int id) {
         List<Claim> claims = getClaims();
         int numClaimsForClaimHandlerId = 0;
+
+        // If claim handler id matches, increment counter
         for (Claim claim : claims) {
             if (claim.getClaim_handler_assigned_id() == id) {
                 numClaimsForClaimHandlerId++;
             }
         }
+
         return numClaimsForClaimHandlerId;
     }
 
@@ -101,11 +106,14 @@ public class SimpleDataTool {
     public int getNumDisastersForState(String stateName) {
         List<Disaster> disasters = getDisasters();
         int numDisastersForState = 0;
+
+        // If state name matches, increment counter
         for (Disaster disaster : disasters) {
             if (disaster.getState().equals(stateName)) {
                 numDisastersForState++;
             }
         }
+
         return numDisastersForState;
     }
 
@@ -126,6 +134,7 @@ public class SimpleDataTool {
         // Map of disaster to cost
         Map<Integer, Double> disasterToCost = new HashMap<Integer, Double>();
 
+        // Populate map with all disasters
         for (Claim claim : claims) {
             int disasterId = claim.getDisaster_id();
             Double claimCost = claim.getEstimate_cost();
@@ -138,6 +147,7 @@ public class SimpleDataTool {
             }
         }
 
+        // Return cost if disaster exists, otherwise return null
         if (disasterToCost.containsKey(id)) {
             BigDecimal bd = new BigDecimal(disasterToCost.get(id));
             bd = bd.setScale(2, RoundingMode.HALF_UP);
@@ -161,6 +171,7 @@ public class SimpleDataTool {
         // Map of claim handler to cost
         Map<Integer, Double> claimHandlerToCost = new HashMap<Integer, Double>();
 
+        // Populate map with all claim handlers
         for (Claim claim : claims) {
             int claimHandlerId = claim.getClaim_handler_assigned_id();
             Double claimCost = claim.getEstimate_cost();
@@ -173,6 +184,7 @@ public class SimpleDataTool {
             }
         }
 
+        // Return average cost if claim handler exists, otherwise return null
         if (claimHandlerToCost.containsKey(id)) {
             int numClaims = getNumClaimsForClaimHandlerId(id);
             Double totalCost = claimHandlerToCost.get(id);
@@ -180,6 +192,7 @@ public class SimpleDataTool {
 
             BigDecimal bd = new BigDecimal(averageCost);
             bd = bd.setScale(2, RoundingMode.HALF_UP);
+
             return bd.doubleValue();
         } else {
             return null;
@@ -205,6 +218,7 @@ public class SimpleDataTool {
         // Map of state to number of disasters
         Map<String, Integer> stateToNumDisasters = new HashMap<String, Integer>();
 
+        // Populate map with all states and number of disasters
         for (Disaster disaster : disasters) {
             String state = disaster.getState();
 
@@ -216,6 +230,7 @@ public class SimpleDataTool {
             }
         }
 
+        // Find max number of disasters. Uses a list in case of ties
         int maxNumDisasters = 0;
 
         for (String state : stateToNumDisasters.keySet()) {
@@ -230,6 +245,7 @@ public class SimpleDataTool {
             }
         }
 
+        // If there is a tie, we will have a list of states. Sort and return the first one alphabetically
         statesWithMostDisasters.sort(String::compareToIgnoreCase);
         return statesWithMostDisasters.get(0);
     }
@@ -253,6 +269,7 @@ public class SimpleDataTool {
         // Map of state to number of disasters
         Map<String, Integer> stateToNumDisasters = new HashMap<String, Integer>();
 
+        // Populate map with all states and number of disasters
         for (Disaster disaster : disasters) {
             String state = disaster.getState();
 
@@ -264,6 +281,7 @@ public class SimpleDataTool {
             }
         }
 
+        // Find the minimum number of disasters. Uses a list in case of ties
         int maxNumDisasters = Integer.MAX_VALUE;
 
         for (String state : stateToNumDisasters.keySet()) {
@@ -278,6 +296,7 @@ public class SimpleDataTool {
             }
         }
 
+        // If there is a tie, we will have a list of states. Sort and return the first one alphabetically
         statesWithLeastDisasters.sort(String::compareToIgnoreCase);
         return statesWithLeastDisasters.get(0);
     }
@@ -294,13 +313,17 @@ public class SimpleDataTool {
         List<Agent> agents = getAgents();
         Map<String, Integer> languageToNumAgents = new HashMap<String, Integer>();
 
+        // Loop through all agents to populate the map
         for (Agent agent : agents) {
             String state = agent.getState();
+
+            // Gets the primary and secondary language of the agent
             String language1 = agent.getPrimary_language();
             String language2 = agent.getSecondary_language();
 
+            // If state matches, add languages to map
             if (state.equalsIgnoreCase(string)) {
-                // Add primary language to map
+                // Add primary language to map - ignore English
                 if (!language1.equalsIgnoreCase("English")) {
                     if (languageToNumAgents.containsKey(language1)) {
                     int newNumAgents = languageToNumAgents.get(language1) + 1;
@@ -310,7 +333,7 @@ public class SimpleDataTool {
                     }
                 }
 
-                // Add secondary language to map
+                // Add secondary language to map ignore English
                 if (!language2.equalsIgnoreCase("English")) {
                     if (languageToNumAgents.containsKey(language2)) {
                     int newNumAgents = languageToNumAgents.get(language2) + 1;
@@ -322,6 +345,7 @@ public class SimpleDataTool {
             }
         } 
 
+        // Find the most spoken language
         int maxNumAgents = 0;
         String mostSpokenLanguage = "";
 
@@ -352,6 +376,7 @@ public class SimpleDataTool {
      *         null if agent does not exist, or agent has no claims (open or not)
      */
     public Integer getNumOfOpenClaimsForAgentAndSeverity(int agentId, int minSeverityRating) {
+        // If rating is out of bounds, return -1
         if (minSeverityRating < 1 || minSeverityRating > 10) {
             return -1;
         }
@@ -396,6 +421,7 @@ public class SimpleDataTool {
         List<Disaster> disasters = getDisasters();
         int numDisastersDeclaredAfterEndDate = 0;
 
+        // Loop through disasters and increment counter if declared date is after end date
         for (Disaster disaster : disasters) {
             LocalDate declaredDate = disaster.getDeclared_date();
             LocalDate endDate = disaster.getEnd_date();
@@ -404,6 +430,7 @@ public class SimpleDataTool {
                 numDisastersDeclaredAfterEndDate++;
             }
         }
+
         return numDisastersDeclaredAfterEndDate;
     }
 
@@ -429,6 +456,7 @@ public class SimpleDataTool {
             agentToTotalClaimCost.put(agentId, 0.0f);
         }
 
+        // Loop through claims and add cost to agent's total claim cost
         for (Claim claim : claims) {
             int agentId = claim.getAgent_assigned_id();
             Double claimCost = claim.getEstimate_cost();
@@ -465,6 +493,7 @@ public class SimpleDataTool {
         // Map of disaster to claims
         Map<Integer, List<Claim>> disasterToClaims = new HashMap<Integer, List<Claim>>();
 
+        // Populate map with all disasters
         for (Claim claim : claims) {
             int disasterId = claim.getDisaster_id();
 
@@ -489,6 +518,7 @@ public class SimpleDataTool {
             disasterToImpactRadius.put(disasterId, impactRadius);
         }
 
+        // If disaster exists, calculate density, otherwise return null
         if (disasterToClaims.containsKey(id)) {
             List<Claim> claimsForDisaster = disasterToClaims.get(id);
             float impactRadius = disasterToImpactRadius.get(id);
