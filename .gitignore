@@ -339,3 +339,6 @@ dist
 # Built Visual Studio Code Extensions
 *.vsix
 # End - VSCode
+java/.idea/libraries/Maven__com_google_code_gson_gson_2_10_1.xml
+java/.idea/libraries/Maven__junit_junit_4_12.xml
+java/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml

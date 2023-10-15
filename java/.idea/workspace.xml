@@ -30,14 +30,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Suharta/Desktop/2023-StateFarm-CodingCompetition/java"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Suharta/Desktop/2023-StateFarm-CodingCompetition/java&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="JUnit.TestSet2">
-    <configuration name="TestSet2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestSet2" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="Round1Java" />
       <extension name="coverage">
         <pattern>
@@ -68,6 +68,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestSet2.test8_getNumOfOpenClaimsForAgentAndSeverity" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Round1Java" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.statefarm.codingcompetition.simpledatatool.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.statefarm.codingcompetition.simpledatatool" />
+      <option name="MAIN_CLASS_NAME" value="com.statefarm.codingcompetition.simpledatatool.TestSet2" />
+      <option name="METHOD_NAME" value="test8_getNumOfOpenClaimsForAgentAndSeverity" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestSet3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Round1Java" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.statefarm.codingcompetition.simpledatatool.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.statefarm.codingcompetition.simpledatatool" />
+      <option name="MAIN_CLASS_NAME" value="com.statefarm.codingcompetition.simpledatatool.TestSet3" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="java" />
       <method v="2">
@@ -83,7 +114,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestSet2" />
+        <item itemvalue="JUnit.TestSet3" />
+        <item itemvalue="JUnit.TestSet2.test8_getNumOfOpenClaimsForAgentAndSeverity" />
         <item itemvalue="JUnit.TestSet2.test7_getMostSpokenAgentLanguageByState" />
       </list>
     </recent_temporary>
@@ -98,5 +130,16 @@
       <updated>1697331278365</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
 </project>
