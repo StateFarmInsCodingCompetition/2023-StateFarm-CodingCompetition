@@ -355,7 +355,18 @@ class SimpleDataTool:
         disaster_data = self.get_disaster_data()
 
         claims_df = pd.DataFrame(claims_data)
+        claims_df = claims_df[['disaster_id']]
+
         disaster_df = pd.DataFrame(disaster_data)
+        disaster_df = disaster_df[['id', 'declared_date']]
+
+        merged_df = pd.merge(claims_df, disaster_df, left_on='disaster_id', right_on='id')
+        merged_df['month_year'] = pd.to_datetime(merged_df['declared_date']).dt.strftime('%B %Y')
+
+        grouped_df = merged_df.groupby('month_year').size().reset_index(name='count')
+        grouped_df = grouped_df.sort_values(by='count', ascending=False)
+
+        return grouped_df['month_year'].head(3).tolist()
 
 
 
