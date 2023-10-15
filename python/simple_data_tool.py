@@ -75,7 +75,12 @@ class SimpleDataTool:
         Returns:
             int: number of claims assigned to claim handler
         """
-        pass
+        claims = self.get_claim_data()
+        count = 0
+        for claim in claims:
+            if claim['claim_handler_assigned_id'] == claim_handler_id:
+                count += 1
+        return count
 
     def get_num_disasters_for_state(self, state):
         """Calculates the number of disasters for a specific state
