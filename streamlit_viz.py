@@ -8,7 +8,7 @@ df = pd.read_json('data/sfcc_2023_disasters.json')
 df = df.drop(['description'], axis=1)
 df['month_year'] = pd.to_datetime(df['declared_date']).dt.strftime('%Y-%m')
 
-st.title("Disasters in the US Over Time")
+st.title("Disasters in the US By Year")
 
 select_time = st.selectbox("Select Month and Year", ["All"] + sorted(df['month_year'].unique()))
 
@@ -21,14 +21,14 @@ fig = px.scatter_geo(filter_df, lat = 'lat', lon = 'long', size = 'radius_miles'
                      hover_name='name', hover_data=['radius_miles'])
 fig.update_geos(
     projection_type="albers usa",
-    bgcolor= "black",  # Background color
+    bgcolor= f"rgb(14, 17, 23)",
     showland=True,
-    landcolor="black",  # Land color
+    landcolor="black",
     showcoastlines=True,
-    coastlinecolor="white",  # Coastline color
+    coastlinecolor="white", 
 )
 fig.update_layout(
     font=dict(color="white"),  # Text color
-    paper_bgcolor="black",  # Plot area background color
+    paper_bgcolor=f"rgb(14, 17, 23)",  # Plot area background color
 )
 st.plotly_chart(fig)
