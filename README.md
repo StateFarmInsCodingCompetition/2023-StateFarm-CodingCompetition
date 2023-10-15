@@ -11,7 +11,7 @@ cd 2023-StateFarm-CodingCompetition
 
 2. Install the necessary packages:
 ```
-pip install fastapi[all] uvicorn
+pip install -r requirements.txt
 ```
 
 3. Run the application:
