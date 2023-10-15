@@ -424,6 +424,27 @@ class SimpleDataTool:
             list: three strings of month and year, descending order of highest claims
         """
 
-        pass
+        claims_df = pd.DataFrame(self.get_claim_data())
+        open_claims_df = claims_df[claims_df['status'] != 'Closed']
+
+        disasters_df = pd.DataFrame(self.get_disaster_data())
+
+        merged_df = pd.merge(open_claims_df, disasters_df, left_on='disaster_id', right_on='id', how='inner')
+
+        merged_df['declared_date'] = pd.to_datetime(merged_df['declared_date'])
+        merged_df['month_year'] = merged_df['declared_date'].dt.strftime('%B %Y')
+
+        grouped_df = merged_df.groupby('month_year')['estimate_cost'].sum()
+
+        top_three_months = grouped_df.nlargest(3)
+
+        print(top_three_months)
+
+        return top_three_months.index.tolist()
+
+
+
+
+
 
     # endregion
