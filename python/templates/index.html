@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Data Viewer</title>
+</head>
+<body>
+    <h1>Interactive Data Viewer</h1>
+    <form method="POST" action="/">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        <label for="data_type">Select Data Type:</label>
+        {{ form.data_type }}
+        <button type="submit">Fetch Data</button>
+    </form>
+    <hr>
+    {% if data %}
+        <h2>Data:</h2>
+        <ul>
+            {% for item in data %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
