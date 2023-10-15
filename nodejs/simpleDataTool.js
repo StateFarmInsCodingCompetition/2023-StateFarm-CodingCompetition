@@ -57,11 +57,11 @@ class SimpleDataTool {
      */
     getTotalClaimCostForDisaster(disasterId) {
         let disasterClaims = sfcc2023Claims.filter((x) => x.disaster_id == disasterId);
-        if(disasterClaims.length <= 0){
+        if (disasterClaims.length <= 0) {
             return null;
         }
         let costSum = 0.0;
-        for(let i = 0; i < disasterClaims.length; i++){
+        for (let i = 0; i < disasterClaims.length; i++) {
             costSum += disasterClaims[i].estimate_cost;
         }
 
@@ -77,17 +77,17 @@ class SimpleDataTool {
      */
     getAverageClaimCostForClaimHandler(claimHandlerId) {
         let claims = sfcc2023Claims.filter((x) => x.claim_handler_assigned_id == claimHandlerId);
-        if(claims.length < 1){
-            return null;   
+        if (claims.length < 1) {
+            return null;
         }
         let total = 0;
-        for(let i = 0; i < claims.length; i++){
+        for (let i = 0; i < claims.length; i++) {
             total = total + claims[i].estimate_cost
         }
         let avg = total / claims.length;
 
         return Number(avg.toFixed(2));
-        
+
     }
 
     /**
@@ -99,8 +99,8 @@ class SimpleDataTool {
      */
     getStateWithMostDisasters() {
         let dict = {};
-        sfcc2023Disasters.forEach( x => {
-            if(!dict[x.state]){
+        sfcc2023Disasters.forEach(x => {
+            if (!dict[x.state]) {
                 dict[x.state] = 0;
             }
             dict[x.state]++;
@@ -109,9 +109,9 @@ class SimpleDataTool {
         let highestKey = null;
         let keys = Object.keys(dict);
         let dictSize = keys.length;
-        for(let i = 0; i < dictSize; i++){
-            if(dict[keys[i]] >= highestVal){
-                if(dict[keys[i]] != highestVal || (highestKey == null || keys[i] < highestKey)){
+        for (let i = 0; i < dictSize; i++) {
+            if (dict[keys[i]] >= highestVal) {
+                if (dict[keys[i]] != highestVal || (highestKey == null || keys[i] < highestKey)) {
                     highestVal = dict[keys[i]];
                     highestKey = keys[i];
                 }
@@ -133,8 +133,8 @@ class SimpleDataTool {
      */
     getStateWithLeastDisasters() {
         let dict = {};
-        sfcc2023Disasters.forEach( x => {
-            if(!dict[x.state]){
+        sfcc2023Disasters.forEach(x => {
+            if (!dict[x.state]) {
                 dict[x.state] = 0;
             }
             dict[x.state]++;
@@ -143,9 +143,9 @@ class SimpleDataTool {
         let lowestKey = null;
         let keys = Object.keys(dict);
         let dictSize = keys.length;
-        for(let i = 0; i < dictSize; i++){
-            if(dict[keys[i]] <= lowestVal){
-                if(dict[keys[i]] != lowestVal || (lowestKey == null || keys[i] < lowestKey)){
+        for (let i = 0; i < dictSize; i++) {
+            if (dict[keys[i]] <= lowestVal) {
+                if (dict[keys[i]] != lowestVal || (lowestKey == null || keys[i] < lowestKey)) {
                     lowestVal = dict[keys[i]];
                     lowestKey = keys[i];
                 }
@@ -164,15 +164,21 @@ class SimpleDataTool {
         let langCount = {};
 
         let bilinguals = sfcc2023Agents.filter(x => (x.state === state && x.secondary_language));
-        if(bilinguals.length < 1){
+        if (bilinguals.length < 1) {
             return "";
         }
 
         bilinguals.forEach(x => {
-            if(!langCount[x.secondary_language]){
+            if (!langCount[x.secondary_language]) {
                 langCount[x.secondary_language] = 0;
             }
             langCount[x.secondary_language]++;
+            if(x.primary_language != "English"){
+                if (!langCount[x.primary_language]) {
+                    langCount[x.primary_language] = 0;
+                }
+                langCount[x.primary_language]++;
+            }
         });
 
         let highestVal = Number.MIN_VALUE;
@@ -180,9 +186,9 @@ class SimpleDataTool {
         let keys = Object.keys(langCount);
         let dictSize = keys.length;
 
-        for(let i = 0; i < dictSize; i++){
-            if(langCount[keys[i]] >= highestVal){
-                if(langCount[keys[i]] != highestVal || (highestKey == "" || keys[i] < highestKey)){
+        for (let i = 0; i < dictSize; i++) {
+            if (langCount[keys[i]] >= highestVal) {
+                if (langCount[keys[i]] != highestVal || (highestKey == "" || keys[i] < highestKey)) {
                     highestVal = langCount[keys[i]];
                     highestKey = keys[i];
                 }
@@ -203,11 +209,11 @@ class SimpleDataTool {
      *                          null if agent does not exist, or agent has no claims (open or not).
      */
     getNumOfOpenClaimsForAgentAndSeverity(agentId, minSeverityRating) {
-        if(minSeverityRating < 1 || minSeverityRating > 10){
+        if (minSeverityRating < 1 || minSeverityRating > 10) {
             return -1;
         }
-        let claims = sfcc2023Claims.filter((x) => {return (x.agent_assigned_id == agentId )&&(x.severity_rating >= minSeverityRating)&&(x.status != "Closed")})
-        if(claims.length < 1){
+        let claims = sfcc2023Claims.filter((x) => { return (x.agent_assigned_id == agentId) && (x.severity_rating >= minSeverityRating) && (x.status != "Closed") })
+        if (claims.length < 1) {
             return null;
         }
         return claims.length;
@@ -223,7 +229,7 @@ class SimpleDataTool {
         sfcc2023Disasters.forEach(x => {
             let d_day = this.dateHelper(x.declared_date);
             let e_day = this.dateHelper(x.end_date)
-            if(d_day > e_day){
+            if (d_day > e_day) {
                 count++;
             }
         })
@@ -241,13 +247,13 @@ class SimpleDataTool {
      */
     buildMapOfAgentsToTotalClaimCost() {
         let dict = {};
-        sfcc2023Agents.forEach(x => {dict[x.id] = 0});
-        sfcc2023Claims.forEach( x =>{
-            if(x.agent_assigned_id > 0 && x.agent_assigned_id < 101){
-                dict[x.agent_assigned_id] =  Number((dict[x.agent_assigned_id]+ x.estimate_cost).toFixed(2));
+        sfcc2023Agents.forEach(x => { dict[x.id] = 0 });
+        sfcc2023Claims.forEach(x => {
+            if (x.agent_assigned_id > 0 && x.agent_assigned_id < 101) {
+                dict[x.agent_assigned_id] = Number((dict[x.agent_assigned_id] + x.estimate_cost).toFixed(2));
             }
         });
-        
+
         return dict;
     }
 
@@ -263,18 +269,18 @@ class SimpleDataTool {
      */
     calculateDisasterClaimDensity(disasterId) {
         let disaster = sfcc2023Disasters.filter(x => x.id == disasterId);
-        if(disaster.length == 0) {
+        if (disaster.length == 0) {
             return null;
         }
         let claimCount = 0;
         sfcc2023Claims.forEach(x => {
-            if(x.disaster_id == disasterId){
+            if (x.disaster_id == disasterId) {
                 claimCount++;
             }
         })
-        let disasterArea = (Math.PI * Math.pow(disaster[0].radius_miles,2))
+        let disasterArea = (Math.PI * Math.pow(disaster[0].radius_miles, 2))
         return Number((claimCount / disasterArea).toFixed(5));
-        
+
     }
 
     /**
@@ -291,36 +297,62 @@ class SimpleDataTool {
         let disasterMap = {}
         let dateMap = {}
         let arr = [];
-        let dateOptions = {year: 'numeric', month:'long'}
+        let dateOptions = { year: 'numeric', month: 'long' }
 
         sfcc2023Disasters.forEach(x => {
             let date = this.dateHelper(x.declared_date)
-            let dateStr = date.toLocaleDateString(undefined,dateOptions)
+            let dateStr = date.toLocaleDateString(undefined, dateOptions)
             disasterMap[x.id] = dateStr;
-            if(dateMap[dateStr] == undefined){
-                dateMap[dateStr] = arr.push({str:dateStr,count:0,claims:[]}) - 1;
+            if (dateMap[dateStr] == undefined) {
+                dateMap[dateStr] = arr.push({ str: dateStr, count: 0, claims: [] }) - 1;
             }
         });
 
-        sfcc2023Claims.forEach( x => {
+        sfcc2023Claims.forEach(x => {
             let key = dateMap[disasterMap[x.disaster_id]];
             arr[key].count++;
             arr[key].claims.push(x.id);
         });
 
-        arr.sort( (x,y) => {return y.count - x.count});
+        arr.sort((x, y) => { return y.count - x.count });
         arr.splice(3);
         let fin = arr.map(x => x.str);
 
         return fin;
     }
 
-    dateHelper(dateStr){
+
+    //Extension
+
+    dateHelper(dateStr) {
         let splitStr = dateStr.split('-');
-        return new Date(splitStr[0],splitStr[1] - 1,splitStr[2]);
+        return new Date(splitStr[0], splitStr[1] - 1, splitStr[2]);
     }
 
-    
+    getAgent(agentId) {
+        let agent = sfcc2023Agents.filter(x => x.id == agentId);
+        return agent;
+    }
+
+    getClaim(claimId) {
+        let claim = sfcc2023Claims.filter(x => x.id == claimId);
+        return claim;
+    }
+
+    getDisaster(disasterId) {
+        let disaster = sfcc2023Disasters.filter(x => x.id == disasterId);
+        return disaster;
+    }
+
+    getClaimHandler(handlerId) {
+        let handler = sfcc2023ClaimHandlers.filter(x => x.id == handlerId);
+        return handler;
+    }
+
+    loadSimpleModels() {
+        return 0;
+    }
+
 }
 
 module.exports = SimpleDataTool;
