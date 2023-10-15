@@ -163,9 +163,9 @@ public class SimpleDataTool {
      * @return number of claims that are not closed and have minimum severity rating
      *         or greater
      *         -1 if severity rating out of bounds
-     *         None if agent does not exist, or agent has no claims (open or not)
+     *         null if agent does not exist, or agent has no claims (open or not)
      */
-    public int getNumOfOpenClaimsForAgentAndSeverity(int agentId, int minSeverityRating) {
+    public Integer getNumOfOpenClaimsForAgentAndSeverity(int agentId, int minSeverityRating) {
         return -2;
     }
 
