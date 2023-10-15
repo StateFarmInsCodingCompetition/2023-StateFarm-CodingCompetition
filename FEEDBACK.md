@@ -13,7 +13,7 @@
         - The website will then be available at `http://127.0.0.1:8080`
      
     - Add Chart View to visualize the number of claims per month. The same setup instructions as above.
-        - Some code when implementing this feature is duplicated from `simpleDataTool.js`, since I didn't have time to implement REST API. This is a good thing to add in the future.
+        - Some code when implementing this feature is duplicated from `simpleDataTool.js`, since I didn't have time to implement REST API. This is something that could be improved in the future.
     
 5. Any feedback for the coding competition? Things you would like to see in future events?
 
