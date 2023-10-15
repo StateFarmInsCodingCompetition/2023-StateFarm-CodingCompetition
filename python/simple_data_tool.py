@@ -249,7 +249,59 @@ class SimpleDataTool:
                         None if agent does not exist, or agent has no claims (open or not)
         """
 
-        pass
+        def check_agent_exists(agent_id, agents):
+            """Checks if agent exists
+
+            Args:
+                agent_id (int): ID of the agent
+                agents (list): list of agents
+
+            Returns:
+                bool: True if agent exists, False otherwise
+            """
+            for agent in agents:
+                if agent['id'] == agent_id:
+                    return True
+            return False
+        
+        def claim_has_min_severity_rating(claim, min_severity_rating):
+            """Checks if claim has minimum severity rating
+
+            Args:
+                claim (dict): claim data
+                min_severity_rating (int): minimum claim severity rating
+
+            Returns:
+                bool: True if claim has minimum severity rating, False otherwise
+            """
+            return claim['severity_rating'] >= min_severity_rating
+        
+        def claim_is_open(claim):
+            """Checks if claim is open
+
+            Args:
+                claim (dict): claim data
+
+            Returns:
+                bool: True if claim is open, False otherwise
+            """
+            return claim['status'] != 'Closed'
+
+        agents = self.get_agent_data()
+        claims = self.get_claim_data()
+
+        # Check if agent exists
+        if not check_agent_exists(agent_id, agents) or (min_severity_rating < 1 or min_severity_rating > 10):
+            return -1
+        
+        # Keeps track of the number of open claims with at least the minimum severity rating
+        count = 0
+
+        for claim in claims:
+            if claim['agent_assigned_id'] == agent_id and claim_has_min_severity_rating(claim, min_severity_rating) and claim_is_open(claim):
+                count += 1
+
+        return count if count > 0 else None
 
     # endregion
 
