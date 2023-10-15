@@ -16,6 +16,10 @@ public class TestSet4 {
         controller = new SimpleDataTool();
     }
 
+    /**
+     * OPTIONAL! OPTIONAL! OPTIONAL!
+     * AS OF 9:21CDT, TEST IS OPTIONAL. SEE GITHUB ISSUE #8 FOR MORE DETAILS
+     */
     @Test
     public void test12_getTopThreeMonthsWithHighestNumOfClaimsDesc() {
         String[] topThreeMonths = controller.getTopThreeMonthsWithHighestNumOfClaimsDesc();
