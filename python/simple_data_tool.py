@@ -2,7 +2,7 @@ import json
 import math
 
 from statistics import mean
-
+from datetime import datetime
 
 
 class SimpleDataTool:
@@ -196,16 +196,19 @@ class SimpleDataTool:
             string: single name of state
         """
         disaster_data = self.get_disaster_data()
-        counter = 0
-        state_with_most_disasters = disaster_data[0["state"]]
+        states = []
         for i in disaster_data:
-            count_of_state = disaster_data.count(i["state"])
-            if count_of_state > counter:
-                counter = count_of_state
-                state_with_most_disasters = i["state"]
-        return state_with_most_disasters
-        
+            states.append(i["state"])
+        states_with_count = {}
+        for state in states:
+            if state in states_with_count:
+                states_with_count[state] += 1
+            else:
+                states_with_count[state] = 1
+        sorted_states = dict(sorted(states_with_count.items()))
+        return max(sorted_states, key=sorted_states.get)
 
+   
     def get_state_with_least_disasters(self):
         """Returns the name of the state with the least disasters based on disaster data
 
@@ -219,7 +222,19 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+        disaster_data = self.get_disaster_data()
+        states = []
+        for i in disaster_data:
+            states.append(i["state"])
+        states_with_count = {}
+        for state in states:
+            if state in states_with_count:
+                states_with_count[state] += 1
+            else:
+                states_with_count[state] = 1
+        sorted_states = dict(sorted(states_with_count.items()))
+        return min(sorted_states, key=sorted_states.get)
+
     
     def get_most_spoken_agent_language_by_state(self, state):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
@@ -231,7 +246,22 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        pass
+        agent_data = self.get_agent_data()
+        languages = []
+        for i in agent_data:
+            if i["state"] == state:
+                languages.append(i["secondary_language"])
+        languages_with_count = {}
+        for language in languages:
+            if language in languages_with_count:
+                languages_with_count[language] += 1
+            else:
+                languages_with_count[language] = 1
+        sorted_languages = dict(sorted(languages_with_count.items()))
+        if len(languages) > 0:
+            return max(sorted_languages, key=sorted_languages.get)
+        else:
+            return ""
 
     def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
@@ -247,8 +277,18 @@ class SimpleDataTool:
                         -1 if severity rating out of bounds
                         None if agent does not exist, or agent has no claims (open or not)
         """
-
-        pass
+        claim_data = self.get_claim_data()
+        num_open_claims = 0
+        if min_severity_rating >= 1 & min_severity_rating <= 10:
+            for i in claim_data:
+                if i["agent_assigned_id"] == agent_id & i["severity_rating"] >= min_severity_rating & i["status"] != "Closed":
+                    num_open_claims += 1
+        else:
+            num_open_claims = -1
+        if num_open_claims != 0:
+            return num_open_claims
+        else:
+            return None
 
     # endregion
 
@@ -260,8 +300,15 @@ class SimpleDataTool:
         Returns:
             int: number of disasters where the declared date is after the end date
         """
-
-        pass
+        disaster_data = self.get_disaster_data()
+        num_disasters = 0
+        for i in disaster_data:
+            end_date = datetime.strptime(i["end_date"], "%Y-%m-%d")
+            declared_date = datetime.strptime(i["declared_date"], "%Y-%m-%d")
+            if declared_date > end_date:
+                num_disasters += 1
+        return num_disasters
+        
 
     def build_map_of_agents_to_total_claim_cost(self):
         """Builds a map of agent and their total claim cost
@@ -313,5 +360,3 @@ class SimpleDataTool:
 
     # endregion
 
-# data = SimpleDataTool()
-# data.get_num_closed_claims()
