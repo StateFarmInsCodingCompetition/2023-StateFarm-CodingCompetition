@@ -1,13 +1,16 @@
 import json
 import math
 import pandas as pd
+from pandas import DataFrame
+import datetime as dt
 
 from statistics import mean
 
+dates = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
+         'December']
 
 
 class SimpleDataTool:
-
     AGENTS_FILEPATH = 'data/sfcc_2023_agents.json'
     CLAIM_HANDLERS_FILEPATH = 'data/sfcc_2023_claim_handlers.json'
     CLAIMS_FILEPATH = 'data/sfcc_2023_claims.json'
@@ -60,10 +63,9 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
-        pclaims = pd.json_normalize(self.get_claim_data(), record_path='status')
-        print(pclaims)
-
-        pass
+        pclaims = pd.json_normalize(self.get_claim_data())
+        res = pclaims.loc[pclaims['status'] == 'Closed']
+        return len(res.index)
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
         """Calculates the number of claims assigned to a specific claim handler
@@ -74,7 +76,9 @@ class SimpleDataTool:
         Returns:
             int: number of claims assigned to claim handler
         """
-        pass
+        pclaims = pd.json_normalize(self.get_claim_data())
+        res = pclaims.loc[pclaims['claim_handler_assigned_id'] == claim_handler_id]
+        return len(res.index)
 
     def get_num_disasters_for_state(self, state):
         """Calculates the number of disasters for a specific state
@@ -86,7 +90,9 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-        pass
+        pclaims = pd.json_normalize(self.get_disaster_data())
+        res = pclaims.loc[pclaims['state'] == state]
+        return len(res.index)
 
     # endregion
 
@@ -102,8 +108,12 @@ class SimpleDataTool:
             float | None: estimate cost of disaster, rounded to the nearest hundredths place
                           returns None if no claims are found
         """
-
-        pass
+        pclaims = pd.json_normalize(self.get_claim_data())
+        related = pclaims.loc[pclaims['disaster_id'] == disaster_id]
+        res = related['estimate_cost'].sum()
+        if res == 0:
+            res = None
+        return res
 
     def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
         """Gets the average estimated cost of all claims assigned to a claim handler
@@ -115,8 +125,17 @@ class SimpleDataTool:
             float | None : average cost of claims, rounded to the nearest hundredths place
                            or None if no claims are found
         """
+        pclaims = pd.json_normalize(self.get_claim_data())
+        related = pclaims.loc[pclaims['claim_handler_assigned_id'] == claim_handler_id]
+        if related.empty:
+            return None
 
-        pass
+        res = related['estimate_cost'].mean()
+        if res == 0:
+            res = None
+        else:
+            res = round(res, 2)
+        return res
 
     def get_state_with_most_disasters(self):
         """Returns the name of the state with the most disasters based on disaster data
@@ -131,7 +150,11 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+        pclaims = pd.json_normalize(self.get_disaster_data())
+        related: DataFrame = pclaims['state'].value_counts().reset_index(drop=False)
+        related.sort_values(by=['count', 'state'], ascending=[False, True], inplace=True)
+        res = related['state'].iloc[0]
+        return res
 
     def get_state_with_least_disasters(self):
         """Returns the name of the state with the least disasters based on disaster data
@@ -146,8 +169,12 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
-    
+        pclaims = pd.json_normalize(self.get_disaster_data())
+        related: DataFrame = pclaims['state'].value_counts().reset_index(drop=False)
+        related.sort_values(by=['count', 'state'], ascending=[True, True], inplace=True)
+        res = related['state'].iloc[0]
+        return res
+
     def get_most_spoken_agent_language_by_state(self, state):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
 
@@ -158,7 +185,24 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        pass
+        pclaims = pd.json_normalize(self.get_agent_data())
+        pclaims = pclaims.loc[pclaims['state'] == state]
+
+        primary: DataFrame = pclaims['primary_language'].value_counts().reset_index(drop=False)
+        secondary = pclaims['secondary_language'].value_counts().reset_index(drop=False)
+
+        primary.columns = ['language', 'count']
+        secondary.columns = ['language', 'count']
+
+        merged = pd.concat([primary, secondary])
+        if merged.empty:
+            return ''
+
+        res = merged['language'].iloc[0]
+        if res == 'English':
+            res = merged['language'].iloc[1]
+
+        return res
 
     def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
@@ -175,7 +219,16 @@ class SimpleDataTool:
                         None if agent does not exist, or agent has no claims (open or not)
         """
 
-        pass
+        if min_severity_rating < 1 or min_severity_rating > 10:
+            return -1
+
+        pclaims = pd.json_normalize(self.get_claim_data())
+        res = pclaims.loc[(pclaims['agent_assigned_id'] == agent_id)
+                          & (pclaims['severity_rating'] >= min_severity_rating)
+                          & (pclaims['status'] != 'Closed')]
+        if res.empty:
+            return None
+        return len(res.index)
 
     # endregion
 
@@ -188,7 +241,9 @@ class SimpleDataTool:
             int: number of disasters where the declared date is after the end date
         """
 
-        pass
+        pclaims = pd.json_normalize(self.get_disaster_data())
+        res = pclaims.loc[pclaims['end_date'] < pclaims['declared_date']]
+        return len(res.index)
 
     def build_map_of_agents_to_total_claim_cost(self):
         """Builds a map of agent and their total claim cost
@@ -202,7 +257,11 @@ class SimpleDataTool:
             dict: key is agent id, value is total cost of claims associated to the agent
         """
 
-        pass
+        pclaims = pd.json_normalize(self.get_claim_data())
+        res = pclaims.groupby('agent_assigned_id')['estimate_cost'].sum().round(2).to_frame()
+        res = res.reindex(range(1, 101), fill_value=0).reset_index()
+
+        return pd.Series(res.estimate_cost.values, index=res.agent_assigned_id).to_dict()
 
     def calculate_disaster_claim_density(self, disaster_id):
         """Calculates density of a diaster based on the number of claims and impact radius
@@ -218,7 +277,17 @@ class SimpleDataTool:
             float: density of claims to disaster area, rounded to the nearest thousandths place
                    None if disaster does not exist
         """
-        pass
+        pclaims = pd.json_normalize(self.get_claim_data())
+        related = pclaims.loc[pclaims['disaster_id'] == disaster_id]
+        if related.empty:
+            return None
+
+        num = len(related.index)
+
+        pdisasters = pd.json_normalize(self.get_disaster_data())
+        radius = pdisasters.loc[pdisasters['id'] == disaster_id]['radius_miles'].iloc[0]
+
+        return round(num / (math.pi * radius ** 2), 5)
 
     # endregion
 
@@ -236,6 +305,23 @@ class SimpleDataTool:
             list: three strings of month and year, descending order of highest claims
         """
 
-        pass
+        pclaims = pd.json_normalize(self.get_claim_data())
+        related = pclaims['disaster_id'].value_counts().reset_index(drop=False)
+
+        pdisasters = pd.json_normalize(self.get_disaster_data())
+        related = related.map(str)
+
+        for i, row in related.iterrows():
+            date = dt.datetime.strptime(pdisasters.loc[pdisasters['id'] == int(row.iloc[0])]['declared_date'].iloc[0],
+                                        '%Y-%m-%d')
+            row.iloc[0] = dates[date.month - 1] + ' ' + str(date.year)
+
+        related['count'] = related['count'].astype(int)
+
+        related = related.groupby('disaster_id')['count'].sum().to_frame().reset_index()  # xd now its actually month:count
+        related.columns = ['month', 'count']
+        related.sort_values(by=['count'], ascending=[False], inplace=True)
+
+        return [related['month'].iloc[0], related['month'].iloc[1], related['month'].iloc[2]]
 
     # endregion
