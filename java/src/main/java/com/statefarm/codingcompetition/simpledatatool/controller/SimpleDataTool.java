@@ -266,7 +266,7 @@ public class SimpleDataTool {
         // loop through map and take the least # of disasters in alphabetical order
         for (Map.Entry<String, Integer> element : stateMap.entrySet()) {
 
-            if(leastDisasters == 0) {   //initialize least disasters
+            if (leastDisasters == 0) { // initialize least disasters
                 leastDisasters = element.getValue();
                 continue;
             }
@@ -290,7 +290,41 @@ public class SimpleDataTool {
      *         or empty string if state doesn't exist
      */
     public String getMostSpokenAgentLanguageByState(String string) {
-        return null;
+
+        HashMap<String, Integer> languageMap = new HashMap<String, Integer>();
+
+        List<Agent> agents = getAgents();
+
+        //loop through and fill HashMap
+        for (Agent agent : agents) {
+
+            if(!string.equals(agent.getState())) continue;
+            String secondaryLan = agent.getSecondary_language();
+
+            if (!languageMap.containsKey(secondaryLan)) { // initialize if new element
+                languageMap.put(secondaryLan, 1);
+                continue;
+            }
+
+            languageMap.put(secondaryLan, languageMap.get(secondaryLan) + 1); // Add one if existing element
+        }
+
+        String result = "";
+        int mostSpoken = 0;
+        // loop through map and take the most spoken secondary language
+        for (Map.Entry<String, Integer> element : languageMap.entrySet()) {
+
+
+
+            if (element.getValue() < mostSpoken)
+                continue;
+
+            mostSpoken = element.getValue();
+            result = element.getKey();
+        }
+
+
+        return result;
     }
 
     /**
