@@ -4,7 +4,6 @@ import math
 from statistics import mean
 
 
-
 class SimpleDataTool:
 
     AGENTS_FILEPATH = 'data/sfcc_2023_agents.json'
@@ -59,7 +58,23 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
-        pass
+        # Initialize close count
+        closed_claims = 0
+
+        # Get Data
+        data = self.get_claim_data()
+
+        # Loop through claim data
+        for item in data:
+
+            # Check if claim is
+            if item["status"] == 'Closed':
+
+                # Increase amount of closed claims
+                closed_claims += 1
+
+        # Return Closed claim amount
+        return closed_claims
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
         """Calculates the number of claims assigned to a specific claim handler
@@ -70,7 +85,23 @@ class SimpleDataTool:
         Returns:
             int: number of claims assigned to claim handler
         """
-        pass
+        # Initialize claim count
+        claim_count = 0
+
+        # Get Data of claims
+        data = self.get_claim_data()
+
+        # Loop through casses
+        for item in data:
+
+            # Check if item has claim id in it
+            if item['claim_handler_assigned_id'] == claim_handler_id:
+
+                # Increase claim count
+                claim_count += 1
+
+        # Return count of claim
+        return claim_count
 
     def get_num_disasters_for_state(self, state):
         """Calculates the number of disasters for a specific state
@@ -82,7 +113,23 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-        pass
+        # Initialize number of disasters
+        num_disasters = 0
+
+        # Get data
+        data = self.get_disaster_data()
+
+        # Loop through data
+        for item in data:
+
+            # check if item is for state specified
+            if item['state'] == state:
+
+                # increase number of disasters
+                num_disasters += 1
+
+        # Return number of disasters
+        return num_disasters
 
     # endregion
 
@@ -98,8 +145,29 @@ class SimpleDataTool:
             float | None: estimate cost of disaster, rounded to the nearest hundredths place
                           returns None if no claims are found
         """
+        # Initialize total cost of damages
+        total_cost = 0.0
 
-        pass
+        # Get disaster data
+        data = self.get_claim_data()
+
+        # Loop
+        for item in data:
+
+            # check if disaster id matches
+            if item['disaster_id'] == disaster_id:
+
+                # Add to total costs
+                total_cost += item['estimate_cost']
+
+        # Check if claims were found
+        if total_cost:
+
+            # return total cost of disasters
+            return total_cost
+
+        # Return None if nothing found
+        return None
 
     def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
         """Gets the average estimated cost of all claims assigned to a claim handler
@@ -111,8 +179,35 @@ class SimpleDataTool:
             float | None : average cost of claims, rounded to the nearest hundredths place
                            or None if no claims are found
         """
+        # Initialize list of costs
+        cost_list = []
 
-        pass
+        # Initialize average cost
+        avg_cost = 0.0
+
+        # Get claims data
+        data = self.get_claim_data()
+
+        # Loop trhough data
+        for item in data:
+
+            # Check if handler id matches item
+            if item['claim_handler_assigned_id'] == claim_handler_id:
+
+                # Add Cost for claim to list of costs
+                cost_list.append(item['estimate_cost'])
+
+        # Check if claims were found
+        if len(cost_list) > 0:
+
+            # Get average cost
+            avg_cost = mean(cost_list)
+
+            # Return average cost
+            return round(avg_cost, 2)
+
+        # Return None if no claims found
+        return None
 
     def get_state_with_most_disasters(self):
         """Returns the name of the state with the most disasters based on disaster data
@@ -127,7 +222,50 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+        # Get disaster data
+        data = self.get_disaster_data()
+
+        # Create empty dictionary
+        state_totals = {}
+
+        max_state = ''
+
+        # loop through data
+        for item in data:
+
+            # Get state for current item
+            state_name = item['state']
+
+            # Check if state is in the dictionary
+            if state_name in state_totals:
+
+                # Increase total disasters for state
+                state_totals[state_name] += 1
+
+            # Otherwise initialize state
+            else:
+
+                # Set state name number of disasters to 1
+                state_totals[state_name] = 1
+
+        # Get Max disasters from all the states
+        max_states = [key for key, value in state_totals.items() if value ==
+                      max(state_totals.values())]
+
+        max_state = max_states[0]
+
+        if len(max_states) > 1:
+
+            if max_states[0] > max_states[1]:
+
+                return max_states[0]
+
+            else:
+
+                return max_states[1]
+
+        # Return first max value
+        return max_state
 
     def get_state_with_least_disasters(self):
         """Returns the name of the state with the least disasters based on disaster data
@@ -142,8 +280,40 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
-    
+        data = self.get_disaster_data()
+
+        # Create empty dictionary
+        state_totals = {}
+
+        max_state = ''
+
+        # loop through data
+        for item in data:
+
+            # Get state for current item
+            state_name = item['state']
+
+            # Check if state is in the dictionary
+            if state_name in state_totals:
+
+                # Increase total disasters for state
+                state_totals[state_name] += 1
+
+            # Otherwise initialize state
+            else:
+
+                # Set state name number of disasters to 1
+                state_totals[state_name] = 1
+
+        # Get Max disasters from all the states
+        min_states = [key for key, value in state_totals.items() if value ==
+                      min(state_totals.values())]
+
+        print(min_states)
+
+        # Return first max value
+        return min_states[0]
+
     def get_most_spoken_agent_language_by_state(self, state):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
 
@@ -154,13 +324,12 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        pass
 
     def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
 
         Note: Severity rating scale for claims is 1 to 10, inclusive.
-        
+
         Args:
             agent_id (int): ID of the agent
             min_severity_rating (int): minimum claim severity rating
