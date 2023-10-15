@@ -4,7 +4,8 @@
 2. Name of each individual participating: Matthew Walden
 3. How many unit tests were you able to pass? All of them.
 4. Document and describe any enhancements included to help the judges properly grade your submission.
-    - Example One Included rest API, install express [npm i should do the trick, as it is in package.json], then start application.js, then navigate to http://localhost:1234 [unless you specify a different env port]. Then, the paths are documented on base path [/]
+    - Example One 
+Included rest API, install express [npm i should do the trick, as it is in package.json], then start application.js, then navigate to http://localhost:1234 [unless you specify a different env port]. Then, the paths are documented on base path [/]
     - Example Two
     - Example Three
 
