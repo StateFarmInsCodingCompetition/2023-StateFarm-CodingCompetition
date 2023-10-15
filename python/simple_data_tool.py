@@ -115,7 +115,16 @@ class SimpleDataTool:
                           returns None if no claims are found
         """
 
-        pass
+        claims = self.get_claim_data()
+        total = 0     
+        for row in claims:
+            if row['disaster_id'] == disaster_id:
+                total += row['estimate_cost']     
+     
+        if total == 0:
+            return None  
+        else:
+            return round(total, 2)  
 
     def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
         """Gets the average estimated cost of all claims assigned to a claim handler
