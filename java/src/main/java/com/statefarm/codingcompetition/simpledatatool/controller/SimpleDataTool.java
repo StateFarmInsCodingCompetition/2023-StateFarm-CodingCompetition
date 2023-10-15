@@ -1,5 +1,6 @@
 package com.statefarm.codingcompetition.simpledatatool.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -105,16 +106,16 @@ public class SimpleDataTool {
      * @return estimate cost of disaster, rounded to the nearest hundredths place
      *         returns null if no claims are found
      */
-    public Float getTotalClaimCostForDisaster(int id) {
+    public Double getTotalClaimCostForDisaster(int id) {
         double sumOfCost = 0;
         for(Claim claim : claims) {
             if (id == claim.getDisaster_id())
                 sumOfCost += claim.getEstimate_cost();
         }
-        float x = (float)sumOfCost;
-        if(x == 0)
+
+        if(sumOfCost == 0)
             return null;
-        return x;
+        return sumOfCost;
     }
     /**
      * Gets the average estimated cost of all claims assigned to a claim handler
@@ -292,19 +293,19 @@ public class SimpleDataTool {
      * @return Map where key is agent id, value is total cost of claims associated
      *         to the agent
      */
-    public Map<Integer, Float> buildMapOfAgentsToTotalClaimCost() {
-        Map<Integer,Float> agentsToCost = new HashMap<>();
+    public Map<Integer, Double> buildMapOfAgentsToTotalClaimCost() {
+        Map<Integer,Double> agentsToCost = new HashMap<>();
         for(Claim claim : claims) {
             if (!agentsToCost.containsKey(claim.getAgent_assigned_id()))
                 agentsToCost.put(claim.getAgent_assigned_id(), claim.getEstimate_cost());
             else if (agentsToCost.containsKey(claim.getAgent_assigned_id()))
-                agentsToCost.replace(claim.getAgent_assigned_id(), agentsToCost.getOrDefault(claim.getAgent_assigned_id(), 0f) + claim.getEstimate_cost());
+                agentsToCost.replace(claim.getAgent_assigned_id(), agentsToCost.getOrDefault(claim.getAgent_assigned_id(), Double.valueOf(0)) + claim.getEstimate_cost());
         }
         return agentsToCost;
     }
 
     /**
-     * Calculates density of a diaster based on the number of claims and impact
+     * Calculates density of a disaster based on the number of claims and impact
      * radius
      * 
      * Hints:
