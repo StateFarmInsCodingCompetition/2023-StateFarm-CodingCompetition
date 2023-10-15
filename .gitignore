@@ -339,3 +339,5 @@ dist
 # Built Visual Studio Code Extensions
 *.vsix
 # End - VSCode
+
+/.idea

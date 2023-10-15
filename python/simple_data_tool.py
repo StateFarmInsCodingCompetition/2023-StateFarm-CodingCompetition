@@ -53,7 +53,7 @@ class SimpleDataTool:
 
     # region Test Set One
 
-    def get_num_closed_claims(self):
+    def get_num_closed_claims(self):  #: z
         """Calculates the number of claims where that status is "Closed"
 
         Returns:
@@ -72,7 +72,7 @@ class SimpleDataTool:
         """
         pass
 
-    def get_num_disasters_for_state(self, state):
+    def get_num_disasters_for_state(self, state):  #: z
         """Calculates the number of disasters for a specific state
 
         Args:
@@ -101,7 +101,7 @@ class SimpleDataTool:
 
         pass
 
-    def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
+    def get_average_claim_cost_for_claim_handler(self, claim_handler_id):  #: z
         """Gets the average estimated cost of all claims assigned to a claim handler
 
         Args:
@@ -129,7 +129,7 @@ class SimpleDataTool:
         """
         pass
 
-    def get_state_with_least_disasters(self):
+    def get_state_with_least_disasters(self):  #: z
         """Returns the name of the state with the least disasters based on disaster data
 
         If two states have the same number of disasters, then sort by alphabetical (a-z)
@@ -156,7 +156,7 @@ class SimpleDataTool:
         """
         pass
 
-    def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
+    def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):  #: z
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
 
         Note: Severity rating scale for claims is 1 to 10, inclusive.
@@ -186,7 +186,7 @@ class SimpleDataTool:
 
         pass
 
-    def build_map_of_agents_to_total_claim_cost(self):
+    def build_map_of_agents_to_total_claim_cost(self):  #: z
         """Builds a map of agent and their total claim cost
 
         Hints:
@@ -220,7 +220,7 @@ class SimpleDataTool:
 
     # region TestSetFour
 
-    def get_top_three_months_with_highest_num_of_claims_desc(self):
+    def get_top_three_months_with_highest_num_of_claims_desc(self):  #: z
         """Gets the top three months with the highest total claim cost
 
         Hint:
