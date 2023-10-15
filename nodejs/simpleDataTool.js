@@ -1,7 +1,10 @@
-const sfcc2023Agents = require("./data/sfcc_2023_agents.json");
-const sfcc2023ClaimHandlers = require("./data/sfcc_2023_claim_handlers.json");
-const sfcc2023Claims = require("./data/sfcc_2023_claims.json");
-const sfcc2023Disasters = require("./data/sfcc_2023_disasters.json");
+import fs from "fs";
+
+const sfcc2023Agents = JSON.parse(fs.readFileSync('./data/sfcc_2023_agents.json', 'utf8'));
+const sfcc2023ClaimHandlers = JSON.parse(fs.readFileSync('./data/sfcc_2023_claim_handlers.json', 'utf8'));
+const sfcc2023Claims = JSON.parse(fs.readFileSync('./data/sfcc_2023_claims.json', 'utf8'));
+const sfcc2023Disasters = JSON.parse(fs.readFileSync('./data/sfcc_2023_disasters.json', 'utf8'));
+
 const logicalOperators = {
 	Equals:         Symbol("equals"),
 	GreaterThan:    Symbol("greaterThan"),
@@ -16,7 +19,7 @@ const stateList = [
     'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
   ];
 
-class SimpleDataTool {
+export class SimpleDataTool {
     constructor() {
         this.REGION_MAP = {
             west: "Alaska,Hawaii,Washington,Oregon,California,Montana,Idaho,Wyoming,Nevada,Utah,Colorado,Arizona,New Mexico",
@@ -444,4 +447,3 @@ class SimpleDataTool {
     }
 }
 
-module.exports = SimpleDataTool;
