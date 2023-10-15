@@ -22,6 +22,11 @@
    - /agentsTotalClaimCost - returns a map of agent ID's and their total claim cost
    - /disasterClaimDensity/{id} - returns the density of the given disaster ID based on the number of claims and the impact radius
 
+   I also implemented some additional methods which can be utilized with the following endpoints:
+
+   - /agents - returns a list of all agents
+   - /claimHandlers - returns a list of all agents
+
    This could be further extended to include persistent data through a database rather than just json files, or even creating a front end to view/edit the data. However, given the time constraints for this competition, these were not feasible to implement.
 
 5. Any feedback for the coding competition? Things you would like to see in future events?

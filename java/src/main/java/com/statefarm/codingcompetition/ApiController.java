@@ -1,5 +1,6 @@
 package com.statefarm.codingcompetition;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.statefarm.codingcompetition.simpledatatool.controller.SimpleDataTool;
+import com.statefarm.codingcompetition.simpledatatool.model.Agent;
+import com.statefarm.codingcompetition.simpledatatool.model.Claim;
+import com.statefarm.codingcompetition.simpledatatool.model.ClaimHandler;
+import com.statefarm.codingcompetition.simpledatatool.model.Disaster;
 
 @RestController
 public class ApiController {
@@ -72,6 +77,17 @@ public class ApiController {
     @GetMapping("/disasterClaimDensity/{id}")
     public Float getDisasterClaimDensity(@PathVariable("id") int id) {
         return dataService.calculateDisasterClaimDensity(id);
+    }
+
+    // Additional endpoints
+    @GetMapping("/agents")
+    public List<Agent> getAgents() {
+        return dataService.getAgents();
+    }
+
+    @GetMapping("/claimHandlers")
+    public List<ClaimHandler> getClaimHandlers() {
+        return dataService.getClaimHandlers();
     }
 }
 

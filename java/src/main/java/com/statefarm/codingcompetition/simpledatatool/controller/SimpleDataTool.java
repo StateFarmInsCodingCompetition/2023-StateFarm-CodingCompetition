@@ -561,5 +561,25 @@ public class SimpleDataTool {
         return new String[3];
     }
 
+    // Additional Methods (not required for competition)
+
+    /**
+     * Gets all agents
+     * 
+     * @return list of all agents
+     */
+    public List<Agent> getAllAgents() {
+        return getAgents();
+    }
+
+    /**
+     * Gets all claim handlers
+     * 
+     * @return list of all claim handlers
+     */
+    public List<ClaimHandler> getAllClaimHandlers() {
+        return getClaimHandlers();
+    }
+
     // endregion
 }
