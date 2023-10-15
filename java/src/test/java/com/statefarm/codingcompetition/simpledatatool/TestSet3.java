@@ -2,6 +2,7 @@ package com.statefarm.codingcompetition.simpledatatool;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Random;
 
@@ -31,22 +32,22 @@ public class TestSet3 {
 
     @Test
     public void test10_buildMapOfAgentsToTotalClaimCost() {
-        Map<Integer, Float> agentCostMap = controller.buildMapOfAgentsToTotalClaimCost();
+        Map<Integer, Double> agentCostMap = controller.buildMapOfAgentsToTotalClaimCost();
 
         assertEquals(100, agentCostMap.size());
 
-        assertEquals(27856.13f, agentCostMap.get(1), 0.01);
-        assertEquals(2253847.27f, agentCostMap.get(3), 0.01);
-        assertEquals(529685.97f, agentCostMap.get(5), 0.01);
-        assertEquals(282307.93f, agentCostMap.get(8), 0.01);
-        assertEquals(2310862.86f, agentCostMap.get(13), 0.01);
+        assertEquals(27856.13, agentCostMap.get(1), 0.01);
+        assertEquals(2253847.27, agentCostMap.get(3), 0.01);
+        assertEquals(529685.97, agentCostMap.get(5), 0.01);
+        assertEquals(282307.93, agentCostMap.get(8), 0.01);
+        assertEquals(2310862.86, agentCostMap.get(13), 0.01);
 
         int numAgentIdsWithoutCost = expectedAgentIdsWithoutCost.length;
         Random rand = new Random();
 
         for (int i = 0; i < 3; i++) {
             int randomAgentId = expectedAgentIdsWithoutCost[rand.nextInt(numAgentIdsWithoutCost)];
-            assertEquals(0.0f, agentCostMap.get(randomAgentId), 0.01);
+            assertEquals(0.0, agentCostMap.get(randomAgentId), 0.01);
         }
 
         assertEquals(null, agentCostMap.get(-5));

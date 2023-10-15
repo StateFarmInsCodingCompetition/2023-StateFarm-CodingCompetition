@@ -2,12 +2,14 @@ package com.statefarm.codingcompetition.simpledatatool.model;
 
 import com.google.gson.Gson;
 
+import java.math.BigDecimal;
+
 public class Claim {
 
     private static final Gson GSON = new Gson();
 
     private int id, disaster_id, severity_rating, agent_assigned_id, claim_handler_assigned_id;
-    private float estimate_cost;
+    private double estimate_cost;
     private boolean total_loss, loss_of_life;
     private String status, type;
 
@@ -51,7 +53,7 @@ public class Claim {
         this.claim_handler_assigned_id = claim_handler_assigned_id;
     }
 
-    public float getEstimate_cost() {
+    public double getEstimate_cost() {
         return this.estimate_cost;
     }
 
