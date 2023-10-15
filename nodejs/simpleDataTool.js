@@ -275,7 +275,7 @@ class SimpleDataTool {
 
         sfcc2023Disasters.forEach((disaster) => {
             const declaredMonth = this.#convertToMonth(disaster.declared_date);
-           
+
             // Get number of claims of this disaster.
             // const numClaims = sfcc2023Claims.filter((claim) => claim.disaster_id == disaster.id);
             const numClaims = 1;
@@ -283,8 +283,30 @@ class SimpleDataTool {
         });
 
         const sortedList = this.#sortMapByValue(monthsToClaims, false);
-        console.log(sortedList);
         return sortedList.slice(0, 3);
+    }
+
+    /**
+     * Returns the map from month to number of claims of that month.
+     * This function is used in ChartController.js
+     * 
+     * @returns {Map} - The map from month to number of claims of that month.
+     */
+    getMonthsToNumOfClaims() {
+        // Map from months to number of claims.
+        const monthsToClaims = new Map();
+
+        sfcc2023Disasters.forEach((disaster) => {
+            const date = new Date(disaster.declared_date);
+            const declaredMonth = date.getFullYear + "/" + (date.getMonth + 1);
+
+            // Get number of claims of this disaster.
+            const numClaims = sfcc2023Claims.filter((claim) => claim.disaster_id == disaster.id);
+            // const numClaims = 1;
+            this.#increaseValueForMap(monthsToClaims, declaredMonth, numClaims);
+        });
+
+        return monthsToClaims;
     }
 
     /**
@@ -357,7 +379,7 @@ class SimpleDataTool {
 
     /**
      * Return the date in "month YYYY" format.
-     * 
+     *
      * @param {*} dateStr - The date to convert
      * @returns The month extracts from the given date.
      */
