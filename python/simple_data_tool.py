@@ -1,5 +1,6 @@
 import json
 import math
+import pandas as pd
 
 from statistics import mean
 
@@ -349,7 +350,26 @@ class SimpleDataTool:
             dict: key is agent id, value is total cost of claims associated to the agent
         """
 
-        pass
+        # Create dataframes for agents and claims data to make it easier to work with the data
+        agents_df = pd.DataFrame(self.get_agent_data())
+        claims_df = pd.DataFrame(self.get_claim_data())
+
+        # Create a dataframe with the agent id and the total claim cost
+        agents_total_claim_cost = pd.DataFrame(agents_df['id'])
+        agents_total_claim_cost['total_claim_cost'] = 0
+
+        # Calculate the total claim cost for each agent
+        for agent_id in agents_total_claim_cost['id']:
+            # Get the total claim cost for the agent 
+            # by summing the estimate cost of all claims associated to the agent
+            total_claim_cost = claims_df[claims_df['agent_assigned_id'] == agent_id]['estimate_cost'].sum()
+            # Set the total claim cost for the agent in the dataframe
+            agents_total_claim_cost.loc[agents_total_claim_cost['id'] == agent_id, 'total_claim_cost'] = total_claim_cost
+
+        # Round the total claim cost to the nearest hundredths
+        agents_total_claim_cost['total_claim_cost'] = agents_total_claim_cost['total_claim_cost'].round(2)
+
+        return agents_total_claim_cost.set_index('id').to_dict()['total_claim_cost']
 
     def calculate_disaster_claim_density(self, disaster_id):
         """Calculates density of a diaster based on the number of claims and impact radius
