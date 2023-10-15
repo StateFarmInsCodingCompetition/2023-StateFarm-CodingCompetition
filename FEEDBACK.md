@@ -2,7 +2,7 @@
 
 1. Your team: Preston Roesslet
 2. Name of each individual participating: Preston Roesslet
-3. How many unit tests were you able to pass? 13 - However, I believe that I would pass all 14 of them if Issue #9 had been resolved. At the time of my submission, Issue #9 had yet to be resolved.
+3. How many unit tests were you able to pass? 13 - However, I believe that I would pass all 14 of them if Issue #9 had been resolved. At the time of my submission, Issue #9 had yet to be resolved, so I wasn't sure how to move forward with Test Set 3 - Test 10
 4. Document and describe any enhancements included to help the judges properly grade your submission.
 
    I implemented a REST Api to interact with the data from the problem set. I utilized Spring Boot. The Spring Boot application is initialized in the RestApi class. I then created all of the endpoints inside of the ApiController.java file.
