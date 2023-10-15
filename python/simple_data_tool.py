@@ -137,7 +137,19 @@ class SimpleDataTool:
                            or None if no claims are found
         """
 
-        pass
+        claims = self.get_claim_data()
+        count = 0
+        total_cost = 0
+        for claim in claims:
+            if claim["claim_handler_assigned_id"] == claim_handler_id:
+                count += 1
+                total_cost += claim["estimate_cost"]
+        if count == 0:
+            return None
+        else:
+            average = total_cost/count
+
+        return round(average, 2)
 
     def get_state_with_most_disasters(self):
         """Returns the name of the state with the most disasters based on disaster data
