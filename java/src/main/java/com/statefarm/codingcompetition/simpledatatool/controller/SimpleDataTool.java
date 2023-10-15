@@ -2,6 +2,10 @@ package com.statefarm.codingcompetition.simpledatatool.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.text.SimpleDateFormat;
 
 import com.statefarm.codingcompetition.simpledatatool.io.JsonHelper;
 import com.statefarm.codingcompetition.simpledatatool.model.Agent;
@@ -58,7 +62,14 @@ public class SimpleDataTool {
      * @return number of closed claims
      */
     public int getNumClosedClaims() {
-        return 0;
+        // System.out.println(agents);
+        int counter = 0;
+        for (Claim c: this.getClaims()){
+            if (c.getStatus().equals("Closed")){
+                counter++;
+            }
+        }
+        return counter;
     }
 
     /**
@@ -68,8 +79,15 @@ public class SimpleDataTool {
      * @return number of claims assigned to claim handler
      */
     public int getNumClaimsForClaimHandlerId(int id) {
-        return 0;
+        int counter = 0;
+        for (Claim claim : getClaims()) {
+            if (claim.getClaim_handler_assigned_id() == id) {
+                counter++;
+            }
+        }
+        return counter;
     }
+        
 
     /**
      * Calculates the number of disasters for a specific state
@@ -79,7 +97,13 @@ public class SimpleDataTool {
      * @return number of disasters for state
      */
     public int getNumDisastersForState(String stateName) {
-        return -1;
+        int counter = 0;
+        for (Disaster d: this.getDisasters()){
+            if (d.getState().equals(stateName)){
+                counter++;
+            }
+        }
+        return counter;
     }
 
     // endregion
@@ -93,8 +117,18 @@ public class SimpleDataTool {
      * @return estimate cost of disaster, rounded to the nearest hundredths place
      *         returns null if no claims are found
      */
-    public Float getTotalClaimCostForDisaster(int id) {
-        return -0.01f;
+    public Double getTotalClaimCostForDisaster(int id) {
+        double sum = 0f;
+
+        for (Claim c: this.getClaims()){
+            if (c.getDisaster_id() == id){
+                sum += c.getEstimate_cost();
+            }
+        }
+        if (sum == 0){
+            return null;
+        }
+        return sum;
     }
 
     /**
@@ -105,7 +139,19 @@ public class SimpleDataTool {
      *         or null if no claims are found
      */
     public Float getAverageClaimCostforClaimHandler(int id) {
-        return -0.01f;
+        Float sum = 0f;
+        int count = 0;
+
+        for (Claim c: claims){
+            if (c.getClaim_handler_assigned_id() == id){
+                sum += c.getEstimate_cost();
+                count++;
+            }
+        }
+        if (sum == 0f){
+            return null;
+        }
+        return sum/count;
     }
 
     /**
@@ -121,7 +167,29 @@ public class SimpleDataTool {
      * @return single name of state
      */
     public String getStateWithTheMostDisasters() {
-        return null;
+        HashMap<String, Integer> map = new HashMap<>();
+        for (Disaster d: this.getDisasters()){
+            if (map.containsKey(d.getState())){
+                int currentCount = map.get(d.getState());
+                currentCount++;
+                map.put(d.getState(), currentCount);
+            }
+            else{
+                map.put(d.getState(), 1);
+            }
+        }
+
+        String maxKey = null;
+        int maxValue = Integer.MIN_VALUE;
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > maxValue) {
+                maxValue = entry.getValue();
+                maxKey = entry.getKey();
+            }
+        }
+
+        return maxKey;
     }
 
     /**
@@ -137,7 +205,32 @@ public class SimpleDataTool {
      * @return single name of state
      */
     public String getStateWithTheLeastDisasters() {
-        return null;
+        HashMap<String, Integer> map = new HashMap<>();
+        for (Disaster d: this.getDisasters()){
+            if (map.containsKey(d.getState())){
+                int currentCount = map.get(d.getState());
+                currentCount++;
+                map.put(d.getState(), currentCount);
+            }
+            else{
+                map.put(d.getState(), 1);
+            }
+        }
+
+        String minKey = null;
+        int minValue = Integer.MAX_VALUE;
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            int value = entry.getValue();
+            String key = entry.getKey();
+
+            if (value < minValue || (value == minValue && key.compareTo(minKey) < 0)) {
+                minValue = value;
+                minKey = key;
+            }
+        }
+
+        return minKey;
     }
 
     /**
@@ -148,8 +241,53 @@ public class SimpleDataTool {
      * @return name of language
      *         or empty string if state doesn't exist
      */
-    public String getMostSpokenAgentLanguageByState(String string) {
-        return null;
+    public String getMostSpokenAgentLanguageByState(String state) {
+        String result = "";
+        int maxFreq = 0;
+
+        Map<String, Integer> freq = new HashMap<>();
+        for (Agent a: getAgents()){
+            String agentState = a.getState();
+            String agentLang1 = a.getPrimary_language();
+            String agentLang2 = a.getSecondary_language();
+
+            if (agentState.equals(state)){
+                if (freq.containsKey(agentLang1) && !agentLang1.equals("English")){
+                    freq.put(agentLang1, freq.get(agentLang1) + 1);
+
+                    if (freq.get(agentLang1) > maxFreq) {
+                        maxFreq = freq.get(agentLang1);
+                        result = agentLang1;
+                    }
+                } else if(agentLang1 != null && !agentLang1.equals("English")) {
+                    freq.put(agentLang1, 1);
+
+                    if (freq.get(agentLang1) > maxFreq) {
+                        maxFreq = freq.get(agentLang1);
+                        result = agentLang1;
+                    }
+                }
+
+                if (freq.containsKey(agentLang2) && !agentLang2.equals("English")){
+                    freq.put(agentLang2, freq.get(agentLang2) + 1);
+
+                    if (freq.get(agentLang2) > maxFreq) {
+                        maxFreq = freq.get(agentLang2);
+                        result = agentLang2;
+                    }
+                } else if(agentLang2 != null && !agentLang2.equals("English")) {
+                    freq.put(agentLang2, 1);
+
+                    if (freq.get(agentLang2) > maxFreq) {
+                        maxFreq = freq.get(agentLang2);
+                        result = agentLang2;
+                    }
+                }
+            }
+        }
+
+        // get the max
+        return result;
     }
 
     /**
@@ -165,8 +303,22 @@ public class SimpleDataTool {
      *         -1 if severity rating out of bounds
      *         None if agent does not exist, or agent has no claims (open or not)
      */
-    public int getNumOfOpenClaimsForAgentAndSeverity(int agentId, int minSeverityRating) {
-        return -2;
+    public Integer getNumOfOpenClaimsForAgentAndSeverity(int agentId, int minSeverityRating) {
+        int counter = 0;
+        for (Claim c: getClaims()){
+            if (c.getAgent_assigned_id() == agentId){
+                if (c.getSeverity_rating() >= minSeverityRating && !c.getStatus().equals("Closed")){
+                    counter++;
+                }
+            }
+        }
+        if (minSeverityRating < 1 || minSeverityRating > 10){
+            return -1;
+        }
+        if (counter == 0){
+            return null;
+        }
+        return counter;
     }
 
     // endregion
@@ -179,7 +331,14 @@ public class SimpleDataTool {
      * @return number of disasters where the declared date is after the end date
      */
     public int getNumDisastersDeclaredAfterEndDate() {
-        return -1;
+        int counter = 0;
+        for (Disaster d: getDisasters()){
+            if (d.getDeclared_date().compareTo(d.getEnd_date()) > 0) {
+                counter += 1;
+            }
+           
+        }
+        return counter;
     }
 
     /**
@@ -193,8 +352,38 @@ public class SimpleDataTool {
      * @return Map where key is agent id, value is total cost of claims associated
      *         to the agent
      */
-    public Map<Integer, Float> buildMapOfAgentsToTotalClaimCost() {
-        return null;
+    public Map<Integer, Double> buildMapOfAgentsToTotalClaimCost() {
+        HashMap<Integer, Double> mapping = new HashMap<>();
+        HashSet<Integer> agentIdSet = new HashSet<>();
+
+        for(Agent agent : getAgents()){
+            Integer agentId = agent.getId();
+            if (!mapping.containsKey(agentId)) {
+                mapping.put(agentId, 0.0);
+            }
+        }
+
+        for (Claim claim : getClaims()) {
+            Integer agentId = claim.getAgent_assigned_id();
+            double cost = (double) claim.getEstimate_cost();
+
+            if (mapping.containsKey(agentId)) {
+                mapping.put(agentId, mapping.get(agentId) + cost);
+            } else if (agentIdSet.contains(agentId)) {
+                mapping.put(agentId, cost);
+            } else {
+                mapping.put(agentId, null);
+            }
+        }
+
+        for (Integer agentId : mapping.keySet()) {
+            mapping.put(agentId, Math.round(mapping.get(agentId) * 100.0) / 100.0);
+        }
+
+        return mapping;
+        // HashMap<String, Double> map = new HashMap<>();
+        // return map;
+
     }
 
     /**
@@ -229,8 +418,23 @@ public class SimpleDataTool {
      * @return three strings of month and year, descending order of highest claims
      */
     public String[] getTopThreeMonthsWithHighestNumOfClaimsDesc() {
-        return new String[1];
+        // Map<String, Float> monthToTotalClaimCost = new HashMap<>();
+        // SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy");
+    
+        // for (Claim claim : claims) {
+        //     String monthYear = sdf.format(claim.getDisaster_id());
+        //     monthToTotalClaimCost.put(monthYear,
+        //         monthToTotalClaimCost.getOrDefault(monthYear, 0f) + claim.getEstimatedLoss());
+        // }
+    
+        // return monthToTotalClaimCost.entrySet().stream()
+        //     .sorted((e1, e2) -> Float.compare(e2.getValue(), e1.getValue()))
+        //     .limit(3)
+        //     .map(Map.Entry::getKey)
+        //     .toArray(String[]::new);
+        return new String[2];
     }
+    
 
     // endregion
 }
