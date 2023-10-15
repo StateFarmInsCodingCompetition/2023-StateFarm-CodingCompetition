@@ -441,6 +441,7 @@ class SimpleDataTool:
         Returns:
             list: three strings of month and year, descending order of highest claims
         """
+        
 
         pass
 
