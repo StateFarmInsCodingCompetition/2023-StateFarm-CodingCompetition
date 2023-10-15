@@ -2,3 +2,4 @@ pytest==7.2.2
 pandas
 fastapi[all]
 uvicorn
+pydantic
