@@ -324,8 +324,19 @@ class SimpleDataTool:
             int: number of disasters where the declared date is after the end date
         """
         disasters = self.get_disaster_data()
+        # Initialize a counter
+        disasters_declared = 0
 
-        disasters_declared = sum(1 for disaster in disasters if datetime.strptime(disaster['declared_date'], '%Y-%m-%d').date() > datetime.strptime(disaster['end_date'], '%Y-%m-%d').date())
+        # Loop through each disaster in the disasters list
+        for disaster in disasters:
+            # Convert string dates to datetime.date objects
+            declared_date = datetime.strptime(disaster['declared_date'], '%Y-%m-%d').date()
+            end_date = datetime.strptime(disaster['end_date'], '%Y-%m-%d').date()
+            
+            # Check if declared_date is greater than end_date and increment the counter if true
+            if declared_date > end_date:
+                disasters_declared += 1
+                
         return disasters_declared
 
 
@@ -341,16 +352,21 @@ class SimpleDataTool:
         Returns:
             dict: key is agent id, value is total cost of claims associated to the agent
         """
+        # Assign dataset to variable
         claims = self.get_claim_data()
+        
+        # Initialize a dictionary to store the total cost of claims per agent
         agent_costs = {agent_id: 0 for agent_id in range(1, 101)}
 
+        # Loop through each claim
         for claim in claims:
-            agent_id = claim["agent_assigned_id"]
-            cost = claim["estimate_cost"]
+            agent_id = claim["agent_assigned_id"]   # Get the agent id
+            cost = claim["estimate_cost"]           # Get the cost of the claim
 
+            # Add the cost of this claim to the total cost for this agent
             agent_costs[agent_id] = round(agent_costs[agent_id] + cost, 2)
             
-        return(agent_costs)
+        return agent_costs
 
 
     def calculate_disaster_claim_density(self, disaster_id):
