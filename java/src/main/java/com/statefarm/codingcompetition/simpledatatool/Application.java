@@ -7,6 +7,7 @@ public class Application {
     public static void main(String[] args) {
         SimpleDataTool sdt = new SimpleDataTool();
 
+        System.out.println(sdt.buildMapOfAgentsToTotalClaimCost());
         System.out.println("working");
     }
 }
