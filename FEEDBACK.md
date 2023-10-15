@@ -14,6 +14,7 @@
     - I included the method to find the name of the most spoken language by agents (besides English) for a specific state.
     - I included the method to find the number of open claims for a specific agent and for a minimum severity level and higher, but it didn't pass the test.
     - I included the method to find the number of disasters where it was declared after it ended.
+    - I couldn't figure out the rest in time, but I will still figure them out in my free time. I think I will be able to do them in an hour or two.
 
 5. Any feedback for the coding competition? Things you would like to see in future events?
     - It was fun! Although I couldn't figure out all the tests, I had a great time, trying to figure things out. I would like to see something similiar to this in future events. I am looking forward to them!
