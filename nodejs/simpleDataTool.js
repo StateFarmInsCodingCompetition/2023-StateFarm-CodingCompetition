@@ -216,15 +216,16 @@ class SimpleDataTool {
     buildMapOfAgentsToTotalClaimCost() {
         const agentsToTotalCost = {};
 
-        sfcc2023Agents.forEach((agent) => agentsToTotalCost[agent.id] = 0);
+        sfcc2023Agents.forEach((agent) => (agentsToTotalCost[agent.id] = 0));
 
         sfcc2023Claims.forEach((claim) => {
             const agentId = claim.agent_assigned_id;
 
             agentsToTotalCost[agentId] += claim.estimate_cost;
-            agentsToTotalCost[agentId] = Math.round(agentsToTotalCost[agentId] * 100) / 100;
+            agentsToTotalCost[agentId] =
+                Math.round(agentsToTotalCost[agentId] * 100) / 100;
         });
-        
+
         return agentsToTotalCost;
     }
 
@@ -239,18 +240,23 @@ class SimpleDataTool {
      * null if disaster does not exist
      */
     calculateDisasterClaimDensity(disasterId) {
-        const givenDisaster = sfcc2023Disasters.find((disaster) => disaster.id == disasterId);
+        const givenDisaster = sfcc2023Disasters.find(
+            (disaster) => disaster.id == disasterId
+        );
         if (!givenDisaster) {
             // Disaster does not exist.
             return null;
         }
         // Find the area of the disaster.
-        const area = Math.PI * givenDisaster.radius_miles * givenDisaster.radius_miles;
+        const area =
+            Math.PI * givenDisaster.radius_miles * givenDisaster.radius_miles;
         // Number of claims of the given disaster.
-        const numClaims = sfcc2023Claims.filter((claim) => claim.disaster_id == disasterId).length;
-        
+        const numClaims = sfcc2023Claims.filter(
+            (claim) => claim.disaster_id == disasterId
+        ).length;
+
         // Return density rounded by 5 decimal places.
-        return Math.round(numClaims / area * 100000) / 100000;
+        return Math.round((numClaims / area) * 100000) / 100000;
     }
 
     /**
@@ -264,7 +270,21 @@ class SimpleDataTool {
      * @returns {Array} - An array of three strings of month and year, descending order of highest claims.
      */
     getTopThreeMonthsWithHighestNumOfClaimsDesc() {
-        return null;
+        // Map from months to number of claims.
+        const monthsToClaims = new Map();
+
+        sfcc2023Disasters.forEach((disaster) => {
+            const declaredMonth = this.#convertToMonth(disaster.declared_date);
+           
+            // Get number of claims of this disaster.
+            // const numClaims = sfcc2023Claims.filter((claim) => claim.disaster_id == disaster.id);
+            const numClaims = 1;
+            this.#increaseValueForMap(monthsToClaims, declaredMonth, numClaims);
+        });
+
+        const sortedList = this.#sortMapByValue(monthsToClaims, false);
+        console.log(sortedList);
+        return sortedList.slice(0, 3);
     }
 
     /**
@@ -333,6 +353,32 @@ class SimpleDataTool {
         });
         // Only returns the array of keys.
         return sortedList.map((entry) => entry[0]);
+    }
+
+    /**
+     * Return the date in "month YYYY" format.
+     * 
+     * @param {*} dateStr - The date to convert
+     * @returns The month extracts from the given date.
+     */
+    #convertToMonth(dateStr) {
+        const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        const date = new Date(dateStr);
+
+        return monthNames[date.getMonth()] + " " + date.getFullYear();
     }
 }
 
