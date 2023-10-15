@@ -2,6 +2,7 @@ import json
 import math
 
 from statistics import mean
+import datetime # For Test Set Four
 
 
 
@@ -107,8 +108,21 @@ class SimpleDataTool:
             float | None: estimate cost of disaster, rounded to the nearest hundredths place
                           returns None if no claims are found
         """
+        # Assign dataset to variable
+        claims = self.get_claim_data()
+        
+        # Total_cost to calculate all sums of estimate_cost
+        total_cost = 0  
 
-        pass
+        # Looping through claims to find those related to the disaster_id
+        for claim in claims:
+            if claim['disaster_id'] == disaster_id:
+                # add to total cost if disaster_id matches
+                total_cost += claim['estimate_cost']
+
+        # If there is no cost, return None
+        return round(total_cost, -2) if total_cost > 0 else None
+
 
     def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
         """Gets the average estimated cost of all claims assigned to a claim handler
@@ -120,8 +134,22 @@ class SimpleDataTool:
             float | None : average cost of claims, rounded to the nearest hundredths place
                            or None if no claims are found
         """
+        # Initialize variables for total_cost and count
+        total_cost = 0
+        count = 0
 
-        pass
+        # Assign dataset to variable
+        claims = self.get_claim_data()
+        
+        # Iterate through claims, add estimate_cost if claim_handler_assigned_id matches
+        for claim in claims:
+            if claim['claim_handler_assigned_id'] == claim_handler_id:
+                # If the dataset matches, add to total_cost and increment count
+                total_cost += claim['estimate_cost']
+                count += 1
+        
+        # If count is 0, return None, else return average cost rounded to nearest hundredths place
+        return None if count == 0 else round(total_cost / count, -2)
 
     def get_state_with_most_disasters(self):
         """Returns the name of the state with the most disasters based on disaster data
@@ -136,7 +164,31 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+        # Create a dictionary to hold counts of disasters per state
+        disaster_counts = {}
+        
+        # Assign dataset to variable
+        disasters = self.get_disaster_data()
+        
+        # Iterate through disasters, add to dictionary for each state
+        for disaster in disasters:
+            state = disaster['state']
+            disaster_counts[state] = disaster_counts.get(state, 0) + 1
+            
+        # Initialize variables to store the state with most disasters
+        most_disasters_state = None
+        max_disasters_count = 0
+        
+        # Sorted list of states alphabetically by using keys() method
+        states = sorted(disaster_counts.keys())
+        
+        # Iterate through states and find the state with the most disasters
+        for state in states:
+            if disaster_counts[state] > max_disasters_count:
+                most_disasters_state = state
+                max_disasters_count = disaster_counts[state]
+        
+        return most_disasters_state
 
     def get_state_with_least_disasters(self):
         """Returns the name of the state with the least disasters based on disaster data
@@ -151,7 +203,31 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+        # Create a dictionary to hold counts of disasters per state
+        disaster_counts = {}
+        
+        # Assign dataset to variable
+        disasters = self.get_disaster_data()
+        
+        # Iterate through disasters, add to dictionary for each state
+        for disaster in disasters:
+            state = disaster['state']
+            disaster_counts[state] = disaster_counts.get(state, 0) + 1
+        
+        # Initialize variables to store the state with the least disasters
+        least_disasters_state = None
+        min_disasters_count = float('inf')  # Set initial value to positive infinity
+        
+        # Sorted list of states alphabetically
+        states = sorted(disaster_counts.keys())
+        
+        # Iterate through states and find the state with the least disasters
+        for state in states:
+            if disaster_counts[state] < min_disasters_count:
+                least_disasters_state = state
+                min_disasters_count = disaster_counts[state]
+        
+        return least_disasters_state
     
     def get_most_spoken_agent_language_by_state(self, state):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
@@ -163,7 +239,29 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        pass
+        # Create a dictionary to hold counts of languages per state
+        language_counts = {}  
+        
+        # Assign dataset to variable
+        agents = self.get_agent_data()
+        
+        # Traverse through agents data
+        for agent in agents:
+            # Check if the agent is from the specified state
+            if agent['state'] == state:
+                # Get the languages spoken by the agent excluding English
+                languages = [lang for lang in agent['languages'] if lang != 'English']
+                # Increment count for each language in the dictionary
+                for lang in languages:
+                    language_counts[lang] = language_counts.get(lang, 0) + 1
+        
+        # Check if no languages were found return empty string
+        if not language_counts:
+            return ''
+    
+        # Find and return the most spoken language / get function returns 0 if key not found
+        most_spoken_language = max(language_counts, key=language_counts.get)
+        return most_spoken_language
 
     def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
@@ -179,8 +277,35 @@ class SimpleDataTool:
                         -1 if severity rating out of bounds
                         None if agent does not exist, or agent has no claims (open or not)
         """
-
-        pass
+        # Assign dataset to variable
+        agents = self.get_agent_data()
+        claims = self.get_claim_data()
+        
+        # Check if the severity rating is out of bounds
+        if min_severity_rating < 1 or min_severity_rating > 10:
+            return -1
+        
+        # Check if the agent exists / any() returns True if any element of the iterable is true
+        agent_exists = any(agent['id'] == agent_id for agent in agents)
+        if not agent_exists:
+            return None
+        
+        
+        # Initialize a counter for open claims
+        open_claims_count = 0
+        # Check every claim
+        for claim in claims:
+            # Check if the claim is assigned to the agent, is not closed, and has sufficient severity
+            if (
+                claim['agent_assigned_id'] == agent_id and
+                claim['status'] != "Closed" and
+                claim['severity_rating'] >= min_severity_rating
+            ):
+                # If all conditions are met, increment the counter
+                open_claims_count += 1
+        
+        # Return None if there are no qualifying claims
+        return open_claims_count if open_claims_count > 0 else None
 
     # endregion
 
@@ -240,7 +365,24 @@ class SimpleDataTool:
         Returns:
             list: three strings of month and year, descending order of highest claims
         """
+        # Dictionary to store the total cost of claims per month
+        monthly_costs = {}
 
-        pass
+        # Assign dataset to variable
+        claims = self.get_claim_data()
+        
+        # Loop through each claim
+        for claim in claims:
+            # Extract the month and year (assuming a date field is available and in 'YYYY-MM-DD' format)
+            claim_date = datetime.datetime.strptime(claim['date'], '%Y-%m-%d')
+            month_year = claim_date.strftime('%B %Y')
+
+            # Add the cost of this claim to the monthly total
+            monthly_costs[month_year] = monthly_costs.get(month_year, 0) + claim['estimate_cost']
+        
+        # Get the top three months by total claim cost
+        top_three_months = sorted(monthly_costs.keys(), key=lambda month: monthly_costs[month], reverse=True)[:3]
+        
+        return top_three_months
 
     # endregion
