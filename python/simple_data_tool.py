@@ -92,7 +92,13 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-        pass
+        
+        disasters = self.get_disaster_data()
+        count = 0
+        for disaster in disasters:
+            if disaster['state'] == state:
+                count += 1
+        return count
 
     # endregion
 
