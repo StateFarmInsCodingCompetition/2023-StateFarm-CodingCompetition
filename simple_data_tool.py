@@ -4,8 +4,6 @@ import pandas as pd
 from pandas import DataFrame
 import datetime as dt
 
-from statistics import mean
-
 dates = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
          'December']
 
