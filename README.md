@@ -7,8 +7,21 @@ This is the GitHub project for the 2023 State Farm Coding Competition Round 1 an
 
 ## Change Log:
 
-- October 14, 2023 - Publishing problem sets
-    - [Problem Statement PDF](./round%201/ROUND_ONE_PROMPT.pdf)
+- October 14, 2023
+    - 7:00pm CDT - Publishing problem sets, [Problem Statement PDF](./round%201/ROUND_ONE_PROMPT.pdf)
+    - 7:35pm CDT
+      - [Issues Creating Branch in GitHub](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/5)
+      - [Python project was missing data/ folder](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/7)
+    - 8:22pm CDT
+      - [Fixed Final Node Test Typo](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/3)
+      - [Fixed int to Integer Type Fix for Java Test 8 + Stub Method](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/4)
+    - 8:37pm CDT
+      - [Cleaning up "round 1" folder ](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/6)
+    - 9:21 CDT
+      - **Test 12 is no longer required to pass before doing bonus credit**
+      - If you don't do Test 12, your score will NOT be impacted
+      - Test 12 MAY still be completed for bonus credit
+      - Please see the [Contradictory method documentation issue](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/8#issuecomment-1763239724) for description and expected output(s)
 - October 6, 2023 - Publishing initial repo, including help guides and skeleton projects
     - This is to just get you started -- making sure your computer is setup, that you are able to build and run the project (including unit tests), and getting familiar with the structure.
     - The Problem Statement and relevant JSON files will be published at the start of Round 1

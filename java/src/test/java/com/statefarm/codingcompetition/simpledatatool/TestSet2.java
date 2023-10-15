@@ -49,11 +49,11 @@ public class TestSet2 {
 
     @Test
     public void test8_getNumOfOpenClaimsForAgentAndSeverity() {
-        assertEquals(-1, controller.getNumOfOpenClaimsForAgentAndSeverity(0, 0));
-        assertEquals(-1, controller.getNumOfOpenClaimsForAgentAndSeverity(25, 11));
+        assertEquals(Integer.valueOf(-1), controller.getNumOfOpenClaimsForAgentAndSeverity(0, 0));
+        assertEquals(Integer.valueOf(-1), controller.getNumOfOpenClaimsForAgentAndSeverity(25, 11));
         assertEquals(null, controller.getNumOfOpenClaimsForAgentAndSeverity(65, 3));
-        assertEquals(16, controller.getNumOfOpenClaimsForAgentAndSeverity(24, 1));
-        assertEquals(3, controller.getNumOfOpenClaimsForAgentAndSeverity(87, 6));
-        assertEquals(2, controller.getNumOfOpenClaimsForAgentAndSeverity(85, 6));
+        assertEquals(Integer.valueOf(16), controller.getNumOfOpenClaimsForAgentAndSeverity(24, 1));
+        assertEquals(Integer.valueOf(3), controller.getNumOfOpenClaimsForAgentAndSeverity(87, 6));
+        assertEquals(Integer.valueOf(2), controller.getNumOfOpenClaimsForAgentAndSeverity(85, 6));
     }
 }
