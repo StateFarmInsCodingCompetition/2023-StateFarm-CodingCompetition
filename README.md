@@ -7,8 +7,11 @@ This is the GitHub project for the 2023 State Farm Coding Competition Round 1 an
 
 ## Change Log:
 
-- October 14, 2023 - Publishing problem sets
-    - [Problem Statement PDF](./round%201/ROUND_ONE_PROMPT.pdf)
+- October 14, 2023
+    - 5:00pm CDT - Publishing problem sets, [Problem Statement PDF](./round%201/ROUND_ONE_PROMPT.pdf)
+    - 8:22 CDT
+      - [Fixed Final Node Test Typo](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/3)
+      - [Fixed int to Integer Type Fix for Java Test 8 + Stub Method](https://github.com/StateFarmInsCodingCompetition/2023-StateFarm-CodingCompetition/issues/4)
 - October 6, 2023 - Publishing initial repo, including help guides and skeleton projects
     - This is to just get you started -- making sure your computer is setup, that you are able to build and run the project (including unit tests), and getting familiar with the structure.
     - The Problem Statement and relevant JSON files will be published at the start of Round 1
