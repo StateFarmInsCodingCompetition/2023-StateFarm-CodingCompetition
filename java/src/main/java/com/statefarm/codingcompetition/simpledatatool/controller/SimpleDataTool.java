@@ -512,7 +512,10 @@ public class SimpleDataTool {
     // region TestSet4
 
     /**
-     * Gets the top three months with the highest total claim cost
+     * Gets the top three months with the highest number of claims
+     * 
+     * OPTIONAL! OPTIONAL! OPTIONAL!
+     * AS OF 9:21CDT, TEST IS OPTIONAL. SEE GITHUB ISSUE #8 FOR MORE DETAILS
      * 
      * Hint:
      * - Month should be full name like 01 is January and 12 is December

@@ -117,6 +117,10 @@ describe("Test Set Three", () => {
 });
 
 describe("Test Set Four", () => {
+    /**
+     * OPTIONAL! OPTIONAL! OPTIONAL!
+     * AS OF 9:21 CDT, TEST IS OPTIONAL. SEE GITHUB ISSUE #8 FOR MORE DETAILS
+     */
     test("Test 12 - getTopThreeMonthsWithHighestNumOfClaimsDesc", () => {
         const topThreeMonths =
             controller.getTopThreeMonthsWithHighestNumOfClaimsDesc();
