@@ -61,23 +61,11 @@ class SimpleDataTool:
     def get_claim_data(self):
         return self.__claim_data
 
-    # data_frame = pd.read_json(CLAIMS_FILEPATH)
-    # # Plot the relationship between claim severity and estimated cost
-    # plt.figure(figsize=(10, 6))
-    # plt.scatter(data_frame['severity_rating'], data_frame['estimate_cost'])
-    # plt.title('Scatter Plot of Severity vs. Estimated Cost')
-    # plt.xlabel('Severity')
-    # plt.ylabel('Estimated Cost')
-    # plt.show()
-
-    # # Using Seaborn
-    # correlation_matrix = data_frame.corr()
-    # plt.figure(figsize=(10, 6))
-    # sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
-    # plt.title('Correlation Heatmap')
-    # plt.show()
-
-
+    def get_disaster_by_id(self, disaster_id):
+        for disaster in self.get_disaster_data():
+            if disaster['id'] == disaster_id:
+                return disaster
+        return None
     # Unit Test Methods
 
     # region Test Set One

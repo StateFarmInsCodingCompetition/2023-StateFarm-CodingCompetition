@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agents Table</title>
+    <style>
+        /* Red and white theme styles */
+        body {
+            background-color: white;
+            color: red;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        select {
+            background-color: red;
+            color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid red;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: red;
+            color: white;
+        }
+
+        /* Add more styles as needed */
+    </style>
+</head>
+<body>
+    <h1>Disasters Table</h1>
+    <select onchange="location = this.value;">
+        <option value="{{ url_for('home') }}">Home</option>
+        <option value="{{ url_for('get_agents_table') }}">Agents Table</option>
+        <option value="{{ url_for('get_claims_table') }}">Claims Table</option>
+    </select>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>State</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Declared Date</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Radius (Miles)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for disaster in disasters %}
+            <tr>
+                <td>{{ disaster.id }}</td>
+                <td>{{ disaster.type }}</td>
+                <td>{{ disaster.state }}</td>
+                <td>{{ disaster.name }}</td>
+                <td>{{ disaster.description }}</td>
+                <td>{{ disaster.start_date }}</td>
+                <td>{{ disaster.end_date }}</td>
+                <td>{{ disaster.declared_date }}</td>
+                <td>{{ disaster.lat }}</td>
+                <td>{{ disaster.long }}</td>
+                <td>{{ disaster.radius_miles }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

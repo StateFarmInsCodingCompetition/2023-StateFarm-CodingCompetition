@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Welcome to the State Farm Data Tool</h1>
+    <h2>Tables:</h2>
+    <ul>
+        <li><a href="{{ url_for('get_agents_table') }}">Agents Table</a></li>
+        <li><a href="{{ url_for('get_claims_table') }}">Claims Table</a></li>
+        <li><a href="{{ url_for('get_disasters_table') }}">Disasters Table</a></li>
+    </ul>
+</body>
+</html>

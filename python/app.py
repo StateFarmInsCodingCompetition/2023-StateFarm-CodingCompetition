@@ -1,33 +1,32 @@
 from flask import Flask, render_template
-from flask_wtf import FlaskForm
-from wtforms import SelectField
 from simple_data_tool import SimpleDataTool
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'  # Replace with a secret key
-
 data_tool = SimpleDataTool()
 
-# Define a form for selecting data
-class DataSelectionForm(FlaskForm):
-    data_type = SelectField('Data Type', choices=[('agents', 'Agents'), ('claims', 'Claims')])
+@app.route('/agents', methods=['GET'])
+def get_agents_table():
+    agents = data_tool.get_agent_data()
+    return render_template('agents_table.html', agents=agents)
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    form = DataSelectionForm()
+@app.route('/claims', methods=['GET'])
+def get_claims_table():
+    claims = data_tool.get_claim_data()
+    return render_template('claims_table.html', claims=claims)
 
-    if form.validate_on_submit():
-        data_type = form.data_type.data
-        if data_type == 'agents':
-            data = data_tool.get_agent_data()
-        elif data_type == 'claims':
-            data = data_tool.get_claim_data()
-        else:
-            data = []
+@app.route('/disasters', methods=['GET'])
+def get_disasters_table():
+    disasters = data_tool.get_disaster_data()
+    return render_template('disasters_table.html', disasters=disasters)
 
-        return render_template('index.html', form=form, data=data)
+@app.route('/disaster/<int:disaster_id>', methods=['GET'])
+def get_disaster(disaster_id):
+    disaster = data_tool.get_disaster_by_id(disaster_id)  
+    return render_template('disasters_table.html', disasters=[disaster])
 
-    return render_template('index.html', form=form, data=None)
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('home.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

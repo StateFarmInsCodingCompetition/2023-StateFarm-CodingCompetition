@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agents Table</title>
+    <style>
+        /* Red and white theme styles */
+        body {
+            background-color: white;
+            color: red;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        select {
+            background-color: red;
+            color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid red;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: red;
+            color: white;
+        }
+
+        /* Add more styles as needed */
+    </style>
+</head>
+<body>
+    <h1>Claims Table</h1>
+    <select onchange="location = this.value;">
+        <option value="{{ url_for('home') }}">Home</option>
+        <option value="{{ url_for('get_agents_table') }}">Agents Table</option>
+        <option value="{{ url_for('get_disasters_table') }}">Disasters Table</option>
+    </select>
+    <table id="claims-table">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Claim ID</th>
+                <th onclick="sortTable(1)">Disaster ID</th>
+                <th>Status</th>
+                <th>Total Loss</th>
+                <th>Loss of Life</th>
+                <th>Type</th>
+                <th onclick="sortTable(2)">Severity Rating</th>
+                <th onclick="sortTable(3)">Estimated Cost</th>
+                <th onclick="sortTable(4)">Agent Assigned ID</th>
+                <th onclick="sortTable(5)">Claim Handler Assigned ID</th>
+            </tr>
+        </thead>
+        <tbody id="claims-table-body">
+            {% for claim in claims %}
+            <tr>
+                <td>{{ claim.id }}</td>
+                <!-- Add a hyperlink for the disaster ID -->
+                <td><a class="disaster-link" href="{{ url_for('get_disaster', disaster_id=claim.disaster_id) }}">{{ claim.disaster_id }}</a></td>
+                <td>{{ claim.status }}</td>
+                <td>{{ claim.total_loss }}</td>
+                <td>{{ claim.loss_of_life }}</td>
+                <td>{{ claim.type }}</td>
+                <td>{{ claim.severity_rating }}</td>
+                <td>{{ claim.estimate_cost }}</td>
+                <td>{{ claim.agent_assigned_id }}</td>
+                <td>{{ claim.claim_handler_assigned_id }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button onclick="previousPage()">Previous</button>
+        <span>Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+        <button onclick="nextPage()">Next</button>
+        Rows per page:
+        <select onchange="updatePageSize(this)">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+    </div>    
+    <script>
+        var currentPage = 1;
+        var rowsPerPage = 10;
+
+        function updateTable() {
+            var tableBody = document.getElementById("claims-table-body");
+            // Calculate the starting and ending indices for the current page
+            var startIndex = (currentPage - 1) * rowsPerPage;
+            var endIndex = startIndex + rowsPerPage;
+
+            // Display only the rows for the current page
+            for (var i = 0; i < tableBody.rows.length; i++) {
+                tableBody.rows[i].style.display = i >= startIndex && i < endIndex ? "" : "none";
+            }
+
+            // Update pagination information
+            document.getElementById("currentPage").textContent = currentPage;
+            document.getElementById("totalPages").textContent = Math.ceil(tableBody.rows.length / rowsPerPage);
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateTable();
+            }
+        }
+
+        function nextPage() {
+            var totalPages = Math.ceil(document.getElementById("claims-table-body").rows.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateTable();
+            }
+        }
+
+        function updatePageSize(select) {
+            rowsPerPage = parseInt(select.value, 10);
+            currentPage = 1;
+            updateTable();
+        }
+
+        // Initial table update
+        updateTable();
+
+        // Function to enable sorting by clicking on table headers
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("claims-table");
+            switching = true;
+            dir = "asc"; // Set the sorting direction to ascending
+
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+
+                    x = rows[i].getElementsByTagName("td")[n];
+                    y = rows[i + 1].getElementsByTagName("td")[n];
+
+                    var xValue = parseFloat(x.innerHTML.replace("$", "").replace(",", ""));
+                    var yValue = parseFloat(y.innerHTML.replace("$", "").replace(",", ""));
+
+                    if (dir == "asc") {
+                        if (xValue > yValue) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (xValue < yValue) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

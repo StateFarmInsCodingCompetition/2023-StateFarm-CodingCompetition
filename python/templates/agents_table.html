@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agents Table</title>
+    <style>
+        /* Red and white theme styles */
+        body {
+            background-color: white;
+            color: red;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        select {
+            background-color: red;
+            color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid red;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: red;
+            color: white;
+        }
+
+        /* Add more styles as needed */
+    </style>
+</head>
+<body>
+    <h1>Agent Table</h1>
+
+    <select onchange="location = this.value;">
+        <option value="{{ url_for('home') }}">Home</option>
+        <option value="{{ url_for('get_claims_table') }}">Claims Table</option>
+        <option value="{{ url_for('get_disasters_table') }}">Disasters Table</option>
+    </select>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>State</th>
+                <th>Region</th>
+                <th>Primary Language</th>
+                <th>Secondary Language</th>
+                <th>Years Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agent in agents %}
+            <tr>
+                <td>{{ agent.id }}</td>
+                <td>{{ agent.first_name }}</td>
+                <td>{{ agent.last_name }}</td>
+                <td>{{ agent.state }}</td>
+                <td>{{ agent.region }}</td>
+                <td>{{ agent.primary_language }}</td>
+                <td>{{ agent.secondary_language }}</td>
+                <td>{{ agent.years_active }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
