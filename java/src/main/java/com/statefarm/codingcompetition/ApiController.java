@@ -1,5 +1,7 @@
 package com.statefarm.codingcompetition;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.statefarm.codingcompetition.simpledatatool.controller.SimpleDataTool;
 
 @RestController
-public class RestEntryPoint {
+public class ApiController {
 
     SimpleDataTool dataService = new SimpleDataTool();
 
@@ -28,12 +30,12 @@ public class RestEntryPoint {
     }
 
     @GetMapping("/disasterTotalCost/{id}")
-    public Float getDisasterTotalCost(@PathVariable("id") int id) {
+    public Double getDisasterTotalCost(@PathVariable("id") int id) {
         return dataService.getTotalClaimCostForDisaster(id);
     }
 
     @GetMapping("/averageClaimCost/{id}")
-    public Float getAverageClaimCost(@PathVariable("id") int id) {
+    public Double getAverageClaimCost(@PathVariable("id") int id) {
         return dataService.getAverageClaimCostforClaimHandler(id);
     }
 
@@ -62,7 +64,10 @@ public class RestEntryPoint {
         return dataService.getNumDisastersDeclaredAfterEndDate();
     }
 
-    // Map method??
+    @GetMapping("/agentsTotalClaimCost")
+    public Map<Integer, Float> getAgentsTotalClaimCost() {
+        return dataService.buildMapOfAgentsToTotalClaimCost();
+    }
 
     @GetMapping("/disasterClaimDensity/{id}")
     public Float getDisasterClaimDensity(@PathVariable("id") int id) {

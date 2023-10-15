@@ -120,18 +120,18 @@ public class SimpleDataTool {
      * @return estimate cost of disaster, rounded to the nearest hundredths place
      *         returns null if no claims are found
      */
-    public Float getTotalClaimCostForDisaster(int id) {
+    public Double getTotalClaimCostForDisaster(int id) {
         List<Claim> claims = getClaims();
 
         // Map of disaster to cost
-        Map<Integer, Float> disasterToCost = new HashMap<Integer, Float>();
+        Map<Integer, Double> disasterToCost = new HashMap<Integer, Double>();
 
         for (Claim claim : claims) {
             int disasterId = claim.getDisaster_id();
-            float claimCost = claim.getEstimate_cost();
+            Double claimCost = claim.getEstimate_cost();
 
             if (disasterToCost.containsKey(disasterId)) {
-                float newCost = disasterToCost.get(disasterId) + claimCost;
+                Double newCost = disasterToCost.get(disasterId) + claimCost;
                 disasterToCost.put(disasterId, newCost);
             } else {
                 disasterToCost.put(disasterId, claimCost);
@@ -139,9 +139,9 @@ public class SimpleDataTool {
         }
 
         if (disasterToCost.containsKey(id)) {
-            BigDecimal bd = new BigDecimal(Float.toString(disasterToCost.get(id)));
+            BigDecimal bd = new BigDecimal(disasterToCost.get(id));
             bd = bd.setScale(2, RoundingMode.HALF_UP);
-            return bd.floatValue();
+            return bd.doubleValue();
         } else {
             return null;
         }
@@ -155,18 +155,18 @@ public class SimpleDataTool {
      * @return average cost of claims, rounded to the nearest hundredths place,
      *         or null if no claims are found
      */
-    public Float getAverageClaimCostforClaimHandler(int id) {
+    public Double getAverageClaimCostforClaimHandler(int id) {
         List<Claim> claims = getClaims();
 
         // Map of claim handler to cost
-        Map<Integer, Float> claimHandlerToCost = new HashMap<Integer, Float>();
+        Map<Integer, Double> claimHandlerToCost = new HashMap<Integer, Double>();
 
         for (Claim claim : claims) {
             int claimHandlerId = claim.getClaim_handler_assigned_id();
-            float claimCost = claim.getEstimate_cost();
+            Double claimCost = claim.getEstimate_cost();
 
             if (claimHandlerToCost.containsKey(claimHandlerId)) {
-                float newCost = claimHandlerToCost.get(claimHandlerId) + claimCost;
+                Double newCost = claimHandlerToCost.get(claimHandlerId) + claimCost;
                 claimHandlerToCost.put(claimHandlerId, newCost);
             } else {
                 claimHandlerToCost.put(claimHandlerId, claimCost);
@@ -175,12 +175,12 @@ public class SimpleDataTool {
 
         if (claimHandlerToCost.containsKey(id)) {
             int numClaims = getNumClaimsForClaimHandlerId(id);
-            float totalCost = claimHandlerToCost.get(id);
-            float averageCost = totalCost / numClaims;
+            Double totalCost = claimHandlerToCost.get(id);
+            Double averageCost = totalCost / numClaims;
 
-            BigDecimal bd = new BigDecimal(Float.toString(averageCost));
+            BigDecimal bd = new BigDecimal(averageCost);
             bd = bd.setScale(2, RoundingMode.HALF_UP);
-            return bd.floatValue();
+            return bd.doubleValue();
         } else {
             return null;
         }
@@ -431,17 +431,14 @@ public class SimpleDataTool {
 
         for (Claim claim : claims) {
             int agentId = claim.getAgent_assigned_id();
-            Float claimCost = claim.getEstimate_cost();
+            Double claimCost = claim.getEstimate_cost();
 
             if (agentToTotalClaimCost.containsKey(agentId)) {
-                // DecimalFormat df = new DecimalFormat("0.00");
-                // String claimCostString = df.format(claimCost);
-                // claimCost = Float.parseFloat(claimCostString);
-                // float newTotalClaimCost = agentToTotalClaimCost.get(agentId) + claimCost;
-                Float newTotalClaimCost = Float.sum(agentToTotalClaimCost.get(agentId), claimCost);
-                agentToTotalClaimCost.put(agentId, newTotalClaimCost);
+                Float prevCost = agentToTotalClaimCost.get(agentId);
+                Float newCost = prevCost + claimCost.floatValue();
+                agentToTotalClaimCost.put(agentId, newCost);
             } else {
-                agentToTotalClaimCost.put(agentId, claimCost);
+                agentToTotalClaimCost.put(agentId, claimCost.floatValue());
             }
         }
         

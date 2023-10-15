@@ -7,7 +7,7 @@ public class Claim {
     private static final Gson GSON = new Gson();
 
     private int id, disaster_id, severity_rating, agent_assigned_id, claim_handler_assigned_id;
-    private float estimate_cost;
+    private Double estimate_cost;
     private boolean total_loss, loss_of_life;
     private String status, type;
 
@@ -51,11 +51,11 @@ public class Claim {
         this.claim_handler_assigned_id = claim_handler_assigned_id;
     }
 
-    public float getEstimate_cost() {
+    public Double getEstimate_cost() {
         return this.estimate_cost;
     }
 
-    public void setEstimate_cost(float estimate_cost) {
+    public void setEstimate_cost(Double estimate_cost) {
         this.estimate_cost = estimate_cost;
     }
 

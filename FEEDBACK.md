@@ -2,14 +2,12 @@
 
 1. Your team: Preston Roesslet
 2. Name of each individual participating: Preston Roesslet
-3. How many unit tests were you able to pass?
+3. How many unit tests were you able to pass? 13
 4. Document and describe any enhancements included to help the judges properly grade your submission.
 
-   I implemented a REST Api to interact with the data from the problem set. I utilized Spring Boot.
+   I implemented a REST Api to interact with the data from the problem set. I utilized Spring Boot. The Spring Boot application is initialized in the RestApi class. I then created all of the endpoints inside of the ApiController.java file.
 
-   The Spring Boot application runs from the RestApi class. I then created all of the endpoints inside of the RestEntryPoint.java file.
-
-   To run the Spring Boot application, run `mvn spring-boot:run`. It runs on localhost:8080 and below are a list of the available endpoints:
+   To run the Spring Boot application, run `mvn spring-boot:run`. The required packages have already been added to my pom.xml file. It runs on localhost:8080 and below is a list of the available endpoints:
 
    - /numberClosedClaims - returns the number of claims where the status is closed
    - /numClaims/{id} - returns the number of claims associated with the given claim handler ID
@@ -21,6 +19,10 @@
    - /mostSpokenLanguage/{state} - returns the language spoken most by claim handlers in the given state
    - /numOpenClaims/{id}/{minSeverity} - returns the number of open claims for the given agent ID and above the given minimum severity
    - /numDistastersDeclaredAfterEndDate - returns the number of disasters where it was declared after it ended
+   - /agentsTotalClaimCost - returns a map of agent ID's and their total claim cost
+   - /disasterClaimDensity/{id} - returns the density of the given disaster ID based on the number of claims and the impact radius
+
+   This could be further extended to include persistent data through a database rather than json files, or even creating a front end to view/edit the data. However, given the time constraints for this competition, this were not feasible to implement.
 
 5. Any feedback for the coding competition? Things you would like to see in future events?
    One thing in particular that I think could be better is ensuring that the test cases and skeleton code are bug free. While I know that programming certainly comes along with bugs, it felt as though there were many issues, some of which weren't being resolved until towards the end of the competition.
