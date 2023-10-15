@@ -1,5 +1,6 @@
 import json
 import math
+import pandas as pd
 
 from statistics import mean
 
@@ -59,6 +60,9 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
+        pclaims = pd.json_normalize(self.get_claim_data(), record_path='status')
+        print(pclaims)
+
         pass
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):

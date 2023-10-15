@@ -1,10 +1,10 @@
 import json
 import random
 
-agent_file_name = 'sfcc_2023_agents.json'
-claim_file_name = 'sfcc_2023_claims.json'
-claim_handlers_file_name = 'sfcc_2023_claim_handlers.json'
-disaster_file_name = 'sfcc_2023_disasters.json'
+agent_file_name = '../data/sfcc_2023_agents.json'
+claim_file_name = '../data/sfcc_2023_claims.json'
+claim_handlers_file_name = '../data/sfcc_2023_claim_handlers.json'
+disaster_file_name = '../data/sfcc_2023_disasters.json'
 
 list_of_states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
                   'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas',
