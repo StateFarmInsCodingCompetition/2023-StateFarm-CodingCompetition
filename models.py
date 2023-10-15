@@ -1,6 +1,14 @@
 from pydantic import BaseModel
 
 
+class Averages(BaseModel):
+    average_claims_per_agent: float
+    average_claims_per_handler: float
+    average_claim_amount: float
+    average_disaster_radius_miles: float
+    average_disaster_length: float
+
+
 class Agent(BaseModel):
     id: int
     name: str

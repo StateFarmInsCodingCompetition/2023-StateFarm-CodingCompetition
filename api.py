@@ -1,7 +1,8 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from simple_data_tool import SimpleDataTool
-from models import Agents, Claims, Claim, ClaimHandlers, Disasters, Disaster, DisasterCount
+from models import Agents, Claims, Claim, ClaimHandlers, Disasters, Disaster, DisasterCount, Averages
+import pandas as pd
 
 app = FastAPI(title="StateFarm Round 1")
 controller = SimpleDataTool()
@@ -65,6 +66,32 @@ async def get_disasters_for_state(state: str):
         return DisasterCount(state=state, number_of_disasters=num_disasters)
     except ValueError:
         raise HTTPException(status_code=404, detail=f"No data available for state: {state}")
+
+
+@app.get('/averages', response_model=Averages)
+async def get_averages():
+    disaster_df = pd.DataFrame(controller.get_disaster_data())
+    claim_df = pd.DataFrame(controller.get_claim_data())
+
+    average_claims_per_agent = claim_df.groupby('agent_assigned_id').count().mean()['id']
+    average_claims_per_handler = claim_df.groupby('claim_handler_assigned_id').count().mean()['id']
+    average_claim_amount = claim_df['estimate_cost'].mean()
+    average_disaster_radius_miles = disaster_df['radius_miles'].mean()
+
+    disaster_df['start_date'] = pd.to_datetime(disaster_df['start_date'])
+    disaster_df['end_date'] = pd.to_datetime(disaster_df['end_date'])
+
+    disaster_df['disaster_length'] = (disaster_df['end_date'] - disaster_df['start_date']).dt.days
+    average_disaster_length = disaster_df['disaster_length'].mean()
+
+    return Averages(
+        average_claims_per_agent=average_claims_per_agent,
+        average_claims_per_handler=average_claims_per_handler,
+        average_claim_amount=average_claim_amount,
+        average_disaster_radius_miles=average_disaster_radius_miles,
+        average_disaster_length=average_disaster_length
+    )
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8010)
