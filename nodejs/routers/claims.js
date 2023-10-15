@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const claims = require("../../data/sfcc_2023_claims.json");
-const handlers = require("../../data/sfcc_2023_claim_handlers.json");
+const claims = require("../data/sfcc_2023_claims.json");
+const handlers = require("../data/sfcc_2023_claim_handlers.json");
 
 module.exports = (dataTool) => {
   router.get("/id/:id", function (req, res) {

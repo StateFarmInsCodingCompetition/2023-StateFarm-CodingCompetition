@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const disasters = require("../../data/sfcc_2023_disasters.json");
+const disasters = require("../data/sfcc_2023_disasters.json");
 
 module.exports = (dataTool) => {
   router.get("/id/:id", function (req, res) {

@@ -57,10 +57,10 @@ api.get("/", (req, res) => {
   });
 });
 
-api.use("/claims", require("./routers/claims/claims")(controller));
-api.use("/disasters", require("./routers/disasters/disasters")(controller));
-api.use("/agents", require("./routers/agents/agents")(controller));
-api.use("/time", require("./routers/time/time")(controller));
+api.use("/claims", require("./routers/claims")(controller));
+api.use("/disasters", require("./routers/disasters")(controller));
+api.use("/agents", require("./routers/agents")(controller));
+api.use("/time", require("./routers/time")(controller));
 
 api.listen(port, () => {
   console.log(`Started the JAKE FROM STATE FARM API on port ${port}`);
