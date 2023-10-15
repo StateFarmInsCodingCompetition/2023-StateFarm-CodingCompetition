@@ -143,7 +143,27 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+
+        disatsers = self.get_disaster_data()
+
+        # Keeps track of the state and the number of disasters
+        state_disaster_count = {}
+
+        for disaster in disatsers:
+            state = disaster['state']
+            state_disaster_count[state] = state_disaster_count.get(state, 0) + 1
+
+        # Get maximum disaster count
+        max_value = max(state_disaster_count.values())
+
+        # Get list of states with max value
+        states_with_max_disasters = [key for key, value in state_disaster_count.items() if value == max_value]
+
+        # Sort list of states
+        states_with_max_disasters.sort()
+
+        # Return first state
+        return states_with_max_disasters[0]
 
     def get_state_with_least_disasters(self):
         """Returns the name of the state with the least disasters based on disaster data
@@ -158,7 +178,27 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        pass
+            
+        disatsers = self.get_disaster_data()
+
+        # Keeps track of the state and the number of disasters
+        state_disaster_count = {}
+
+        for disaster in disatsers:
+            state = disaster['state']
+            state_disaster_count[state] = state_disaster_count.get(state, 0) + 1
+
+        # Get minimum disaster count
+        min_value = min(state_disaster_count.values())
+
+        # Get list of states with min value
+        states_with_min_disasters = [key for key, value in state_disaster_count.items() if value == min_value]
+
+        # Sort list of states
+        states_with_min_disasters.sort()
+
+        # Return first state
+        return states_with_min_disasters[0]
     
     def get_most_spoken_agent_language_by_state(self, state):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
