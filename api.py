@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from simple_data_tool import SimpleDataTool
+import uvicorn
 
 app = FastAPI(title="StateFarm Round 1")
 controller = SimpleDataTool()
@@ -35,6 +36,4 @@ def read_disaster(disaster_id: int):
 
 
 if __name__ == "__main__":
-    import uvicorn
-
     uvicorn.run(app, host="0.0.0.0", port=8010)
