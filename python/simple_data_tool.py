@@ -1,8 +1,8 @@
 import json
 import math
-
+from datetime import datetime
 from statistics import mean
-
+from fractions import Fraction
 
 
 class SimpleDataTool:
@@ -59,7 +59,11 @@ class SimpleDataTool:
         Returns:
             int: number of closed claims
         """
-        pass
+        sum = 0
+        for i in self.get_claim_data():
+            if (i['status'] == 'Closed'):
+                sum += 1
+        return sum
 
     def get_num_claims_for_claim_handler_id(self, claim_handler_id):
         """Calculates the number of claims assigned to a specific claim handler
@@ -70,7 +74,11 @@ class SimpleDataTool:
         Returns:
             int: number of claims assigned to claim handler
         """
-        pass
+        sum = 0
+        for i in self.get_claim_data():
+            if (i['claim_handler_assigned_id'] == claim_handler_id):
+                sum += 1
+        return sum
 
     def get_num_disasters_for_state(self, state):
         """Calculates the number of disasters for a specific state
@@ -82,7 +90,11 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-        pass
+        sum = 0
+        for i in self.get_disaster_data():
+            if (i['state'] == state):
+                sum += 1
+        return sum
 
     # endregion
 
@@ -98,8 +110,14 @@ class SimpleDataTool:
             float | None: estimate cost of disaster, rounded to the nearest hundredths place
                           returns None if no claims are found
         """
+        sum = 0
+        found = False
+        for i in self.get_claim_data():
+            if (i['disaster_id'] == disaster_id):
+                found = True
+                sum += i['estimate_cost']
 
-        pass
+        return round(sum, 2) if found else None
 
     def get_average_claim_cost_for_claim_handler(self, claim_handler_id):
         """Gets the average estimated cost of all claims assigned to a claim handler
@@ -111,8 +129,16 @@ class SimpleDataTool:
             float | None : average cost of claims, rounded to the nearest hundredths place
                            or None if no claims are found
         """
+        sum = 0
+        times_found = 0
+        found = False
+        for i in self.get_claim_data():
+            if (i['claim_handler_assigned_id'] == claim_handler_id):
+                found = True
+                sum += i['estimate_cost']
+                times_found += 1
 
-        pass
+        return round(sum/times_found, 2) if found else None
 
     def get_state_with_most_disasters(self):
         """Returns the name of the state with the most disasters based on disaster data
@@ -122,12 +148,29 @@ class SimpleDataTool:
 
         Example: Say New Jersey and Delaware both have the highest number of disasters at
                  12 disasters each. Then, this method would return "Delaware" since "D"
-                 comes before "N" in the alphabet. 
+                 comes before "N" in the alphabet.
 
         Returns:
             string: single name of state
         """
-        pass
+        
+        state_dict = {}
+
+        for i in self.get_disaster_data():
+            curState = i['state']
+            if (curState in state_dict):
+                state_dict[curState] += 1
+            else:
+                state_dict[curState] = 0
+
+        maxVal = max(state_dict.values())
+        maxStates = []
+
+        for i in state_dict.keys():
+            if state_dict[i] == maxVal:
+                maxStates.append(i)
+
+        return min(maxStates)
 
     def get_state_with_least_disasters(self):
         """Returns the name of the state with the least disasters based on disaster data
@@ -137,13 +180,29 @@ class SimpleDataTool:
 
         Example: Say New Mexico and West Virginia both have the least number of disasters at
                  1 disaster each. Then, this method would return "New Mexico" since "N"
-                 comes before "W" in the alphabet. 
+                 comes before "W" in the alphabet.
 
         Returns:
             string: single name of state
         """
-        pass
-    
+        state_dict = {}
+
+        for i in self.get_disaster_data():
+            curState = i['state']
+            if (curState in state_dict):
+                state_dict[curState] += 1
+            else:
+                state_dict[curState] = 0
+
+        maxVal = min(state_dict.values())
+        minStates = []
+
+        for i in state_dict.keys():
+            if state_dict[i] == maxVal:
+                minStates.append(i)
+
+        return min(minStates)
+
     def get_most_spoken_agent_language_by_state(self, state):
         """Returns the name of the most spoken language by agents (besides English) for a specific state
 
@@ -154,13 +213,29 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        pass
+        lang_dict = {}
+        for i in self.get_agent_data():
+            if (i['state'] == state):
+                pLang = i['primary_language']
+                sLang = i['secondary_language']
+                if (pLang in lang_dict):
+                    lang_dict[pLang] += 1
+                else:
+                    lang_dict[pLang] = 0
+
+                if (sLang in lang_dict):
+                    lang_dict[sLang] += 1
+                else:
+                    lang_dict[sLang] = 0
+        if ('English' in lang_dict):
+            lang_dict.pop('English')
+        return max(lang_dict, key=lang_dict.get) if bool(lang_dict) else ""
 
     def get_num_of_open_claims_for_agent_and_severity(self, agent_id, min_severity_rating):
         """Returns the number of open claims for a specific agent and for a minimum severity level and higher
 
         Note: Severity rating scale for claims is 1 to 10, inclusive.
-        
+
         Args:
             agent_id (int): ID of the agent
             min_severity_rating (int): minimum claim severity rating
@@ -171,8 +246,24 @@ class SimpleDataTool:
                         None if agent does not exist, or agent has no claims (open or not)
         """
 
-        pass
+        sum = 0
+        cData = self.get_claim_data()
+        has_claims = False
+        found = False
 
+        if (min_severity_rating not in range(1, 11)):
+            return -1
+
+        for i in cData:
+            if (i['agent_assigned_id'] == agent_id):
+                if(i['severity_rating'] >= min_severity_rating):
+                    if(i['severity_rating'] not in range(1, 11)):
+                        return -1
+                    if (i['status'] != 'Closed'):
+                        sum += 1
+                    has_claims = True
+                found = True
+        return sum if found or has_claims else None
     # endregion
 
     # region TestSetThree
@@ -183,8 +274,11 @@ class SimpleDataTool:
         Returns:
             int: number of disasters where the declared date is after the end date
         """
-
-        pass
+        sum = 0
+        for i in self.get_disaster_data():
+            if (datetime.strptime(i['declared_date'], '%Y-%m-%d') > datetime.strptime(i['end_date'], '%Y-%m-%d')):
+                sum += 1
+        return sum
 
     def build_map_of_agents_to_total_claim_cost(self):
         """Builds a map of agent and their total claim cost
@@ -197,8 +291,19 @@ class SimpleDataTool:
         Returns:
             dict: key is agent id, value is total cost of claims associated to the agent
         """
+        agent_map = {}
+        cData = self.get_claim_data()
 
-        pass
+        for i in range(1, 101):
+            agent_map[i] = 0
+
+        for i in cData:
+            curID = i['agent_assigned_id']
+            agent_map[curID] += i['estimate_cost']
+
+        for i in agent_map.keys():
+            agent_map[i] = round(agent_map[i], 2)
+        return agent_map if agent_map else None
 
     def calculate_disaster_claim_density(self, disaster_id):
         """Calculates density of a diaster based on the number of claims and impact radius
@@ -214,7 +319,27 @@ class SimpleDataTool:
             float: density of claims to disaster area, rounded to the nearest thousandths place
                    None if disaster does not exist
         """
-        pass
+        num_claims = 0
+        disaster_radius = 0
+        found = False
+        
+        for i in self.get_disaster_data():
+            if (i['id'] == disaster_id):
+                disaster_radius = i['radius_miles']
+        for i in self.get_claim_data():
+            if (i['disaster_id'] == disaster_id):
+                num_claims += 1
+                found = True
+                
+        if (not found): 
+            return None
+
+        disaster_area = float(num_claims) / (math.pi * math.pow(disaster_radius, 2))
+
+        if (disaster_area == 0):
+            return None
+
+        return round(disaster_area, 5)
 
     # endregion
 
