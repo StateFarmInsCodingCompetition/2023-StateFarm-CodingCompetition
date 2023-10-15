@@ -16,13 +16,15 @@ class SimpleDataTool {
         };
     }
 
+
     /**
      * Calculates the number of claims where the status is "Closed"
      *
      * @returns {number} number of closed claims
      */
     getNumClosedClaims() {
-        return -1;
+        let numClosedClaims = sfcc2023Claims.filter(claim => claim.status === 'Closed').length;
+        return numClosedClaims;
     }
 
     /**
@@ -32,7 +34,7 @@ class SimpleDataTool {
      * @returns {number} - Number of claims assigned to the claim handler.
      */
     getNumClaimsForClaimHandlerId(claimHandlerId) {
-        return null;
+        return sfcc2023Claims.filter(claim => claim.claim_handler_assigned_id === claimHandlerId).length;
     }
 
     /**
@@ -42,7 +44,7 @@ class SimpleDataTool {
      * @returns {number} - Number of disasters for the state.
      */
     getNumDisastersForState(state) {
-        return null;
+        return sfcc2023Disasters.filter(disaster => disaster.state === state).length;
     }
 
     /**
@@ -53,7 +55,15 @@ class SimpleDataTool {
      *                          or null if no claims are found.
      */
     getTotalClaimCostForDisaster(disasterId) {
-        return -1;
+        let claimsLinkedToDisaster = sfcc2023Claims.filter(claim => claim.disaster_id === disasterId);
+        if (claimsLinkedToDisaster.length > 0) {
+            let disasterCostSum = 0;
+            claimsLinkedToDisaster.forEach(claim => {
+                disasterCostSum = disasterCostSum + claim.estimate_cost;
+            })
+            return disasterCostSum;
+        }
+        return null;
     }
 
     /**
@@ -64,7 +74,16 @@ class SimpleDataTool {
      *                          or null if no claims are found.
      */
     getAverageClaimCostForClaimHandler(claimHandlerId) {
-        return -1;
+        let claimsLinkedToClaimHandler = sfcc2023Claims.filter(claim => claim.claim_handler_assigned_id === claimHandlerId);
+        if (claimsLinkedToClaimHandler.length > 0) {
+            let averageCost = 0;
+            claimsLinkedToClaimHandler.forEach(claim => {
+                averageCost = averageCost + claim.estimate_cost;
+            })
+            averageCost = averageCost / claimsLinkedToClaimHandler.length;
+            return Math.round(averageCost * 100) / 100;
+        }
+        return null;
     }
 
     /**
@@ -75,7 +94,22 @@ class SimpleDataTool {
      * @returns {string} - Single name of state
      */
     getStateWithMostDisasters() {
-        return null;
+        let stateDisasterCount = {};
+        sfcc2023Disasters.forEach(disaster => {
+            stateDisasterCount[disaster.state] = (stateDisasterCount[disaster.state] || 0) + 1;
+        })
+
+        let maxState = null;
+        let maxCount = 0;
+
+        for (const state in stateDisasterCount) {
+            if (stateDisasterCount[state] > maxCount || (stateDisasterCount[state] === maxCount && state < maxState)) {
+                maxState = state;
+                maxCount = stateDisasterCount[state];
+            }
+        }
+
+        return maxState;
     }
 
     /**
@@ -90,7 +124,23 @@ class SimpleDataTool {
      * @returns {string} - Single name of state
      */
     getStateWithLeastDisasters() {
-        return null;
+        let stateDisasterCount = {};
+        sfcc2023Disasters.forEach(disaster => {
+            stateDisasterCount[disaster.state] = (stateDisasterCount[disaster.state] || 0) + 1;
+        })
+        
+        let leastState = null;
+        // High number
+        let leastCount = 1000;
+
+        for (const state in stateDisasterCount) {
+            if (stateDisasterCount[state] < leastCount || (stateDisasterCount[state] === leastCount && state < leastState)) {
+                leastState = state;
+                leastCount = stateDisasterCount[state];
+            }
+        }
+
+        return leastState;
     }
 
     /**
@@ -100,7 +150,30 @@ class SimpleDataTool {
      * @returns {string} - Name of language, or empty string if state doesn't exist.
      */
     getMostSpokenAgentLanguageByState(state) {
-        return null;
+
+        const agentsInState = sfcc2023Agents.filter(agent => agent.state === state);
+        if ( agentsInState.length > 0 ) {
+            let languageCount = {};
+    
+            agentsInState.forEach(agent => {
+                languageCount[agent.primary_language] = (languageCount[agent.primary_language] || 0) + 1;
+                languageCount[agent.secondary_language] = (languageCount[agent.secondary_language] || 0) + 1;
+            })
+    
+            let maxLanguage = null;
+            let maxCount = 0;
+    
+            for (const language in languageCount) {
+                if (languageCount[language] > maxCount && language !== "English") {
+                    maxLanguage = language;
+                    maxCount = languageCount[language];
+                }
+            }
+    
+            return maxLanguage;
+        }
+
+        return "";
     }
 
     /**
@@ -115,7 +188,22 @@ class SimpleDataTool {
      *                          null if agent does not exist, or agent has no claims (open or not).
      */
     getNumOfOpenClaimsForAgentAndSeverity(agentId, minSeverityRating) {
-        return -2;
+
+        if (minSeverityRating < 1 || minSeverityRating > 10) {
+            return -1
+        }        
+
+        const agentsOpenClaims = sfcc2023Claims.filter(claim => claim.agent_assigned_id === agentId && claim.status !== "Closed");
+
+        if(agentsOpenClaims.length > 0) {
+            const claimsWithinSeverityRating = agentsOpenClaims.filter(claim => claim.severity_rating >= minSeverityRating);
+            if(claimsWithinSeverityRating.length > 0) {
+                return claimsWithinSeverityRating.length;
+            }
+            return -1;
+        }
+
+        return null;
     }
 
     /**
@@ -124,7 +212,8 @@ class SimpleDataTool {
      * @returns {number} - Number of disasters where the declared date is after the end date.
      */
     getNumDisastersDeclaredAfterEndDate() {
-        return null;
+
+        return sfcc2023Disasters.filter(disaster => disaster.end_date < disaster.declared_date).length;
     }
 
     /** Builds a map of agent and their total claim cost
@@ -137,7 +226,14 @@ class SimpleDataTool {
      *  @returns {Object}: key is agent id, value is total cost of claims associated to the agent
      */
     buildMapOfAgentsToTotalClaimCost() {
-        return null;
+        const agentClaimsCostMap = {};
+        sfcc2023Agents.forEach(agent => {
+            agentClaimsCostMap[agent.id] = 0;
+        })
+        sfcc2023Claims.forEach(claim => {
+            agentClaimsCostMap[claim.agent_assigned_id] = Math.round((agentClaimsCostMap[claim.agent_assigned_id] + claim.estimate_cost) * 100) / 100 ;
+        })
+        return agentClaimsCostMap;
     }
 
     /**  Calculates density of a disaster based on the number of claims and impact radius
@@ -151,7 +247,14 @@ class SimpleDataTool {
      * null if disaster does not exist
      */
     calculateDisasterClaimDensity(disasterId) {
-        return -1;
+        const disaster = sfcc2023Disasters.find(disaster => disaster.id === disasterId);
+        if (disaster) {
+            const areaOfDisaster = Math.pow(disaster.radius_miles, 2) * Math.PI;
+            const claimsLinkedToDisaster = sfcc2023Claims.filter(claim => claim.disaster_id === disasterId);
+    
+            return Math.round(claimsLinkedToDisaster.length / areaOfDisaster * 100000) / 100000;
+        }
+        return null;
     }
 
     /**
@@ -168,7 +271,30 @@ class SimpleDataTool {
      * @returns {Array} - An array of three strings of month and year, descending order of highest claims.
      */
     getTopThreeMonthsWithHighestNumOfClaimsDesc() {
-        return null;
+
+        const monthAndYearMap = {}
+
+        
+        const getDisasterMonthAndYear = (disasterDate) => {
+            let declaredDate = new Date(disasterDate);
+            return declaredDate.toLocaleString('default', { month: 'long' }) + " " + declaredDate.getFullYear();
+        }
+
+        sfcc2023Claims.forEach(claim => {
+            let disaster = sfcc2023Disasters.find( disaster => disaster.id === claim.disaster_id);
+
+            const monthAndYear = getDisasterMonthAndYear(disaster.declared_date);
+
+            monthAndYearMap[monthAndYear] = (monthAndYearMap[monthAndYear] || 0) + claim.estimate_cost;
+        })
+
+        const monthAndYearArray = Object.entries(monthAndYearMap);
+
+        monthAndYearArray.sort((a, b) => b[1] - a[1]);
+
+        const top3MonthsWithHighestClaimCost = monthAndYearArray.slice(0, 3).map(entry => entry[0]);
+
+        return top3MonthsWithHighestClaimCost;
     }
 }
 
