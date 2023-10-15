@@ -51,7 +51,7 @@ public class TestSet2 {
     public void test8_getNumOfOpenClaimsForAgentAndSeverity() {
         assertEquals(-1, controller.getNumOfOpenClaimsForAgentAndSeverity(0, 0));
         assertEquals(-1, controller.getNumOfOpenClaimsForAgentAndSeverity(25, 11));
-        assertEquals(null, controller.getNumOfOpenClaimsForAgentAndSeverity(65, 3));
+        assertEquals(0, controller.getNumOfOpenClaimsForAgentAndSeverity(65, 3));
         assertEquals(16, controller.getNumOfOpenClaimsForAgentAndSeverity(24, 1));
         assertEquals(3, controller.getNumOfOpenClaimsForAgentAndSeverity(87, 6));
         assertEquals(2, controller.getNumOfOpenClaimsForAgentAndSeverity(85, 6));
