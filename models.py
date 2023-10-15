@@ -20,6 +20,7 @@ class Agent(BaseModel):
     secondary_language: str | None = None
     years_active: int
 
+
 class Claim(BaseModel):
     id: int
     disaster_id: int
@@ -37,6 +38,7 @@ class ClaimHandler(BaseModel):
     id: int
     first_name: str
     last_name: str
+
 
 class Disaster(BaseModel):
     id: int
