@@ -272,6 +272,7 @@ class SimpleDataTool:
             dict: key is agent id, value is total cost of claims associated to the agent
         """
 
+        # getting total of estimate cost for each agent, and filling 0 for any empty costs
         pclaims = pd.json_normalize(self.get_claim_data())
         res = pclaims.groupby('agent_assigned_id')['estimate_cost'].sum().round(2).to_frame()
         res = res.reindex(range(1, 101), fill_value=0).reset_index()
@@ -300,6 +301,8 @@ class SimpleDataTool:
         num = len(related.index)
 
         pdisasters = pd.json_normalize(self.get_disaster_data())
+
+        # matching disaster id to the radius
         radius = pdisasters.loc[pdisasters['id'] == disaster_id]['radius_miles'].iloc[0]
 
         return round(num / (math.pi * radius ** 2), 5)
@@ -326,6 +329,7 @@ class SimpleDataTool:
         pdisasters = pd.json_normalize(self.get_disaster_data())
         related = related.map(str)
 
+        # getting the month and year for each disaster id
         for i, row in related.iterrows():
             date = dt.datetime.strptime(pdisasters.loc[pdisasters['id'] == int(row.iloc[0])]['declared_date'].iloc[0],
                                         '%Y-%m-%d')
@@ -333,6 +337,7 @@ class SimpleDataTool:
 
         related['count'] = related['count'].astype(int)
 
+        # getting the total count for each month/year
         related = related.groupby('disaster_id')['count'].sum().to_frame().reset_index()  # xd now its actually month:count
         related.columns = ['month', 'count']
         related.sort_values(by=['count'], ascending=[False], inplace=True)
