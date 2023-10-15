@@ -7,10 +7,10 @@ from statistics import mean
 
 class SimpleDataTool:
 
-    AGENTS_FILEPATH = '/Users/dallonjarman/Documents/GitHub/2023-StateFarm-CodingCompetition/python/data/sfcc_2023_agents.json'
-    CLAIM_HANDLERS_FILEPATH = '/Users/dallonjarman/Documents/GitHub/2023-StateFarm-CodingCompetition/python/data/sfcc_2023_claim_handlers.json'
-    CLAIMS_FILEPATH = '/Users/dallonjarman/Documents/GitHub/2023-StateFarm-CodingCompetition/python/data/sfcc_2023_claims.json'
-    DISASTERS_FILEPATH = '/Users/dallonjarman/Documents/GitHub/2023-StateFarm-CodingCompetition/python/data/sfcc_2023_disasters.json'
+    AGENTS_FILEPATH = 'python/data/sfcc_2023_agents.json'
+    CLAIM_HANDLERS_FILEPATH = 'python/data/sfcc_2023_claim_handlers.json'
+    CLAIMS_FILEPATH = 'python/data/sfcc_2023_claims.json'
+    DISASTERS_FILEPATH = 'python/data/sfcc_2023_disasters.json'
 
     REGION_MAP = {
         'west': 'Alaska,Hawaii,Washington,Oregon,California,Montana,Idaho,Wyoming,Nevada,Utah,Colorado,Arizona,New Mexico',

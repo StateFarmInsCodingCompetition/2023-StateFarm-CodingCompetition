@@ -74,7 +74,7 @@ class TestSetTwo:
         assert controller.get_state_with_most_disasters() == 'California'
         assert controller.get_state_with_least_disasters() == 'Alaska'
 
-    def test_get_most_spoken_agent_language_by_state(self, controller):
+    def get_most_spoken_agent_primary_language_by_stat(self, controller):
         """Test 7"""
         assert controller.get_most_spoken_agent_language_by_state(
             'New Hampshire') == 'Arabic'
