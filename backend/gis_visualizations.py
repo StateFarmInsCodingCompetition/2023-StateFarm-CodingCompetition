@@ -24,13 +24,14 @@ fig_disaster = px.scatter_geo(filter_df, lat = 'lat', lon = 'long', size = 'radi
                               hover_name='name', hover_data=['radius_miles'])
 fig_disaster.update_geos(
     projection_type="albers usa",
-    bgcolor= f"rgb(14, 17, 23)",
+    bgcolor= f"rgb(255, 255, 255)",
     showland=True,
     showcoastlines=True,
+    landcolor = 'white',
     coastlinecolor="white", 
 )
 fig_disaster.update_layout(
-    font=dict(color="black"),
-    paper_bgcolor=f"rgb(14, 17, 23)",
+    font=dict(color="white"),
+    paper_bgcolor=f"rgb(255, 255, 255)",
 )
 st.plotly_chart(fig_disaster)
