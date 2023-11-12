@@ -11,7 +11,7 @@ disaster_df['lat'] = pd.to_numeric(disaster_df['lat'])
 disaster_df['long'] = pd.to_numeric(disaster_df['long'])
 disaster_df['radius_miles'] = pd.to_numeric(disaster_df['radius_miles'])
 
-st.title("GIS")
+st.title("Disasters in the US")
 
 select_time = st.selectbox("Select Month and Year", ["All"] + sorted(disaster_df['month_year'].unique()))
 
