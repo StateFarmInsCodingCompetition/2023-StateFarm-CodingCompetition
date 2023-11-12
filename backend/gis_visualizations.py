@@ -27,10 +27,11 @@ fig_disaster.update_geos(
     bgcolor= f"rgb(14, 17, 23)",
     showland=True,
     showcoastlines=True,
+    land_color = 'white',
     coastlinecolor="white", 
 )
 fig_disaster.update_layout(
-    font=dict(color="black"),
+    font=dict(color="white"),
     paper_bgcolor=f"rgb(14, 17, 23)",
 )
 st.plotly_chart(fig_disaster)
