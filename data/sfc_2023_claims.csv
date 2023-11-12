@@ -1,0 +1,1001 @@
+id,disaster_id,status,total_loss,loss_of_life,type,severity_rating,estimate_cost,agent_assigned_id,claim_handler_assigned_id
+1,15,Received,False,False,Auto,4,3580.02,97,50
+2,24,In Review,False,False,Auto,6,1741.32,36,92
+3,31,Received,True,False,Auto,4,15224.3,94,133
+4,14,Received,False,True,Auto,8,6542.46,92,39
+5,30,Closed,False,False,Auto,1,979.81,86,103
+6,77,Received,True,True,Auto,9,200430.52,98,19
+7,31,Received,False,False,Home,5,1362.17,94,156
+8,17,Closed,True,True,Home,8,438400.51,3,112
+9,20,In Review,False,False,Auto,4,1326.11,94,35
+10,86,In Review,False,True,Auto,3,437.48,100,49
+11,86,In Review,False,False,Auto,10,8797.07,100,68
+12,21,Closed,False,False,Auto,7,2918.5,83,150
+13,74,In Review,True,True,Auto,1,23890.38,26,19
+14,55,In Review,False,True,Auto,8,1681.48,79,117
+15,35,In Review,False,False,Home,10,993.53,85,59
+16,25,Received,True,True,Home,6,13560.17,79,73
+17,66,Closed,True,False,Auto,9,30294.14,94,122
+18,97,Received,True,True,Auto,5,264700.71,13,138
+19,29,Received,True,False,Auto,10,39400.46,88,30
+20,92,In Review,True,True,Auto,6,140820.81,92,11
+21,57,Closed,True,True,Auto,1,68880.07,89,115
+22,98,Received,False,False,Auto,4,1544.33,77,97
+23,91,Received,True,False,Home,1,5534.35,92,21
+24,72,Closed,False,True,Auto,10,7509.84,34,22
+25,16,In Review,True,False,Auto,7,13195.12,94,23
+26,40,Received,False,False,Auto,2,1021.43,92,118
+27,2,Received,True,False,Auto,8,11272.93,79,28
+28,51,Received,True,True,Home,1,81160.19,99,108
+29,81,In Review,True,False,Life,8,28912.89,4,11
+30,6,Closed,True,True,Auto,8,423760.7,18,152
+31,77,In Review,True,False,Life,8,63488.54,71,11
+32,22,Received,True,False,Auto,8,1256.87,70,27
+33,20,Closed,True,False,Auto,2,13762.36,94,31
+34,89,Received,False,False,Auto,10,8764.87,88,148
+35,63,In Review,True,True,Auto,7,95060.58,86,19
+36,11,Received,True,True,Home,1,72510.72,49,27
+37,94,Closed,True,True,Life,10,860000.96,15,34
+38,23,In Review,False,False,Auto,1,440.44,92,17
+39,34,Closed,True,True,Auto,6,420540.13,24,85
+40,61,Received,False,False,Auto,1,972.58,57,143
+41,56,Received,True,True,Auto,9,186210.41,79,114
+42,85,Closed,False,True,Home,3,1105.04,39,136
+43,65,Closed,False,False,Auto,5,1651.13,14,38
+44,87,In Review,False,False,Home,9,2587.56,29,2
+45,30,In Review,False,False,Auto,3,161.71,86,62
+46,73,Closed,True,False,Auto,5,32380.38,36,37
+47,99,Received,True,True,Auto,4,76840.43,7,57
+48,71,Closed,True,True,Auto,9,748080.1,27,142
+49,83,Closed,False,False,Home,9,6508.15,86,41
+50,41,Closed,False,True,Auto,9,7954.76,49,32
+51,99,Closed,False,True,Auto,4,829.6,7,155
+52,88,In Review,True,True,Auto,3,98970.24,47,1
+53,67,Closed,True,False,Auto,7,64372.16,13,73
+54,92,Received,True,True,Home,8,664240.86,92,93
+55,39,In Review,True,True,Auto,9,328770.11,11,113
+56,87,Closed,True,False,Home,9,33192.9,23,89
+57,66,Received,False,False,Home,10,150.42,94,137
+58,52,In Review,False,True,Auto,9,2803.2,5,146
+59,56,Received,False,False,Auto,5,2156.95,79,123
+60,59,Closed,False,False,Auto,8,731.8,87,55
+61,15,In Review,False,True,Home,1,292.7,80,74
+62,37,Received,False,True,Auto,10,4423.32,79,130
+63,56,Closed,True,True,Home,6,158520.21,79,63
+64,74,Closed,False,False,Auto,7,2859.48,80,91
+65,8,Closed,False,False,Home,8,4101.33,7,57
+66,64,In Review,False,False,Auto,2,1904.24,79,118
+67,10,Received,False,True,Home,1,460.0,66,149
+68,66,Received,False,True,Home,9,6279.52,94,98
+69,98,Received,False,True,Auto,2,290.87,77,111
+70,26,Closed,False,True,Home,7,5725.39,15,97
+71,81,Closed,False,False,Home,2,283.68,4,121
+72,80,Received,True,True,Auto,6,191760.43,29,57
+73,34,Closed,False,False,Auto,1,187.21,24,19
+74,81,Closed,False,True,Home,10,1932.27,4,61
+75,33,Received,True,False,Life,7,30436.07,79,69
+76,26,Closed,True,False,Auto,3,12480.86,15,136
+77,64,In Review,True,True,Auto,9,741960.11,79,120
+78,11,Closed,False,True,Auto,7,4201.27,49,62
+79,86,Closed,True,True,Auto,4,12720.15,84,26
+80,4,In Review,True,False,Auto,1,5767.29,3,122
+81,98,In Review,True,True,Auto,7,330890.3,36,49
+82,82,Received,False,False,Auto,3,1657.61,79,11
+83,66,Received,True,False,Auto,4,26592.59,94,139
+84,54,In Review,False,False,Auto,2,580.37,34,150
+85,9,In Review,True,False,Home,9,34452.08,94,152
+86,39,Closed,False,False,Auto,6,515.0,62,78
+87,27,In Review,False,False,Auto,9,4578.17,83,141
+88,21,Closed,True,False,Auto,8,18592.37,83,112
+89,13,In Review,False,True,Auto,5,1479.36,79,104
+90,42,Closed,True,False,Auto,1,2668.32,87,22
+91,63,In Review,True,True,Auto,6,438360.74,18,17
+92,67,Received,False,False,Auto,5,2067.1,13,99
+93,47,Received,True,True,Auto,2,31340.03,18,1
+94,67,Closed,True,False,Home,5,5665.9,88,56
+95,57,Received,True,False,Auto,4,39716.85,82,17
+96,75,Received,True,True,Auto,10,733900.72,78,141
+97,37,Closed,True,True,Auto,10,826700.56,79,118
+98,50,Received,True,True,Auto,3,86340.22,8,31
+99,86,Closed,True,False,Auto,8,10200.96,84,66
+100,29,Closed,False,True,Life,7,5174.43,13,72
+101,96,In Review,True,True,Auto,4,216600.22,76,131
+102,6,In Review,True,False,Auto,6,18492.29,18,148
+103,85,Received,False,False,Home,6,1586.04,99,12
+104,20,In Review,False,True,Home,5,3883.58,94,14
+105,25,Closed,True,True,Auto,1,39910.41,79,82
+106,73,In Review,False,False,Home,8,7378.47,77,15
+107,60,In Review,True,True,Home,9,411120.7,94,80
+108,98,Received,False,True,Home,7,5652.69,36,19
+109,66,Received,False,True,Auto,3,1189.53,94,81
+110,79,Received,True,False,Auto,1,9172.87,43,117
+111,2,Received,True,True,Auto,5,230100.3,79,137
+112,1,In Review,False,False,Life,1,159.96,75,93
+113,51,Received,True,False,Auto,3,4446.5,39,28
+114,51,In Review,False,False,Auto,7,5364.37,39,37
+115,58,In Review,False,False,Auto,7,4368.15,46,60
+116,56,Closed,True,False,Auto,5,4715.54,79,29
+117,59,Received,False,False,Home,7,6452.08,87,57
+118,77,Closed,False,False,Auto,6,4557.68,98,22
+119,26,In Review,False,True,Auto,1,651.75,15,80
+120,89,In Review,False,False,Life,2,1929.28,13,57
+121,89,Closed,True,True,Home,10,687300.71,88,82
+122,85,Received,False,False,Auto,9,8225.1,99,17
+123,2,Received,True,False,Home,7,28945.04,79,103
+124,29,Closed,True,True,Auto,3,222330.15,88,91
+125,92,Closed,False,True,Auto,5,4418.71,92,77
+126,18,Closed,True,True,Auto,2,45000.06,39,23
+127,56,Received,True,False,Life,4,11873.0,79,5
+128,53,Received,False,True,Home,1,46.02,94,62
+129,38,Received,True,True,Auto,5,192950.47,24,46
+130,31,Received,False,True,Life,9,2762.64,94,11
+131,5,Closed,False,True,Home,9,1336.23,30,45
+132,91,In Review,True,False,Home,10,27780.53,92,150
+133,16,Received,False,True,Home,2,1765.29,94,76
+134,38,Received,True,True,Auto,3,173490.61,20,54
+135,86,Closed,True,True,Auto,5,298550.27,76,136
+136,38,Received,True,True,Home,7,581350.32,20,121
+137,10,Closed,True,True,Auto,6,270540.99,66,123
+138,60,Received,True,True,Home,10,128400.89,94,79
+139,98,Received,True,False,Home,4,5936.8,77,58
+140,57,In Review,False,True,Auto,8,5145.72,89,78
+141,16,In Review,False,True,Auto,7,6718.53,94,9
+142,95,In Review,True,False,Auto,2,324.53,84,15
+143,84,In Review,True,True,Auto,8,185680.91,92,119
+144,100,Received,False,False,Auto,6,1282.19,70,143
+145,11,In Review,False,True,Auto,5,3733.06,49,53
+146,73,In Review,True,True,Home,9,853920.95,36,82
+147,26,Received,False,False,Home,3,2336.44,15,9
+148,70,Received,True,True,Auto,2,12980.82,24,139
+149,78,Closed,False,True,Auto,6,3449.69,94,95
+150,11,Closed,True,True,Auto,4,67480.89,49,93
+151,2,Received,True,True,Home,4,368840.36,79,50
+152,17,Received,False,True,Auto,10,9865.7,3,124
+153,7,Received,True,False,Auto,4,37324.45,73,105
+154,54,Closed,True,True,Home,5,409800.36,34,15
+155,47,Received,False,True,Home,7,5347.35,100,32
+156,87,Closed,True,False,Auto,5,5200.7,29,144
+157,2,Closed,False,False,Home,8,4378.82,79,153
+158,90,Received,False,True,Auto,5,3497.1,26,45
+159,2,In Review,False,False,Auto,8,7928.67,79,152
+160,50,In Review,True,False,Auto,5,38945.93,8,74
+161,80,Closed,True,True,Home,9,65520.68,29,40
+162,17,In Review,True,False,Auto,6,52368.11,3,102
+163,74,In Review,True,True,Auto,3,78210.71,26,78
+164,22,Closed,False,False,Auto,6,3747.84,70,119
+165,6,Received,True,True,Home,1,7620.94,18,17
+166,2,In Review,False,False,Auto,2,1691.21,79,14
+167,39,In Review,True,True,Auto,5,206250.11,89,79
+168,6,Closed,False,False,Auto,4,972.56,76,101
+169,39,In Review,True,False,Home,5,47995.42,89,150
+170,56,Received,True,False,Auto,1,3423.49,79,113
+171,10,In Review,True,False,Home,5,21945.23,66,70
+172,42,Closed,True,False,Home,1,2063.11,87,111
+173,10,Closed,True,True,Auto,4,334000.63,85,107
+174,97,Received,False,False,Life,5,4483.3,13,63
+175,50,Received,True,False,Auto,7,12705.11,8,81
+176,61,In Review,True,True,Auto,7,21140.3,57,103
+177,24,Received,False,False,Auto,3,1233.05,77,19
+178,32,Received,True,True,Home,6,120540.32,19,38
+179,65,Closed,False,True,Auto,4,620.26,14,121
+180,99,In Review,False,False,Auto,3,2756.2,7,10
+181,83,Closed,True,True,Auto,4,206520.21,86,100
+182,84,Received,True,False,Auto,10,51730.89,92,125
+183,82,In Review,False,False,Auto,3,438.07,79,23
+184,7,In Review,True,False,Auto,8,13600.66,19,115
+185,34,Received,True,True,Auto,7,147280.09,20,30
+186,58,Closed,False,False,Auto,9,2260.64,46,110
+187,61,Received,False,True,Life,4,2481.55,57,102
+188,46,Received,True,False,Auto,5,43030.83,92,41
+189,63,Closed,True,False,Life,2,3988.1,100,86
+190,66,Received,True,False,Auto,5,44450.24,94,148
+191,8,Received,False,True,Home,7,1107.71,7,87
+192,49,Received,False,True,Auto,4,2268.44,15,138
+193,24,Closed,True,False,Auto,5,43735.56,77,45
+194,88,In Review,False,True,Auto,10,3721.85,47,135
+195,72,Closed,True,True,Auto,5,326450.84,34,145
+196,39,In Review,True,False,Auto,4,6288.55,82,82
+197,43,Closed,True,True,Auto,4,227360.9,36,99
+198,48,Received,True,True,Life,1,25630.07,91,43
+199,71,In Review,True,True,Life,6,561000.07,42,2
+200,81,Received,True,False,Auto,2,18314.97,4,23
+201,14,In Review,True,True,Auto,8,134800.54,92,55
+202,67,In Review,True,True,Auto,5,92450.18,88,42
+203,29,In Review,True,True,Auto,8,733600.26,13,86
+204,95,Closed,True,False,Life,4,7948.67,86,112
+205,4,In Review,True,False,Auto,3,29718.91,3,76
+206,44,Received,True,False,Home,6,46386.26,86,53
+207,71,In Review,False,True,Home,1,67.8,60,141
+208,78,Received,True,True,Home,10,467400.75,94,65
+209,12,In Review,True,True,Home,4,141160.26,92,4
+210,65,Received,True,False,Home,4,9068.43,14,46
+211,88,In Review,True,False,Auto,6,15864.62,17,136
+212,50,Closed,True,False,Home,5,32625.66,8,25
+213,77,In Review,True,False,Home,10,45070.87,71,151
+214,69,Received,False,True,Auto,2,676.13,99,91
+215,49,Received,True,False,Home,3,12552.15,15,4
+216,39,Closed,True,True,Auto,8,323440.7,89,146
+217,60,Closed,True,True,Auto,5,406750.64,94,12
+218,1,Closed,False,False,Auto,7,4700.79,95,80
+219,88,Closed,True,False,Home,1,6029.17,17,7
+220,61,Closed,False,False,Auto,4,3760.85,57,103
+221,32,In Review,True,False,Auto,4,23708.94,19,85
+222,92,Closed,True,False,Auto,6,58633.0,92,39
+223,87,Received,False,False,Home,3,2599.44,23,21
+224,40,Closed,True,True,Auto,4,370880.21,92,133
+225,86,Closed,True,False,Auto,7,14217.39,86,55
+226,29,Closed,True,False,Auto,10,65360.93,13,150
+227,71,In Review,True,False,Auto,5,47605.46,42,15
+228,35,In Review,False,False,Home,3,456.18,85,104
+229,61,In Review,False,True,Home,3,586.18,57,39
+230,79,In Review,True,False,Auto,7,2275.1,43,1
+231,36,Closed,False,False,Home,1,619.31,7,40
+232,45,In Review,False,False,Auto,7,3672.15,7,20
+233,9,Closed,True,False,Life,1,2956.68,94,135
+234,24,Received,True,True,Home,2,83720.65,77,78
+235,15,In Review,False,False,Auto,8,773.79,21,123
+236,22,Received,True,False,Auto,2,14100.29,70,19
+237,64,Closed,True,True,Home,7,616770.92,79,142
+238,6,Received,False,True,Auto,10,4050.75,100,133
+239,87,In Review,False,False,Home,7,2745.09,29,47
+240,20,Received,False,True,Auto,5,4320.75,94,114
+241,35,Received,False,False,Auto,3,1170.8,66,74
+242,36,Received,True,True,Auto,5,273600.71,7,41
+243,89,Received,True,True,Home,4,305760.75,13,49
+244,99,Closed,True,False,Life,6,48804.96,7,27
+245,79,Received,False,False,Auto,8,2314.31,43,89
+246,86,Received,False,True,Home,2,626.28,76,123
+247,89,In Review,False,False,Home,1,648.71,13,33
+248,91,Closed,True,False,Auto,7,53053.87,92,58
+249,96,In Review,True,True,Home,2,36560.04,18,141
+250,53,Received,True,False,Auto,6,26940.95,94,22
+251,81,In Review,False,False,Home,3,1205.72,4,35
+252,27,Closed,True,True,Home,3,89370.04,46,35
+253,6,Received,False,False,Auto,5,1772.43,86,14
+254,67,Received,False,True,Auto,10,2970.9,88,114
+255,38,In Review,True,True,Auto,10,951900.97,24,149
+256,57,Closed,False,True,Home,10,4754.14,82,9
+257,26,Received,True,False,Home,3,15435.74,15,43
+258,84,In Review,False,True,Auto,10,1185.26,92,61
+259,100,In Review,True,True,Auto,1,85420.5,56,47
+260,100,Closed,False,False,Auto,10,7743.98,56,19
+261,38,Closed,False,True,Auto,10,2133.75,24,106
+262,5,Closed,True,True,Home,6,364020.06,30,48
+263,26,Closed,False,True,Life,4,2906.39,15,105
+264,14,Closed,True,True,Auto,10,352300.74,92,39
+265,51,Closed,True,False,Auto,5,21870.2,39,37
+266,94,Received,False,True,Auto,4,1024.57,15,127
+267,16,Received,True,True,Auto,9,526140.58,94,105
+268,47,In Review,True,True,Home,6,380580.84,18,128
+269,65,Closed,False,True,Auto,2,305.7,14,108
+270,33,Received,True,True,Home,9,330840.79,79,36
+271,22,Received,True,False,Auto,6,23832.81,56,25
+272,89,In Review,True,False,Auto,10,10110.43,13,19
+273,98,In Review,True,False,Auto,10,32380.37,36,65
+274,17,Closed,True,False,Auto,7,19761.82,3,98
+275,34,Received,False,True,Home,6,4611.72,24,46
+276,55,Closed,False,False,Auto,7,4400.1,79,88
+277,97,Received,True,False,Home,6,32616.0,88,17
+278,82,In Review,True,False,Auto,2,13894.58,79,51
+279,32,Closed,True,False,Auto,3,13167.24,73,140
+280,76,Closed,True,True,Auto,8,542160.69,58,49
+281,46,Closed,True,False,Home,1,4983.17,92,21
+282,59,Closed,True,True,Auto,3,210690.04,87,150
+283,77,Closed,False,True,Auto,3,1579.85,71,96
+284,94,In Review,False,True,Auto,8,1368.9,15,48
+285,31,Closed,True,False,Home,2,3644.19,94,100
+286,28,Closed,False,False,Auto,4,518.81,35,150
+287,41,Received,True,False,Auto,10,16790.59,49,18
+288,80,In Review,True,False,Auto,4,18872.07,29,59
+289,100,Closed,False,True,Life,2,562.76,70,54
+290,69,Received,True,True,Life,8,409600.11,39,77
+291,72,In Review,False,True,Home,7,3803.3,34,107
+292,39,Closed,True,True,Auto,1,89830.43,62,28
+293,34,Closed,False,False,Home,9,1321.42,24,96
+294,57,In Review,False,True,Auto,2,1875.43,62,112
+295,95,In Review,True,True,Auto,6,490980.66,84,18
+296,34,Received,False,False,Home,1,803.72,24,103
+297,5,Closed,False,False,Home,2,820.64,30,54
+298,80,Closed,True,False,Auto,4,4396.24,29,73
+299,80,Received,False,True,Home,4,1336.46,29,150
+300,6,Closed,False,False,Home,7,1007.8,86,141
+301,81,Closed,False,True,Home,5,4705.78,4,95
+302,67,Received,False,True,Home,3,1375.37,13,47
+303,17,In Review,True,True,Auto,4,206920.61,3,28
+304,49,Received,True,True,Auto,10,419400.37,15,32
+305,44,Closed,True,False,Auto,4,26600.73,76,145
+306,26,Received,False,True,Auto,3,2295.92,15,11
+307,58,Received,False,True,Auto,10,9837.21,1,58
+308,82,In Review,False,False,Home,7,5034.36,79,105
+309,54,Closed,False,True,Auto,9,6392.54,34,81
+310,93,Closed,False,True,Auto,7,5867.6,30,9
+311,26,Closed,False,False,Auto,3,2439.0,15,131
+312,75,Closed,True,False,Home,7,27252.0,14,66
+313,47,Closed,True,False,Auto,5,43545.48,84,79
+314,41,Closed,True,True,Home,10,867200.98,49,15
+315,63,Closed,True,False,Auto,6,13974.78,18,150
+316,71,In Review,True,False,Auto,5,22525.23,27,122
+317,2,Closed,False,True,Home,2,1802.38,79,123
+318,22,Closed,False,True,Home,9,3704.27,70,63
+319,92,Closed,False,False,Auto,5,4927.06,92,63
+320,70,In Review,False,True,Auto,1,801.01,24,39
+321,1,In Review,False,False,Home,5,4646.24,75,118
+322,36,Received,False,False,Auto,2,1953.73,7,23
+323,19,Received,True,True,Home,6,78360.26,99,17
+324,41,Closed,True,True,Auto,8,703520.12,49,83
+325,80,In Review,False,False,Auto,8,6562.11,59,110
+326,14,In Review,False,False,Auto,9,7522.67,92,45
+327,36,Closed,True,True,Home,6,522540.08,7,91
+328,98,Closed,False,False,Auto,7,826.89,77,69
+329,20,In Review,False,True,Auto,4,2696.92,94,122
+330,81,Received,False,True,Auto,10,1276.98,4,101
+331,87,Received,True,False,Auto,10,7760.81,29,51
+332,81,Closed,False,False,Auto,8,3790.56,4,23
+333,31,Received,False,False,Auto,3,2992.13,94,94
+334,45,Received,True,True,Life,4,131440.25,7,83
+335,71,In Review,False,True,Life,10,6215.09,60,154
+336,91,Closed,True,False,Auto,3,14340.0,92,19
+337,3,Closed,False,True,Auto,7,570.18,4,89
+338,89,Closed,True,True,Auto,1,78470.86,88,124
+339,62,In Review,True,True,Auto,10,886800.79,55,129
+340,56,Received,False,False,Auto,7,5450.47,79,127
+341,87,Closed,True,True,Home,9,694260.11,29,146
+342,57,Closed,True,False,Auto,4,37468.91,11,140
+343,4,In Review,True,False,Auto,2,3002.77,3,130
+344,83,Closed,True,True,Auto,9,381780.94,18,12
+345,98,Received,True,True,Auto,10,464700.46,77,97
+346,43,Received,True,False,Auto,7,39991.9,36,69
+347,34,Closed,True,True,Home,5,115150.09,58,17
+348,68,Received,False,True,Home,4,3771.23,10,55
+349,25,Closed,True,False,Home,9,79416.47,79,17
+350,6,Closed,True,False,Auto,2,2412.76,76,121
+351,20,Closed,True,False,Auto,10,21840.36,94,128
+352,79,Received,False,True,Auto,7,5134.24,43,5
+353,38,In Review,False,True,Home,6,5921.77,58,145
+354,11,Received,True,True,Auto,3,290310.52,49,153
+355,86,In Review,False,False,Home,3,936.32,18,103
+356,70,Closed,True,True,Auto,4,88840.64,24,97
+357,47,In Review,False,True,Auto,2,1672.03,18,36
+358,19,In Review,True,True,Auto,8,555280.47,39,131
+359,94,In Review,True,True,Auto,7,88480.03,15,137
+360,5,Closed,False,False,Home,9,4188.24,43,144
+361,14,In Review,False,True,Auto,4,3264.11,92,123
+362,62,In Review,True,False,Auto,3,2727.59,55,103
+363,40,Closed,False,True,Home,2,346.41,92,135
+364,26,In Review,True,False,Auto,2,13714.18,15,82
+365,69,In Review,True,False,Auto,7,63539.85,99,61
+366,76,Received,False,True,Home,5,667.58,24,4
+367,54,Received,True,False,Auto,1,455.17,34,64
+368,16,In Review,False,True,Life,3,346.23,94,104
+369,66,Received,False,False,Auto,6,3113.5,94,80
+370,54,In Review,False,False,Auto,4,2910.25,34,140
+371,19,Received,False,False,Auto,7,4988.42,99,46
+372,19,Closed,True,False,Auto,2,12076.22,99,87
+373,55,Closed,True,True,Auto,5,321350.25,79,61
+374,22,Closed,False,True,Auto,5,1802.61,56,25
+375,9,Closed,False,False,Auto,9,4110.7,94,106
+376,75,Received,True,False,Auto,2,18474.94,78,74
+377,74,Closed,False,False,Home,6,879.0,80,35
+378,30,In Review,True,False,Home,5,2415.33,100,124
+379,98,In Review,False,False,Auto,10,9406.97,77,124
+380,34,Closed,False,False,Auto,7,5037.71,24,128
+381,73,Received,False,True,Auto,2,1966.41,77,128
+382,81,In Review,True,True,Auto,1,68850.94,4,150
+383,30,In Review,False,True,Auto,1,72.01,86,130
+384,29,In Review,True,False,Auto,7,41083.54,13,36
+385,33,Received,False,True,Auto,7,5420.82,79,53
+386,71,In Review,True,True,Auto,10,661100.69,60,119
+387,91,Closed,False,True,Home,8,829.68,92,38
+388,26,Closed,True,False,Auto,8,51192.1,15,133
+389,16,Closed,False,False,Auto,10,8807.75,94,64
+390,13,Received,True,True,Auto,9,747630.27,79,120
+391,94,Received,True,False,Life,8,65336.7,15,109
+392,59,Closed,True,True,Home,1,19660.33,87,88
+393,78,Closed,False,True,Auto,5,2297.56,94,120
+394,24,Received,True,True,Auto,1,5130.34,36,119
+395,77,In Review,False,True,Auto,2,1959.1,71,4
+396,77,Closed,False,True,Home,2,40.03,71,125
+397,64,Received,True,True,Home,4,58320.43,79,31
+398,25,Received,False,True,Auto,6,4135.15,79,28
+399,49,Closed,True,False,Home,8,63064.63,15,30
+400,88,Closed,True,True,Home,5,429000.2,17,150
+401,83,Closed,True,True,Auto,5,310200.59,100,71
+402,22,In Review,False,True,Home,7,4359.38,56,5
+403,97,Received,True,False,Auto,4,26252.13,88,106
+404,86,Received,True,False,Auto,5,23635.34,86,72
+405,58,In Review,True,False,Home,8,64224.48,46,55
+406,14,Received,False,False,Auto,1,559.17,92,55
+407,2,Received,True,True,Auto,8,36240.71,79,58
+408,39,Closed,True,False,Home,7,9373.4,62,23
+409,19,Received,False,True,Auto,5,4078.5,39,85
+410,6,Closed,True,False,Life,3,22662.83,100,81
+411,81,In Review,False,True,Home,7,3582.41,4,126
+412,3,Closed,False,False,Auto,2,481.72,4,24
+413,63,Closed,True,False,Auto,1,7001.76,76,49
+414,30,Closed,True,False,Auto,6,59484.55,84,133
+415,78,Closed,False,True,Auto,6,5938.27,94,77
+416,18,Closed,True,True,Auto,6,588960.77,39,154
+417,15,Closed,True,False,Home,4,7024.05,97,5
+418,2,Received,True,False,Auto,6,16350.8,79,147
+419,31,Received,True,True,Auto,1,47010.55,94,24
+420,10,Closed,False,False,Home,8,2560.06,66,107
+421,34,In Review,True,True,Auto,8,680480.2,20,151
+422,59,Received,True,False,Auto,2,11218.95,87,19
+423,67,Received,False,False,Home,2,903.3,88,80
+424,34,In Review,False,True,Auto,7,5530.65,24,132
+425,56,Closed,True,False,Home,8,1928.68,79,132
+426,76,Received,True,False,Home,9,33642.76,20,4
+427,10,In Review,False,True,Auto,9,6600.03,85,31
+428,27,Received,True,True,Auto,5,299000.33,46,58
+429,23,Received,False,True,Auto,5,2255.25,92,111
+430,3,Closed,False,True,Auto,7,5361.48,4,81
+431,31,Received,True,True,Auto,8,171840.18,94,45
+432,71,Closed,False,False,Home,1,533.44,60,41
+433,32,Closed,False,False,Auto,3,523.39,19,82
+434,28,In Review,True,True,Life,1,71350.29,35,30
+435,42,Received,True,False,Home,5,32865.86,87,46
+436,41,Received,True,False,Life,5,14445.72,49,146
+437,89,Received,False,False,Life,2,77.01,13,9
+438,27,In Review,True,False,Auto,1,3709.54,83,28
+439,60,In Review,True,False,Auto,2,7198.08,94,5
+440,34,In Review,True,False,Auto,1,3165.03,24,141
+441,77,Received,True,False,Auto,9,81171.13,71,106
+442,23,In Review,False,True,Home,7,1439.37,92,16
+443,56,In Review,False,False,Auto,6,2857.0,79,118
+444,27,Received,False,False,Auto,3,957.86,83,54
+445,11,In Review,True,True,Auto,4,197320.46,49,4
+446,26,In Review,False,True,Life,1,559.25,15,77
+447,10,In Review,True,False,Auto,4,25628.87,85,56
+448,55,In Review,False,False,Life,1,297.22,79,79
+449,24,Closed,False,True,Auto,2,996.31,36,10
+450,77,Received,True,False,Auto,4,36692.41,98,155
+451,73,Received,True,True,Home,8,267840.17,77,80
+452,86,Received,True,True,Auto,10,629800.4,84,79
+453,87,Closed,False,True,Auto,7,6785.98,59,68
+454,50,Received,True,True,Auto,4,87520.56,8,140
+455,48,In Review,True,True,Auto,4,157200.54,91,132
+456,34,In Review,False,False,Auto,7,3958.45,20,125
+457,3,Closed,True,True,Auto,6,507960.66,4,46
+458,96,Received,False,False,Auto,10,8451.8,86,80
+459,69,In Review,True,True,Auto,10,784300.86,39,129
+460,1,Received,True,False,Auto,5,35605.15,75,54
+461,21,Received,False,False,Home,8,5556.47,46,92
+462,84,In Review,False,False,Home,8,1975.72,92,154
+463,25,Received,True,True,Auto,4,73840.91,79,129
+464,89,Closed,True,True,Auto,1,14890.1,13,105
+465,10,Received,False,False,Auto,10,3729.19,66,115
+466,93,Received,True,True,Auto,2,115860.44,30,41
+467,49,In Review,True,False,Auto,7,51471.07,15,113
+468,81,Closed,False,False,Home,3,72.09,4,21
+469,87,Received,True,False,Auto,3,24078.17,23,17
+470,12,Received,False,True,Auto,10,4338.81,92,21
+471,42,Closed,True,False,Auto,4,12952.8,87,75
+472,95,Closed,False,True,Auto,10,1037.09,86,11
+473,49,In Review,True,True,Auto,10,768300.8,15,15
+474,21,Received,False,False,Auto,2,254.4,46,132
+475,26,Received,False,True,Auto,9,2270.77,15,27
+476,1,Closed,False,True,Home,1,343.72,95,42
+477,38,Received,True,True,Auto,2,116620.07,24,31
+478,31,In Review,False,True,Home,6,4755.81,94,1
+479,72,Closed,True,True,Auto,9,559620.74,34,65
+480,74,Closed,False,False,Auto,9,1899.39,26,33
+481,5,Received,False,False,Auto,4,1812.8,43,88
+482,73,Received,False,False,Life,5,1340.55,77,31
+483,40,In Review,False,True,Home,5,4977.69,92,150
+484,36,In Review,False,False,Auto,9,2763.97,7,142
+485,87,Received,True,True,Auto,3,78840.96,59,67
+486,9,Closed,False,True,Home,9,2830.69,94,19
+487,2,Received,True,False,Auto,4,34516.6,79,106
+488,8,Closed,True,True,Auto,9,649080.64,7,70
+489,44,Closed,False,False,Auto,5,2252.98,18,32
+490,53,Received,True,False,Auto,10,78290.92,94,40
+491,40,In Review,False,True,Home,8,3397.62,92,97
+492,34,In Review,True,False,Auto,4,33300.88,58,146
+493,43,In Review,False,True,Auto,6,2714.89,77,99
+494,93,Closed,True,False,Auto,3,14700.76,30,1
+495,36,Closed,True,False,Auto,1,1183.91,7,18
+496,28,Closed,False,False,Auto,2,1978.46,35,75
+497,40,Closed,False,True,Auto,1,561.77,92,10
+498,87,Received,True,False,Home,10,82830.9,23,63
+499,7,In Review,False,False,Auto,10,1320.74,19,108
+500,34,In Review,True,False,Auto,1,6682.52,20,38
+501,80,Closed,True,True,Home,8,370080.13,29,102
+502,45,Closed,False,True,Auto,10,8618.41,7,51
+503,52,Closed,False,False,Auto,5,4392.43,5,54
+504,35,Received,True,False,Life,5,34555.98,85,111
+505,58,Closed,False,True,Auto,4,3923.95,83,120
+506,92,Received,True,False,Home,1,4923.98,92,139
+507,61,Received,True,False,Auto,3,22854.24,57,31
+508,85,In Review,True,False,Auto,1,2098.09,99,30
+509,50,In Review,False,False,Home,7,2462.7,8,152
+510,52,In Review,True,False,Auto,7,14504.15,5,136
+511,65,Received,True,False,Auto,6,11490.8,31,122
+512,63,In Review,True,False,Auto,9,46494.46,18,150
+513,54,In Review,True,False,Home,5,44255.05,34,64
+514,33,Closed,True,True,Auto,1,52580.35,79,137
+515,26,Received,True,True,Auto,7,248780.42,15,149
+516,57,In Review,False,False,Auto,9,3098.72,62,101
+517,11,Received,True,True,Auto,2,191280.69,49,38
+518,78,Received,False,True,Home,3,704.37,94,24
+519,14,Received,False,False,Auto,10,7231.72,92,16
+520,16,Closed,False,True,Auto,4,1736.49,94,48
+521,81,Received,False,True,Auto,8,4525.44,4,45
+522,27,In Review,True,True,Auto,3,81210.42,46,59
+523,65,In Review,True,True,Home,9,595080.15,31,25
+524,28,In Review,True,True,Auto,3,118200.92,35,128
+525,36,Closed,True,False,Home,5,6610.99,7,126
+526,70,Closed,True,False,Home,5,49440.56,20,84
+527,79,In Review,False,False,Auto,5,3647.73,43,152
+528,89,Received,True,True,Home,5,364850.84,88,40
+529,63,Closed,False,False,Home,6,2264.03,76,68
+530,22,In Review,True,True,Auto,9,47700.78,56,28
+531,2,In Review,True,False,Auto,7,24031.55,79,150
+532,63,Received,True,False,Auto,4,4616.38,86,124
+533,61,Received,False,False,Auto,1,163.2,57,135
+534,66,In Review,False,True,Auto,7,164.1,94,22
+535,23,Closed,False,False,Auto,3,2408.9,92,139
+536,56,In Review,False,False,Auto,7,1901.39,79,122
+537,53,Closed,False,True,Auto,5,3229.48,94,73
+538,28,Received,True,True,Auto,7,585690.69,35,70
+539,63,In Review,False,False,Home,8,6353.74,100,71
+540,19,Received,True,False,Life,7,66997.51,99,75
+541,60,Received,False,False,Auto,8,2457.73,94,44
+542,9,In Review,True,False,Auto,1,9164.77,94,61
+543,32,Received,True,True,Home,1,5410.19,74,107
+544,98,Closed,True,False,Life,6,11640.36,77,80
+545,58,Received,True,False,Auto,3,11439.73,1,142
+546,43,In Review,False,False,Auto,8,7196.88,77,156
+547,32,Closed,False,False,Home,10,1720.81,74,9
+548,5,Closed,False,True,Home,2,1952.02,43,112
+549,68,Closed,False,True,Auto,7,4606.26,10,107
+550,52,In Review,True,True,Home,5,435300.17,5,92
+551,4,In Review,False,False,Auto,3,2079.9,3,152
+552,53,Received,False,True,Auto,3,1544.71,94,85
+553,55,Received,False,False,Auto,8,443.24,79,137
+554,38,Closed,False,True,Auto,3,1781.83,20,47
+555,95,Closed,False,False,Home,6,3958.52,76,140
+556,65,In Review,False,True,Auto,7,966.57,31,16
+557,37,Received,False,True,Life,9,5392.06,79,82
+558,50,In Review,False,False,Auto,9,1405.89,8,2
+559,63,In Review,False,False,Life,6,4960.88,84,19
+560,100,Closed,False,True,Auto,6,1384.94,70,79
+561,29,Closed,False,True,Auto,5,4804.24,88,116
+562,7,Closed,True,False,Auto,7,15869.27,73,39
+563,35,In Review,True,False,Auto,2,8062.8,85,24
+564,18,In Review,False,True,Home,1,619.95,99,42
+565,61,Received,True,True,Auto,1,78290.56,57,127
+566,85,Closed,True,False,Auto,9,50625.14,39,138
+567,15,In Review,True,True,Home,8,235200.5,21,33
+568,65,In Review,True,False,Auto,1,7795.58,31,5
+569,84,In Review,False,True,Auto,5,361.6,92,128
+570,44,Closed,True,False,Home,5,44160.65,18,121
+571,88,Closed,False,False,Home,3,192.99,17,28
+572,68,Closed,False,False,Auto,6,3176.44,10,24
+573,18,Received,True,True,Auto,9,486630.26,99,59
+574,87,Closed,True,True,Auto,3,248550.88,23,65
+575,58,Received,False,True,Auto,1,419.25,1,131
+576,31,Received,True,True,Auto,4,260440.06,94,88
+577,31,Closed,True,True,Auto,3,78240.65,94,37
+578,36,Closed,False,True,Auto,6,235.43,7,19
+579,46,Closed,False,False,Home,8,3052.67,92,26
+580,76,Received,False,True,Auto,4,1167.37,24,53
+581,97,Received,False,True,Auto,2,1054.78,88,77
+582,4,Closed,False,False,Auto,8,888.98,3,117
+583,73,Closed,True,False,Auto,6,23040.29,77,126
+584,50,Received,False,False,Auto,8,5808.12,8,35
+585,42,Received,True,False,Auto,2,5502.11,87,89
+586,4,In Review,True,True,Auto,4,219360.58,3,138
+587,4,Closed,False,True,Home,7,581.98,3,100
+588,54,Received,True,True,Auto,5,497250.92,34,121
+589,93,In Review,True,True,Life,1,83730.15,43,4
+590,60,Received,True,True,Home,1,84010.28,94,90
+591,54,Closed,False,True,Auto,4,2248.63,34,73
+592,28,Closed,False,False,Auto,6,3639.59,35,144
+593,78,Closed,True,False,Auto,2,9186.14,94,117
+594,28,Closed,True,True,Home,1,22990.88,35,91
+595,68,In Review,False,False,Home,5,629.11,10,67
+596,72,Closed,False,True,Auto,10,4250.24,34,119
+597,57,Closed,False,False,Home,5,1090.41,89,72
+598,49,Closed,False,True,Home,5,639.36,15,84
+599,42,In Review,True,True,Auto,1,84240.59,87,55
+600,1,Closed,True,False,Auto,5,21385.17,63,20
+601,7,Received,False,False,Auto,9,7214.92,74,74
+602,22,Received,True,True,Auto,6,321660.15,56,117
+603,22,Received,True,True,Auto,3,224280.63,70,21
+604,7,Closed,True,True,Auto,1,18260.06,74,92
+605,71,Closed,False,True,Auto,2,1927.89,60,59
+606,51,In Review,True,False,Home,7,12838.72,99,16
+607,86,Received,False,True,Auto,7,2926.29,76,8
+608,30,In Review,True,True,Auto,6,546000.47,18,26
+609,28,In Review,True,True,Auto,1,92350.35,35,68
+610,44,Received,True,False,Home,9,32886.19,100,2
+611,40,Closed,False,False,Auto,2,896.95,92,19
+612,76,Received,True,True,Life,5,211450.63,20,129
+613,22,Received,True,False,Auto,6,45840.4,70,142
+614,41,In Review,True,True,Auto,7,372540.97,49,81
+615,55,In Review,True,True,Auto,9,108540.53,79,14
+616,96,In Review,True,True,Auto,7,474670.16,76,25
+617,61,In Review,False,True,Auto,9,1840.45,57,127
+618,97,In Review,True,True,Auto,2,168540.08,88,119
+619,28,Received,True,True,Auto,6,375360.99,35,147
+620,76,Closed,False,False,Life,4,790.01,58,101
+621,92,Closed,True,False,Auto,6,18042.96,92,121
+622,31,In Review,True,False,Home,9,1656.57,94,33
+623,29,Received,False,True,Auto,3,277.61,13,44
+624,23,In Review,True,False,Home,4,28720.26,92,7
+625,19,Closed,True,True,Auto,3,269280.5,39,68
+626,59,In Review,False,False,Home,8,4623.95,87,103
+627,34,Received,False,False,Home,9,6150.6,24,112
+628,88,Closed,True,False,Home,4,23760.92,17,150
+629,57,Received,True,True,Auto,2,98700.46,82,114
+630,59,Closed,False,True,Home,8,6064.9,87,125
+631,37,In Review,False,True,Auto,6,1066.17,79,123
+632,88,Closed,True,True,Auto,9,749340.19,47,26
+633,45,In Review,False,False,Auto,1,185.56,7,4
+634,1,In Review,False,True,Home,6,5357.45,75,70
+635,83,Received,True,False,Auto,7,8848.92,76,150
+636,73,In Review,False,False,Home,6,2924.06,36,29
+637,88,In Review,True,False,Auto,5,37790.58,47,78
+638,95,Closed,False,False,Home,2,541.7,76,27
+639,15,In Review,True,False,Auto,7,36442.81,21,105
+640,93,Received,False,False,Home,10,8780.2,30,112
+641,100,Received,False,False,Auto,1,941.07,56,64
+642,42,Received,False,True,Home,5,2399.31,87,122
+643,43,Closed,True,False,Home,4,22080.52,36,7
+644,68,Received,False,False,Auto,1,930.94,10,87
+645,13,In Review,True,False,Auto,4,26268.29,79,136
+646,24,Closed,False,True,Auto,6,491.02,77,108
+647,1,Received,False,True,Auto,4,1931.15,95,55
+648,17,Received,True,False,Auto,9,86139.06,3,116
+649,32,Closed,False,True,Home,8,2191.62,74,103
+650,82,In Review,True,False,Home,1,3013.4,79,64
+651,77,In Review,False,True,Auto,5,2349.91,98,8
+652,25,Received,True,False,Home,5,35935.6,79,30
+653,32,Closed,True,False,Auto,8,75072.57,74,21
+654,3,In Review,True,True,Life,1,72490.79,4,147
+655,97,Received,True,False,Auto,10,7720.3,88,48
+656,84,Received,True,False,Auto,8,10208.11,92,98
+657,84,Closed,False,False,Auto,7,3077.28,92,78
+658,2,Closed,False,False,Home,1,919.33,79,106
+659,92,In Review,True,False,Life,10,81980.88,92,6
+660,3,Received,True,False,Life,1,7533.88,4,1
+661,94,Closed,False,True,Auto,7,853.8,15,151
+662,42,Closed,True,True,Life,1,94160.43,87,113
+663,62,Closed,False,True,Auto,10,6858.57,28,148
+664,1,Received,False,True,Auto,7,6264.18,68,150
+665,8,Received,False,True,Auto,1,252.87,7,103
+666,24,In Review,True,False,Auto,8,3416.88,77,5
+667,63,In Review,False,True,Auto,2,1460.9,84,5
+668,43,Closed,True,True,Auto,7,462000.03,77,8
+669,89,Closed,False,True,Auto,4,2396.69,13,153
+670,55,Received,True,True,Auto,8,252880.51,79,82
+671,82,Closed,True,True,Home,6,352620.7,79,33
+672,12,Closed,True,True,Auto,10,350300.0,92,143
+673,79,Closed,False,False,Home,10,4627.84,30,87
+674,93,Closed,True,True,Auto,10,156300.73,30,27
+675,89,In Review,False,True,Life,4,590.35,13,50
+676,1,In Review,False,True,Auto,6,5151.6,95,90
+677,8,Closed,True,True,Auto,10,144400.99,7,73
+678,2,Closed,False,False,Auto,10,9101.54,79,14
+679,45,Closed,False,True,Auto,3,2803.81,7,140
+680,27,In Review,True,False,Home,3,15651.99,46,69
+681,68,Closed,False,True,Auto,6,989.48,10,16
+682,21,In Review,False,False,Home,1,910.09,83,113
+683,74,Closed,True,False,Auto,7,39837.87,26,96
+684,49,Received,False,True,Auto,6,1377.66,15,88
+685,16,Closed,False,True,Home,4,786.05,94,91
+686,38,Received,False,True,Auto,1,634.29,58,48
+687,38,In Review,False,True,Home,1,89.67,24,10
+688,93,Closed,True,True,Home,8,786640.28,30,94
+689,5,Received,False,False,Auto,7,3596.39,30,106
+690,55,In Review,True,False,Auto,2,15434.86,79,73
+691,38,Closed,False,False,Home,8,4949.68,24,92
+692,27,In Review,False,False,Home,7,2135.73,1,34
+693,74,Received,False,True,Auto,2,1240.6,97,55
+694,44,Closed,True,True,Auto,4,349200.2,76,132
+695,67,Closed,True,True,Auto,7,236390.72,88,138
+696,74,Received,True,False,Home,2,16960.62,80,113
+697,66,Closed,True,False,Auto,4,9220.15,94,74
+698,65,Closed,False,False,Auto,2,1479.66,14,18
+699,88,In Review,False,True,Home,4,2225.02,17,12
+700,70,Closed,False,True,Auto,5,353.23,24,5
+701,6,In Review,True,False,Auto,10,49760.07,76,39
+702,51,Received,False,False,Auto,1,837.87,99,96
+703,36,In Review,True,True,Auto,5,367750.27,7,130
+704,70,Closed,True,True,Auto,3,157740.54,20,48
+705,86,Received,False,True,Auto,5,894.57,18,82
+706,65,Received,True,False,Auto,6,43020.03,78,1
+707,52,In Review,True,True,Auto,5,56550.56,91,111
+708,3,Received,False,False,Auto,6,5719.79,4,65
+709,78,In Review,True,True,Auto,7,111720.24,94,100
+710,64,Closed,True,True,Auto,3,218190.05,79,123
+711,43,Closed,True,True,Auto,4,395680.72,36,6
+712,25,Received,False,True,Auto,1,260.71,79,126
+713,100,In Review,False,True,Life,5,1626.47,70,88
+714,87,Received,True,True,Auto,9,483930.83,29,69
+715,55,Closed,False,True,Home,3,2330.06,79,13
+716,26,Closed,True,True,Home,9,278100.1,15,147
+717,92,Received,False,True,Auto,1,754.27,92,114
+718,22,Closed,False,True,Auto,9,8866.36,56,88
+719,70,Received,False,True,Auto,7,4890.5,24,8
+720,56,Closed,True,True,Life,9,898380.99,79,69
+721,24,Closed,True,False,Auto,1,8294.58,77,51
+722,88,Received,True,False,Auto,2,7184.29,47,122
+723,69,Closed,False,False,Auto,8,3154.75,99,24
+724,99,Received,False,True,Auto,3,2134.37,7,89
+725,9,Received,False,True,Auto,9,7807.37,94,109
+726,85,Closed,False,False,Home,6,3938.7,39,23
+727,97,Closed,True,True,Home,3,159480.91,13,134
+728,78,Closed,False,True,Home,1,913.11,94,156
+729,29,Received,False,True,Home,3,714.39,13,64
+730,30,Closed,True,False,Auto,9,28998.59,100,4
+731,75,Received,True,False,Home,9,45810.77,14,1
+732,3,In Review,True,True,Auto,2,182980.56,4,154
+733,9,In Review,True,False,Auto,5,33760.82,94,2
+734,87,In Review,True,False,Home,5,42805.53,29,3
+735,22,In Review,True,False,Life,5,21120.73,56,25
+736,6,Closed,True,False,Auto,10,32870.64,84,85
+737,16,Received,True,True,Home,10,111000.32,94,83
+738,71,In Review,False,False,Auto,4,3781.89,60,133
+739,9,Closed,False,False,Home,3,1224.39,94,71
+740,18,Closed,True,False,Auto,7,7252.7,99,37
+741,67,Received,False,False,Auto,6,4816.64,88,33
+742,87,In Review,True,True,Home,6,177300.26,29,128
+743,47,In Review,True,True,Auto,9,444060.29,100,125
+744,32,In Review,True,True,Home,2,64260.11,73,142
+745,46,In Review,True,False,Auto,7,46998.59,92,39
+746,7,In Review,False,True,Auto,7,6808.01,74,21
+747,88,In Review,True,False,Home,9,67815.3,17,14
+748,20,Closed,False,True,Auto,5,2026.6,94,129
+749,64,In Review,False,True,Auto,10,3303.46,79,33
+750,78,Received,True,False,Auto,2,13212.55,94,44
+751,61,In Review,True,True,Auto,2,41920.49,57,18
+752,57,Received,True,True,Auto,4,303680.79,62,136
+753,53,Closed,False,True,Auto,3,2360.51,94,23
+754,38,Received,False,True,Auto,8,3741.19,24,40
+755,81,Received,False,False,Auto,9,1853.58,4,100
+756,28,Received,False,True,Home,5,144.96,35,88
+757,65,Received,True,False,Auto,2,13254.29,31,19
+758,83,In Review,True,True,Auto,5,476700.35,84,55
+759,57,Closed,True,True,Home,4,40640.95,89,79
+760,39,Closed,False,False,Auto,10,8194.73,62,135
+761,42,Closed,False,False,Life,2,1378.11,87,105
+762,29,Closed,True,False,Home,2,15210.68,88,70
+763,11,In Review,True,False,Auto,3,6678.89,49,137
+764,8,In Review,True,False,Auto,10,66200.61,7,32
+765,89,Received,False,True,Home,6,1200.82,88,13
+766,87,Closed,False,False,Auto,8,6645.04,29,102
+767,94,In Review,False,True,Auto,7,5489.83,15,46
+768,94,Closed,False,False,Auto,4,1426.02,15,78
+769,71,Closed,False,True,Home,2,1185.23,27,14
+770,23,Closed,True,True,Home,1,44470.19,92,3
+771,12,In Review,False,True,Auto,2,1855.65,92,7
+772,64,Closed,True,True,Auto,4,277800.09,79,59
+773,54,In Review,True,True,Home,8,400800.26,34,104
+774,59,Closed,False,False,Home,5,2424.28,87,37
+775,81,Closed,False,True,Auto,6,5233.2,4,83
+776,14,In Review,False,False,Home,1,903.28,92,107
+777,88,Received,False,True,Auto,1,151.14,17,56
+778,20,Received,False,True,Auto,10,8861.3,94,56
+779,21,In Review,True,True,Auto,6,153900.55,83,57
+780,48,Received,True,True,Home,8,781680.49,91,109
+781,45,In Review,False,True,Auto,6,997.98,7,2
+782,86,Closed,False,False,Auto,4,3847.33,86,116
+783,64,Closed,True,True,Home,6,434460.51,79,25
+784,38,Received,False,False,Auto,2,30.22,24,152
+785,71,Received,False,True,Auto,8,5473.72,42,96
+786,60,Closed,False,False,Auto,1,275.26,94,153
+787,40,In Review,True,True,Auto,3,276090.74,92,95
+788,42,Received,False,False,Auto,4,856.72,87,145
+789,63,Closed,True,False,Home,1,9125.3,84,83
+790,65,In Review,False,False,Home,8,2929.85,31,130
+791,1,In Review,False,True,Home,10,374.91,95,84
+792,39,In Review,True,False,Home,1,1180.05,11,149
+793,2,In Review,True,True,Auto,1,7460.25,79,85
+794,76,Received,False,False,Auto,4,1982.92,58,81
+795,88,Received,True,False,Home,1,4817.47,47,64
+796,54,Closed,True,False,Auto,9,85635.87,34,142
+797,33,In Review,True,False,Home,4,37568.29,79,59
+798,92,Closed,True,False,Auto,3,5004.08,92,42
+799,52,In Review,True,True,Home,5,42550.22,91,46
+800,60,Closed,True,True,Auto,9,370620.85,94,61
+801,55,Received,True,False,Auto,7,67410.15,79,37
+802,80,In Review,True,False,Auto,9,10413.64,59,56
+803,50,In Review,False,False,Home,8,4718.07,8,144
+804,31,Closed,False,True,Auto,8,4057.32,94,39
+805,95,Closed,False,True,Auto,1,717.73,76,27
+806,25,In Review,True,True,Auto,5,36000.63,79,85
+807,82,Closed,False,False,Auto,6,1574.47,79,125
+808,99,Received,True,False,Life,5,5810.89,7,127
+809,16,Closed,True,True,Auto,2,112840.74,94,15
+810,12,Received,False,False,Auto,7,871.97,92,113
+811,14,Received,False,True,Home,10,9672.97,92,87
+812,99,In Review,True,False,Home,6,7038.95,7,113
+813,14,In Review,True,True,Auto,6,398700.23,92,17
+814,55,Closed,True,False,Auto,6,22320.02,79,38
+815,9,In Review,True,False,Home,5,37615.87,94,112
+816,70,Closed,False,True,Auto,5,950.47,24,126
+817,36,Closed,False,True,Life,1,964.51,7,65
+818,39,Received,True,True,Auto,2,27920.25,11,77
+819,72,Received,True,True,Auto,9,547830.97,34,25
+820,20,Closed,True,True,Auto,10,585600.76,94,115
+821,100,In Review,False,False,Auto,9,6776.55,70,30
+822,95,In Review,False,False,Auto,4,3960.26,86,119
+823,64,Received,True,False,Home,4,25836.9,79,90
+824,33,In Review,True,False,Home,6,5598.03,79,117
+825,52,Closed,False,False,Home,6,5368.25,5,5
+826,65,Received,True,False,Home,1,4528.73,31,17
+827,41,Received,False,False,Auto,8,404.5,49,50
+828,2,Received,False,False,Home,5,752.68,79,75
+829,75,Closed,True,True,Home,6,323401.0,78,140
+830,21,Received,True,False,Auto,1,4094.41,83,56
+831,40,Closed,False,True,Auto,4,3500.86,92,39
+832,13,In Review,True,False,Auto,7,49630.98,79,21
+833,60,In Review,True,False,Auto,10,48420.48,94,49
+834,95,Closed,True,True,Auto,3,162510.42,84,73
+835,88,Closed,False,True,Home,5,2375.73,17,112
+836,1,Closed,False,False,Auto,9,624.38,63,153
+837,80,Closed,True,False,Auto,6,56700.97,59,105
+838,44,In Review,True,True,Auto,4,355200.53,18,136
+839,97,Closed,True,False,Home,10,49820.09,88,4
+840,65,In Review,True,False,Auto,7,33264.82,78,108
+841,3,Received,False,False,Auto,10,7304.2,4,144
+842,35,Closed,True,False,Home,1,925.95,85,145
+843,77,Closed,False,False,Auto,10,504.36,71,74
+844,91,Closed,False,False,Auto,8,245.45,92,7
+845,7,Received,False,False,Auto,4,2240.45,19,144
+846,61,Received,True,False,Auto,3,19692.31,57,148
+847,79,Received,True,True,Home,4,27120.27,43,47
+848,96,Closed,True,False,Auto,6,55578.74,76,79
+849,46,Received,True,False,Auto,6,38940.07,92,70
+850,16,Closed,False,False,Auto,1,517.81,94,78
+851,62,Received,True,False,Home,2,10616.06,28,118
+852,1,Received,False,False,Auto,5,465.02,63,149
+853,100,Closed,False,False,Auto,8,4683.6,56,131
+854,70,Received,False,True,Home,3,551.22,20,155
+855,96,In Review,True,True,Home,3,64590.04,100,2
+856,65,In Review,False,True,Auto,4,3684.28,31,25
+857,13,Closed,True,False,Auto,5,36230.19,79,66
+858,3,Closed,False,False,Auto,2,577.51,4,105
+859,7,In Review,True,False,Auto,9,33939.75,19,107
+860,56,Received,False,True,Home,9,8457.55,79,124
+861,45,Received,False,False,Auto,6,3975.3,7,116
+862,81,Received,False,True,Auto,10,4500.14,4,31
+863,56,Closed,False,True,Home,3,1600.51,79,34
+864,37,In Review,True,False,Home,3,29292.2,79,25
+865,62,Closed,True,True,Auto,9,385110.55,28,55
+866,27,Received,True,True,Auto,7,447370.97,83,149
+867,88,Closed,False,False,Home,3,810.02,17,89
+868,88,Closed,True,True,Life,9,51930.41,47,85
+869,67,Received,False,False,Home,8,2008.33,13,66
+870,63,In Review,True,True,Home,1,27880.1,76,91
+871,6,In Review,True,False,Auto,10,44660.75,18,54
+872,50,In Review,False,False,Auto,5,4778.71,8,10
+873,60,In Review,False,False,Auto,9,6337.93,94,28
+874,12,Closed,True,False,Auto,8,44736.31,92,122
+875,3,Closed,False,True,Home,10,5640.05,4,29
+876,13,Received,True,True,Auto,7,685860.58,79,33
+877,64,Closed,False,True,Auto,7,5608.84,79,47
+878,99,Received,False,False,Auto,8,2124.44,7,127
+879,7,Closed,False,True,Home,2,1821.05,74,156
+880,54,Received,False,True,Home,4,3559.35,34,155
+881,42,In Review,False,False,Home,9,6789.36,87,99
+882,63,In Review,False,False,Home,10,639.05,18,59
+883,58,In Review,True,True,Auto,1,24640.34,83,36
+884,16,Closed,True,True,Home,2,12460.64,94,73
+885,38,In Review,False,True,Auto,9,4050.01,20,23
+886,92,In Review,False,False,Home,3,1443.34,92,123
+887,83,Received,True,True,Auto,4,79880.28,86,69
+888,60,In Review,False,True,Home,4,887.56,94,102
+889,24,Closed,True,True,Auto,6,102360.97,77,6
+890,53,Closed,False,False,Auto,2,889.26,94,120
+891,13,Closed,False,False,Home,8,6043.47,79,45
+892,50,In Review,False,False,Home,10,4996.96,8,42
+893,75,Received,True,True,Auto,2,154380.09,78,103
+894,12,In Review,False,False,Life,1,818.38,92,65
+895,98,Closed,True,False,Auto,4,10668.93,77,13
+896,8,Closed,False,True,Home,9,1139.83,7,21
+897,6,In Review,False,False,Auto,6,5610.29,18,96
+898,31,Closed,False,True,Auto,1,124.23,94,89
+899,71,Closed,False,False,Auto,1,178.63,60,41
+900,68,In Review,True,False,Auto,10,51240.64,10,81
+901,86,Received,True,False,Auto,1,767.67,84,155
+902,2,Closed,False,False,Auto,7,641.23,79,81
+903,91,Received,True,True,Home,2,193940.02,92,45
+904,100,Received,False,False,Auto,5,926.49,70,93
+905,99,Received,False,False,Home,2,1185.55,7,64
+906,11,In Review,True,False,Auto,8,51528.05,49,85
+907,58,Closed,False,True,Auto,6,3038.38,1,92
+908,52,In Review,True,False,Home,8,65600.99,5,110
+909,83,Received,True,True,Auto,7,81480.4,84,20
+910,13,Closed,True,False,Home,1,3579.27,79,27
+911,73,Closed,False,False,Home,7,1126.82,36,114
+912,38,Received,False,False,Auto,4,2099.12,58,24
+913,90,In Review,False,True,Auto,10,8397.56,97,124
+914,12,Closed,True,False,Auto,6,33234.66,92,32
+915,86,In Review,False,True,Home,8,2116.54,86,125
+916,55,Received,True,True,Auto,9,624960.43,79,122
+917,61,Received,True,True,Auto,6,551460.46,57,29
+918,65,Closed,False,True,Auto,7,4135.69,31,66
+919,36,In Review,True,False,Auto,8,36112.36,7,149
+920,1,Received,True,True,Auto,8,588880.6,75,113
+921,95,Received,True,True,Auto,9,666270.01,76,40
+922,10,Closed,True,True,Home,5,334400.43,66,150
+923,43,Received,True,False,Auto,7,26782.59,77,133
+924,48,Received,False,True,Home,5,1131.79,5,35
+925,1,Closed,True,False,Auto,2,16452.99,68,33
+926,47,Received,False,True,Auto,3,1369.64,86,49
+927,91,Closed,True,True,Auto,9,662580.23,92,105
+928,73,In Review,False,False,Auto,4,1990.45,77,4
+929,51,Closed,False,False,Auto,5,2071.34,99,140
+930,82,In Review,False,True,Auto,3,1418.54,79,2
+931,9,Closed,False,False,Home,1,245.77,94,51
+932,44,In Review,True,True,Life,4,45400.86,84,118
+933,47,Received,True,True,Home,4,379120.91,86,78
+934,96,In Review,False,True,Home,9,2512.86,100,20
+935,31,Received,True,True,Auto,3,141510.27,94,17
+936,54,In Review,True,True,Auto,5,289150.04,34,152
+937,40,Closed,False,True,Auto,5,1544.66,92,77
+938,9,Closed,True,True,Auto,1,73880.59,94,75
+939,88,Closed,False,False,Auto,6,2161.83,47,120
+940,22,Received,True,False,Auto,3,22011.55,56,107
+941,80,Closed,True,True,Home,8,455040.92,23,12
+942,8,Closed,True,True,Life,7,190820.74,7,102
+943,32,Closed,False,False,Auto,3,1183.36,73,86
+944,35,In Review,False,True,Home,2,524.11,85,12
+945,18,In Review,True,True,Auto,3,92040.59,99,1
+946,42,Received,True,False,Home,5,41735.24,87,115
+947,26,In Review,False,True,Life,6,4991.11,15,60
+948,39,Closed,False,False,Auto,2,1389.04,62,18
+949,58,Closed,False,False,Auto,6,3959.67,83,58
+950,9,In Review,True,True,Home,2,43100.3,94,62
+951,61,In Review,True,True,Auto,3,246060.83,57,106
+952,62,In Review,False,True,Home,4,2704.88,55,20
+953,34,Closed,True,True,Auto,6,498360.94,24,121
+954,63,Closed,True,False,Auto,10,8430.87,76,122
+955,63,Received,False,True,Auto,8,2521.48,86,65
+956,76,In Review,True,True,Home,8,95600.69,20,70
+957,44,Received,True,True,Home,9,124290.48,76,56
+958,72,Received,True,True,Auto,1,43240.37,34,49
+959,95,In Review,True,False,Auto,2,10964.52,86,14
+960,54,In Review,False,True,Home,1,469.92,34,51
+961,97,Closed,True,True,Home,8,629760.5,13,42
+962,29,In Review,True,True,Auto,6,288840.08,88,85
+963,34,In Review,True,False,Home,8,71368.57,58,36
+964,25,In Review,False,False,Auto,7,127.32,79,135
+965,17,Received,True,True,Auto,7,694890.27,3,81
+966,18,Received,True,True,Home,1,40760.9,39,130
+967,63,In Review,True,True,Home,3,294960.98,86,43
+968,63,Received,False,True,Auto,4,3094.95,100,96
+969,3,Received,False,True,Auto,3,136.16,4,76
+970,99,Received,True,False,Home,9,41607.83,7,120
+971,86,In Review,False,True,Home,8,2756.09,86,110
+972,38,Closed,False,True,Auto,7,4729.21,20,98
+973,31,Closed,False,True,Auto,10,7563.08,94,97
+974,38,In Review,False,False,Auto,5,3815.56,20,130
+975,39,Closed,True,False,Auto,9,43056.28,82,61
+976,24,Received,True,False,Home,7,8379.17,77,91
+977,23,Closed,False,False,Auto,5,370.47,92,10
+978,99,In Review,True,True,Auto,3,218910.99,7,47
+979,93,Closed,True,False,Home,1,1050.49,30,140
+980,99,In Review,True,False,Home,5,19410.9,7,95
+981,42,Received,True,False,Auto,5,43560.01,87,40
+982,52,Received,False,True,Auto,1,584.99,5,48
+983,94,Received,True,False,Home,4,20256.5,15,136
+984,3,Closed,False,False,Auto,3,2400.82,4,53
+985,63,In Review,False,True,Auto,2,969.22,100,122
+986,99,In Review,True,False,Auto,9,63981.35,7,47
+987,27,In Review,False,True,Auto,5,985.83,1,125
+988,93,In Review,False,True,Auto,4,3833.72,43,15
+989,68,Received,False,False,Auto,6,2935.22,10,67
+990,95,Received,True,True,Home,2,17720.19,84,66
+991,34,Closed,True,True,Auto,10,913300.2,24,129
+992,12,Received,True,True,Home,3,79980.03,92,92
+993,42,Closed,False,False,Auto,6,4862.2,87,110
+994,82,Received,True,True,Home,5,177150.91,79,88
+995,15,Received,True,True,Auto,9,248670.91,21,140
+996,58,Received,False,True,Auto,4,1662.24,83,114
+997,95,In Review,False,False,Home,6,2078.24,84,80
+998,66,Received,True,True,Auto,2,17420.91,94,113
+999,17,Closed,True,True,Auto,10,484100.78,3,85
+1000,9,Received,True,False,Life,6,42330.53,94,156

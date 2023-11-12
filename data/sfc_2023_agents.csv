@@ -1,0 +1,101 @@
+id,first_name,last_name,state,region,primary_language,secondary_language,years_active
+1,Catha,Abrahmer,Minnesota,Midwest,English,German,10
+2,Yetta,Eason,Oregon,West,English,Korean,12
+3,Janeta,D'Avaux,Connecticut,Northeast,English,,47
+4,Kalie,Tomkins,Virginia,South,English,,33
+5,Teddy,Dennitts,Illinois,Midwest,English,Chinese,48
+6,Xylina,MacMurray,New Jersey,Northeast,English,Italian,17
+7,Walker,Nosworthy,Tennessee,South,English,,39
+8,Kip,Scuffham,Maine,Northeast,English,French,35
+9,Winifred,Duddy,North Dakota,Midwest,English,Italian,32
+10,Layney,Drewry,Maryland,Northeast,English,,25
+11,Beatrice,Sprowles,Arizona,West,English,Arabic,7
+12,Candida,Dungay,South Carolina,South,English,Chinese,43
+13,Whitby,Awin,Pennsylvania,Northeast,English,Spanish,1
+14,Buck,Withringten,Alabama,South,English,Italian,16
+15,Ladonna,Earengey,Indiana,Midwest,English,,36
+16,Guglielmo,Lamboll,Vermont,Northeast,English,,4
+17,Gardner,Nasey,Idaho,West,English,Spanish,21
+18,Georgina,Lovegrove,California,West,English,,11
+19,Xaviera,Darell,Massachusetts,Northeast,English,German,10
+20,Dick,Andras,Ohio,Midwest,English,,14
+21,Luise,Reeken,North Carolina,South,English,Spanish,14
+22,Gale,Cantua,Arkansas,South,English,German,2
+23,Gracie,Polland,Washington,West,English,Italian,29
+24,Connie,Loyley,Ohio,Midwest,English,,33
+25,Laryssa,Affleck,South Dakota,Midwest,English,,7
+26,Erina,Coan,North Carolina,South,English,Spanish,43
+27,Evered,Sergent,Utah,West,English,Spanish,50
+28,Cassandry,Curston,New Mexico,West,English,,49
+29,Cirstoforo,Yurov,Washington,West,English,German,34
+30,Hewe,Matveiko,Missouri,Midwest,English,Spanish,25
+31,Nevil,O' Hern,Alabama,South,English,French,19
+32,Cynthea,Pitkins,New Jersey,Northeast,English,,16
+33,Irita,Segebrecht,South Carolina,South,English,,38
+34,Loraine,Turmel,Iowa,Midwest,English,Italian,21
+35,Doris,Illem,Oklahoma,South,English,,5
+36,Maritsa,Hulme,Michigan,Midwest,English,,28
+37,Hagen,Baxter,Oregon,West,English,Arabic,44
+38,Patty,Saxelby,Hawaii,West,English,Spanish,4
+39,Hans,Hardway,Georgia,South,English,Spanish,47
+40,Lind,Loughton,Rhode Island,Northeast,English,Italian,6
+41,Cynthie,Gytesham,North Dakota,Midwest,English,,36
+42,Dougie,Faulconer,Utah,West,English,,15
+43,Briano,Lowell,Missouri,Midwest,English,Italian,36
+44,Eli,Ginity,Nevada,West,English,Arabic,7
+45,Wendell,Tolputt,New Jersey,Northeast,English,Spanish,50
+46,Briggs,Snasdell,Minnesota,Midwest,English,German,6
+47,Peadar,D'Hooge,Idaho,West,English,Spanish,17
+48,Babbette,Tower,Rhode Island,Northeast,English,,45
+49,Tedda,Highwood,Kansas,Midwest,English,Arabic,41
+50,Davina,Totton,Oregon,West,English,Korean,35
+51,Blondelle,MacDearmaid,South Dakota,Midwest,English,Spanish,31
+52,Vinnie,Chree,South Carolina,South,English,,43
+53,Boniface,Antwis,Rhode Island,Northeast,English,,25
+54,Merrill,Pallin,New Hampshire,Northeast,English,Arabic,40
+55,Brent,Alywen,New Mexico,West,English,Spanish,13
+56,Vinnie,Lindemann,District of Columbia,Northeast,English,,45
+57,Pooh,Wilce,Louisiana,South,English,German,19
+58,Kaiser,Toffolini,Ohio,Midwest,English,Chinese,21
+59,Clark,Tussaine,Washington,West,English,Italian,1
+60,Annissa,Moxted,Utah,West,English,Spanish,26
+61,Imelda,McMenamie,New Jersey,Northeast,English,,6
+62,Melanie,Blunsom,Arizona,West,English,,49
+63,Sarge,Iredale,Alaska,West,English,,6
+64,Hanson,Buxam,Nevada,West,English,,35
+65,Nettle,Apps,Hawaii,West,English,Arabic,19
+66,Joellen,Chapiro,Nebraska,Midwest,English,French,25
+67,Smith,Budden,Hawaii,West,English,Chinese,7
+68,Roz,Sygroves,Alaska,West,English,Spanish,42
+69,Emylee,Simonetto,Wyoming,West,English,,24
+70,Trev,Balint,District of Columbia,Northeast,English,,14
+71,Karrah,Gartenfeld,Mississippi,South,English,French,25
+72,Newton,Orro,Kentucky,South,English,Spanish,40
+73,Letta,Fury,Massachusetts,Northeast,English,Spanish,15
+74,Ashien,McGeachey,Massachusetts,Northeast,English,Chinese,46
+75,Calypso,Yuryev,Alaska,West,English,,16
+76,Rhys,Kobelt,California,West,English,,34
+77,Gaspard,Pegden,Michigan,Midwest,English,,35
+78,Lory,de Juares,Alabama,South,English,,27
+79,Nils,Brashier,Texas,South,English,Italian,18
+80,Idalia,Farleigh,North Carolina,South,English,,16
+81,Vi,Barkus,New Jersey,Northeast,English,Spanish,33
+82,Darcee,Timewell,Arizona,West,English,,26
+83,Rozanna,Heakins,Minnesota,Midwest,English,French,20
+84,Jemima,Rosling,California,West,English,Korean,37
+85,Fancie,Kilner,Nebraska,Midwest,English,,6
+86,Gabrila,Ridgedell,California,West,English,Arabic,32
+87,Curcio,Musgrave,Colorado,West,English,,19
+88,Honey,Duffill,Pennsylvania,Northeast,English,Italian,26
+89,Harley,Vittel,Arizona,West,English,,20
+90,Blake,Penddreth,New Jersey,Northeast,English,Spanish,36
+91,Starlene,Boscott,Illinois,Midwest,English,Italian,34
+92,Orsa,Bellamy,Florida,South,English,Spanish,38
+93,Philis,Bover,Rhode Island,Northeast,English,,25
+94,Kathe,Tipler,New York,Northeast,English,,47
+95,Durand,Ellwood,Alaska,West,English,,45
+96,Brana,Drinan,South Dakota,Midwest,English,,42
+97,Wiatt,Kitchenman,North Carolina,South,English,Korean,40
+98,Lionello,Krauze,Mississippi,South,English,German,48
+99,Louella,Evangelinos,Georgia,South,English,Korean,6
+100,Christa,McPartling,California,West,English,,39
