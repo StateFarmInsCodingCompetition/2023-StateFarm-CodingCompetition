@@ -14,10 +14,10 @@ def test_read_data_files(controller):
     Args:
         controller (SimpleDataTool): utility script that loads JSON files and does comparisons
     """
-    assert (len(controller.get_agent_data()) == 100)
-    assert (len(controller.get_claim_handler_data()) == 156)
-    assert (len(controller.get_claim_data()) == 1000)
-    assert (len(controller.get_disaster_data()) == 100)
+    assert (len(controller.__agent_data) == 100)
+    assert (len(controller.__claim_handler_data) == 156)
+    assert (len(controller.__claim_data) == 1000)
+    assert (len(controller.__disaster_data) == 100)
 
 
 class TestSetOne:

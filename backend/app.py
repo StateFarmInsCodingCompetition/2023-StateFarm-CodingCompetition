@@ -9,7 +9,7 @@ from simple_data_tool import SimpleDataTool
 app = Flask(__name__)
 app.config.from_pyfile('secrets.properties', silent=False)
 
-CORS(app)
+CORS(app, supports_credentials=True)
 
 print('Initializing...')
 client = MongoClient(app.config['DB_URI'])  # Connect to db
@@ -49,4 +49,16 @@ def endpoint(path):  # Generified endpoint for all data access
         response.status = 422
         return response
 
-    return jsonify(json_wrap(func(**cast_args)))
+    try:
+        response = func(**cast_args)
+    except Exception as e:
+        response = jsonify(e)
+        response.status = 400
+        return response
+
+    print(response)
+    response = jsonify(response)
+    if not response.is_json:  # Json wrap string responses
+        response = jsonify(json_wrap(response.data))
+
+    return response

@@ -1,21 +1,8 @@
 import './App.css'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import Cookies from "universal-cookie";
 import Header from "./static/Header";
-
-export const cookies = new Cookies();
-
-export function getCurrentUser() {
-    return cookies.get("user");
-}
-
-export function setCurrentUser(user) {
-    cookies.set("user", user); // Will jsonify the user object
-}
-
-export function removeCurrentUser() {
-    cookies.remove("user");
-}
+import CRM from "./pages/CRM";
+import GIS from "./pages/GIS";
 
 export function validateUser(currentUser, navigate) {
     if (currentUser === undefined) {
@@ -29,8 +16,10 @@ export function validateUser(currentUser, navigate) {
 function App() {
     return (
         <Router>
+            <Header/>
             <Routes>
-                <Route exact path="/" element={<Header/>}/>
+                <Route exact path="/" element={<CRM/>}/>
+                <Route exact path="/gis" element={<GIS/>}/>
             </Routes>
         </Router>
     );

@@ -3,6 +3,8 @@ import math
 import pandas as pd
 from pandas import DataFrame
 import datetime as dt
+from bson.json_util import dumps
+
 
 dates = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
          'December']
@@ -48,16 +50,16 @@ class SimpleDataTool:
         return data
 
     def get_agent_data(self):
-        return self.__agent_data
+        return json.loads(dumps(self.__agent_data.find()))
 
     def get_claim_handler_data(self):
-        return self.__claim_handler_data
+        return json.loads(dumps(self.__claim_handler_data.find()))
 
     def get_disaster_data(self):
-        return self.__disaster_data
+        return json.loads(dumps(self.__disaster_data.find()))
 
     def get_claim_data(self):
-        return self.__claim_data
+        return json.loads(dumps(self.__claim_data.find()))
 
     # Unit Test Methods
 
@@ -71,7 +73,7 @@ class SimpleDataTool:
         """
 
         # converting JSON to pd dataframe
-        df = pd.json_normalize(self.get_claim_data())
+        df = pd.DataFrame(list(self.__claim_data.find()))
 
         # filtering the data
         res = df.loc[df['status'] == 'Closed']
@@ -87,7 +89,7 @@ class SimpleDataTool:
         Returns:
             int: number of claims assigned to claim handler
         """
-        df = pd.json_normalize(self.get_claim_data())
+        df = pd.DataFrame(list(self.__claim_data.find()))
         res = df.loc[df['claim_handler_assigned_id'] == claim_handler_id]
         return len(res.index)
 
@@ -101,7 +103,7 @@ class SimpleDataTool:
         Returns:
             int: number of disasters for state
         """
-        df = pd.json_normalize(self.get_disaster_data())
+        df = pd.DataFrame(list(self.__disaster_data.find()))
         res = df.loc[df['state'] == state]
         return len(res.index)
 
@@ -119,7 +121,7 @@ class SimpleDataTool:
             float | None: estimate cost of disaster, rounded to the nearest hundredths place
                           returns None if no claims are found
         """
-        df = pd.json_normalize(self.get_claim_data())
+        df = pd.DataFrame(list(self.__claim_data.find()))
         related = df.loc[df['disaster_id'] == disaster_id]
 
         # summing the estimate cost for specified disaster
@@ -138,7 +140,7 @@ class SimpleDataTool:
             float | None : average cost of claims, rounded to the nearest hundredths place
                            or None if no claims are found
         """
-        df = pd.json_normalize(self.get_claim_data())
+        df = pd.DataFrame(list(self.__claim_data.find()))
         related = df.loc[df['claim_handler_assigned_id'] == claim_handler_id]
         if related.empty:
             return None
@@ -165,7 +167,7 @@ class SimpleDataTool:
         Returns:
             string: single name of state
         """
-        df = pd.json_normalize(self.get_disaster_data())
+        df = pd.DataFrame(list(self.__disaster_data.find()))
 
         # creating frequency table, then sorting the values
         related: DataFrame = df['state'].value_counts().reset_index(drop=False)
@@ -188,7 +190,7 @@ class SimpleDataTool:
         """
 
         # same as above function
-        df = pd.json_normalize(self.get_disaster_data())
+        df = pd.DataFrame(list(self.__disaster_data.find()))
         related: DataFrame = df['state'].value_counts().reset_index(drop=False)
         related.sort_values(by=['count', 'state'], ascending=[True, True], inplace=True)
         res = related['state'].iloc[0]
@@ -204,7 +206,7 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        df = pd.DataFrame(list(self.get_agent_data().find()))
+        df = pd.DataFrame(list(self.__agent_data.find().find()))
         df = df.loc[df['state'] == state]
 
         # creating frequency tables for the languages
@@ -243,7 +245,7 @@ class SimpleDataTool:
         if min_severity_rating < 1 or min_severity_rating > 10:
             return -1
 
-        df = pd.json_normalize(self.get_claim_data())
+        df = pd.DataFrame(list(self.__claim_data.find()))
         res = df.loc[(df['agent_assigned_id'] == agent_id)
                           & (df['severity_rating'] >= min_severity_rating)
                           & (df['status'] != 'Closed')]
@@ -262,7 +264,7 @@ class SimpleDataTool:
             int: number of disasters where the declared date is after the end date
         """
 
-        df = pd.json_normalize(self.get_disaster_data())
+        df = pd.DataFrame(list(self.__disaster_data.find()))
         res = df.loc[df['end_date'] < df['declared_date']]
         return len(res.index)
 
@@ -279,7 +281,7 @@ class SimpleDataTool:
         """
 
         # getting total of estimate cost for each agent, and filling 0 for any empty costs
-        df = pd.json_normalize(self.get_claim_data())
+        df = pd.DataFrame(list(self.__claim_data.find()))
         res = df.groupby('agent_assigned_id')['estimate_cost'].sum().round(2).to_frame()
         res = res.reindex(range(1, 101), fill_value=0).reset_index()
 
@@ -299,14 +301,14 @@ class SimpleDataTool:
             float: density of claims to disaster area, rounded to the nearest thousandths place
                    None if disaster does not exist
         """
-        df = pd.json_normalize(self.get_claim_data())
+        df = pd.DataFrame(list(self.__claim_data.find()))
         related = df.loc[df['disaster_id'] == disaster_id]
         if related.empty:
             return None
 
         num = len(related.index)
 
-        df2 = pd.json_normalize(self.get_disaster_data())
+        df2 = pd.DataFrame(list(self.__disaster_data.find()))
 
         # matching disaster id to the radius
         radius = df2.loc[df2['id'] == disaster_id]['radius_miles'].iloc[0]
@@ -329,10 +331,10 @@ class SimpleDataTool:
             list: three strings of month and year, descending order of highest claims
         """
 
-        df = pd.json_normalize(self.get_claim_data())
+        df = pd.DataFrame(list(self.__claim_data.find()))
         related = df['disaster_id'].value_counts().reset_index(drop=False)
 
-        df2 = pd.json_normalize(self.get_disaster_data())
+        df2 = pd.DataFrame(list(self.__disaster_data.find()))
         related = related.map(str)
 
         # getting the month and year for each disaster id

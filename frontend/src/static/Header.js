@@ -1,6 +1,9 @@
 import {Button} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 function Header() {
+    let navigate = useNavigate()
+
     return (
         <div className="header">
             <div className="pill">
@@ -8,7 +11,8 @@ function Header() {
             </div>
 
             <div className="pill">
-                <Button>Test</Button>
+                <Button onClick={() => navigate("/")}>Data View</Button>
+                <Button onClick={() => navigate("/gis")}>Plot View</Button>
             </div>
         </div>
 
