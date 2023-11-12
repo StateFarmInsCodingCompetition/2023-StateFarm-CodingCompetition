@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "streetsidesoftware.code-spell-checker",
+        "vscode-icons-team.vscode-icons",
+        "dbaeumer.vscode-eslint",
+        "christian-kohler.path-intellisense",
+        "donjayamanne.python-extension-pack",
+        "Cameron.vscode-pytest",
+        "pamaron.pytest-runner"
+    ]
+}
