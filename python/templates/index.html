@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agent & Claim Handler Search</title>
+    <!-- Link to your CSS file if you have one in the static folder -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Search Agents and Claim Handlers</h1>
+    <form method="POST">
+        Region: <input type="text" name="region"><br>
+        Language: <input type="text" name="language"><br>
+        <input type="submit" value="Search">
+    </form>
+    <h2>Results:</h2>
+    <h3>Agents:</h3>
+    {% for agent in agents %}
+        <p>{{ agent }}</p>
+    {% endfor %}
+    <h3>Claim Handlers:</h3>
+    {% for handler in claim_handlers %}
+        <p>{{ handler }}</p>
+    {% endfor %}
+</body>
+</html>
