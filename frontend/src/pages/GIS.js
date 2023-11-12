@@ -2,7 +2,7 @@ import Plot from 'react-plotly.js';
 
 function GIS() {
     return (
-            <iframe src="http://ec2-18-226-200-201.us-east-2.compute.amazonaws.com:8501/?embed=true" className="streamlit"></iframe>
+            <iframe src="http://ec2-18-119-129-148.us-east-2.compute.amazonaws.com:8501/?embed=true" className="streamlit"></iframe>
     )
 }
 
