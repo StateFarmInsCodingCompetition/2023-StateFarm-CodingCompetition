@@ -1,4 +1,4 @@
-export const central_uri = "http://ec2-18-225-84-160.us-east-2.compute.amazonaws.com:5000/";
+export const central_uri = "http://ec2-18-119-129-148.us-east-2.compute.amazonaws.com:5000/";
 export async function post(path, body) {
     return await fetch(central_uri + path, {
         method: "post",

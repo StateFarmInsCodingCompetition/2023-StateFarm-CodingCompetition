@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 import requests
 
-connection_disasters = requests.get("http://ec2-18-225-84-160.us-east-2.compute.amazonaws.com:5000/get_disaster_data").json()
+connection_disasters = requests.get("http://ec2-18-119-129-148.us-east-2.compute.amazonaws.com:5000/get_disaster_data").json()
 disaster_df = pd.DataFrame(connection_disasters)
 disaster_df = disaster_df.drop(['_id', 'description'], axis=1)
 disaster_df['month_year'] = pd.to_datetime(disaster_df['declared_date']).dt.strftime('%Y-%m')
