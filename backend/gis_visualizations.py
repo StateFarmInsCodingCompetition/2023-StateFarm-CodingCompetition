@@ -26,12 +26,11 @@ fig_disaster.update_geos(
     projection_type="albers usa",
     bgcolor= f"rgb(14, 17, 23)",
     showland=True,
-    landcolor="black",
     showcoastlines=True,
     coastlinecolor="white", 
 )
 fig_disaster.update_layout(
-    font=dict(color="white"),
+    font=dict(color="black"),
     paper_bgcolor=f"rgb(14, 17, 23)",
 )
 st.plotly_chart(fig_disaster)
