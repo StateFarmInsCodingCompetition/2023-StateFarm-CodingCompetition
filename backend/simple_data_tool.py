@@ -9,10 +9,10 @@ dates = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August
 
 
 class SimpleDataTool:
-    AGENTS_FILEPATH = 'data/sfcc_2023_agents.json'
-    CLAIM_HANDLERS_FILEPATH = 'data/sfcc_2023_claim_handlers.json'
-    CLAIMS_FILEPATH = 'data/sfcc_2023_claims.json'
-    DISASTERS_FILEPATH = 'data/sfcc_2023_disasters.json'
+    AGENTS_FILEPATH = '../data/sfcc_2023_agents.json'
+    CLAIM_HANDLERS_FILEPATH = '../data/sfcc_2023_claim_handlers.json'
+    CLAIMS_FILEPATH = '../data/sfcc_2023_claims.json'
+    DISASTERS_FILEPATH = '../data/sfcc_2023_disasters.json'
 
     REGION_MAP = {
         'west': 'Alaska,Hawaii,Washington,Oregon,California,Montana,Idaho,Wyoming,Nevada,Utah,Colorado,Arizona,New Mexico',
@@ -21,13 +21,21 @@ class SimpleDataTool:
         'northeast': 'Maryland,Delaware,District of Columbia,Pennsylvania,New York,New Jersey,Connecticut,Massachusetts,Vermont,New Hampshire,Rhode Island,Maine'
     }
 
-    def __init__(self):
-        self.__agent_data = self.load_json_from_file(self.AGENTS_FILEPATH)
-        self.__claim_handler_data = self.load_json_from_file(
-            self.CLAIM_HANDLERS_FILEPATH)
-        self.__claim_data = self.load_json_from_file(self.CLAIMS_FILEPATH)
-        self.__disaster_data = self.load_json_from_file(
-            self.DISASTERS_FILEPATH)
+    def __reload_data(self):
+        self.__agent_data = self.__client['agents']
+        self.__claim_handler_data = self.__client['claim_handlers']
+        self.__claim_data = self.__client['claims']
+        self.__disaster_data = self.__client['disasters']
+        # self.__agent_data = self.load_json_from_file(self.AGENTS_FILEPATH)
+        # self.__claim_handler_data = self.load_json_from_file(
+        #     self.CLAIM_HANDLERS_FILEPATH)
+        # self.__claim_data = self.load_json_from_file(self.CLAIMS_FILEPATH)
+        # self.__disaster_data = self.load_json_from_file(
+        #     self.DISASTERS_FILEPATH)
+
+    def __init__(self, client):
+        self.__client = client['statefarm_data']
+        self.__reload_data()
 
     # Helper Methods
 
@@ -196,7 +204,7 @@ class SimpleDataTool:
             string: name of language
                     or empty string if state doesn't exist
         """
-        df = pd.json_normalize(self.get_agent_data())
+        df = pd.DataFrame(list(self.get_agent_data().find()))
         df = df.loc[df['state'] == state]
 
         # creating frequency tables for the languages
